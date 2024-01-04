@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="HealthEvent" load_steps=2 format=3 uid="uid://dot44gd0wwyic"]
+
+[ext_resource type="Script" path="res://Script/Player/Event/Health_Event.gd" id="1_wgox7"]
+
+[resource]
+script = ExtResource("1_wgox7")

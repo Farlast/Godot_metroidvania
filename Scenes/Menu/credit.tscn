@@ -1,0 +1,163 @@
+[gd_scene load_steps=9 format=3 uid="uid://b62yxnsqyflww"]
+
+[ext_resource type="Texture2D" uid="uid://o4426trj0b4j" path="res://Art/UI/panel-border-023.png" id="1_eg1o5"]
+[ext_resource type="Script" path="res://Script/System/MenuTrigger/to_scene_button.gd" id="3_dtlf2"]
+[ext_resource type="Texture2D" uid="uid://b2ghjo6da5elg" path="res://Art/UI/panel-001.png" id="4_8kdwh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pjg2a"]
+font_size = 100
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q5ytg"]
+texture = ExtResource("1_eg1o5")
+texture_margin_left = 50.0
+texture_margin_top = 50.0
+texture_margin_right = 50.0
+texture_margin_bottom = 50.0
+region_rect = Rect2(0, -1, 97, 97)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dh4jd"]
+font_size = 30
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_522je"]
+texture = ExtResource("4_8kdwh")
+texture_margin_left = 50.0
+texture_margin_top = 10.0
+texture_margin_right = 50.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eftub"]
+texture = ExtResource("4_8kdwh")
+texture_margin_left = 50.0
+texture_margin_top = 20.0
+texture_margin_right = 50.0
+texture_margin_bottom = 20.0
+modulate_color = Color(0, 0, 0, 1)
+
+[node name="Credit" type="CanvasLayer"]
+
+[node name="Control" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.027451, 0.0235294, 0.0705882, 1)
+
+[node name="title" type="Label" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -13.0
+offset_top = -494.0
+offset_right = -13.0
+offset_bottom = -357.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Credits"
+label_settings = SubResource("LabelSettings_pjg2a")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="programming" type="Panel" parent="."]
+custom_minimum_size = Vector2(500, 100)
+offset_left = 455.0
+offset_top = 231.0
+offset_right = 1447.0
+offset_bottom = 331.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_q5ytg")
+
+[node name="Label" type="Label" parent="programming"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -43.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Programming & Art"
+label_settings = SubResource("LabelSettings_dh4jd")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="programming"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = 51.0
+offset_right = 1.0
+offset_bottom = 143.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Falass"
+label_settings = SubResource("LabelSettings_dh4jd")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="audio" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 100)
+offset_left = 462.0
+offset_top = 410.0
+offset_right = 1454.0
+offset_bottom = 510.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_q5ytg")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="audio"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 5.0
+offset_top = -42.0
+offset_right = 5.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Asset"
+label_settings = SubResource("LabelSettings_dh4jd")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 462.0
+offset_top = -64.0
+offset_right = -470.0
+offset_bottom = 338.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "
+Audio
+- Free Deadly Kombat by Daniel SoundsGood
+- Sea choir - synth mood atmo by szegvari
+- Boss theme by Ron
+UI
+- Kenney_fantasy-ui-borders by kenney 
+Font
+- Maitree"
+label_settings = SubResource("LabelSettings_dh4jd")
+horizontal_alignment = 1
+
+[node name="ToMainMenu" type="Button" parent="."]
+offset_left = 807.0
+offset_top = 885.0
+offset_right = 1111.0
+offset_bottom = 947.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_522je")
+theme_override_styles/hover = SubResource("StyleBoxTexture_eftub")
+text = "Back To menu"
+script = ExtResource("3_dtlf2")
+next_scene_file = "res://Scenes/Menu/main_menu.tscn"

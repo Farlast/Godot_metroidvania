@@ -1,0 +1,95 @@
+[gd_scene load_steps=13 format=3 uid="uid://dte2emrtlk6xa"]
+
+[ext_resource type="Script" path="res://Script/Props/Destroyable.gd" id="1_j3655"]
+[ext_resource type="Texture2D" uid="uid://lpydseqmrse7" path="res://Art/BG/Cove/cove_decorations.png" id="2_h34te"]
+[ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="3_lhs3p"]
+[ext_resource type="Texture2D" uid="uid://dbffa3d86qrba" path="res://Art/Effect/Tex_random.png" id="4_8ctw0"]
+[ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="5_e7cd7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4v3id"]
+atlas = ExtResource("2_h34te")
+region = Rect2(509, 29, 338, 493)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m0nnh"]
+size = Vector2(124, 124)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2mypl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6yx38"]
+atlas = ExtResource("4_8ctw0")
+region = Rect2(40.4701, 6.61002, 110.11, 123.42)
+
+[sub_resource type="Curve" id="Curve_po4te"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_7302m"]
+offsets = PackedFloat32Array(0, 0.866856, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.866667, 0.866667, 0.866667, 1, 1, 1, 1, 0)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ulomm"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 4
+particles_anim_loop = true
+
+[node name="coral_1" type="Node2D"]
+script = ExtResource("1_j3655")
+
+[node name="Art" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = SubResource("AtlasTexture_4v3id")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 10
+script = ExtResource("3_lhs3p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-1, -4)
+shape = SubResource("RectangleShape2D_m0nnh")
+debug_color = Color(0.184314, 0.623529, 0.443137, 0.419608)
+
+[node name="hit_effect" type="CPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_2mypl")
+emitting = false
+one_shot = true
+preprocess = 0.03
+explosiveness = 0.73
+randomness = 0.79
+local_coords = true
+texture = SubResource("AtlasTexture_6yx38")
+emission_shape = 3
+emission_rect_extents = Vector2(50, 50)
+direction = Vector2(0, -1)
+initial_velocity_min = 255.0
+initial_velocity_max = 705.0
+angular_velocity_max = 316.8
+linear_accel_min = 5.0
+linear_accel_max = 16.95
+linear_accel_curve = SubResource("Curve_po4te")
+damping_min = 9.0
+damping_max = 9.0
+scale_amount_min = 0.1
+scale_amount_max = 0.3
+color = Color(0.0862745, 0.239216, 0.054902, 1)
+color_ramp = SubResource("Gradient_7302m")
+
+[node name="slash_effect" type="CPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_ulomm")
+rotation = 0.565487
+emitting = false
+amount = 1
+lifetime = 0.3
+one_shot = true
+local_coords = true
+draw_order = 1
+texture = ExtResource("5_e7cd7")
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+scale_amount_min = 0.5
+scale_amount_max = 0.7
+anim_speed_min = 1.0
+anim_speed_max = 1.0

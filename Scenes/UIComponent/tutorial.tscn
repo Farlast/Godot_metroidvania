@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://de1emibi6ixjc"]
+
+[ext_resource type="Script" path="res://Script/System/DisplayText/display_text.gd" id="1_w0eua"]
+[ext_resource type="Resource" uid="uid://o61lla2xmbd2" path="res://Script/System/EventChannel/tutorial_event_resource.tres" id="2_wn265"]
+[ext_resource type="Texture2D" uid="uid://o4426trj0b4j" path="res://Art/UI/panel-border-023.png" id="3_2ihpb"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ihby2"]
+texture = ExtResource("3_2ihpb")
+texture_margin_left = 50.0
+texture_margin_top = 50.0
+texture_margin_right = 50.0
+texture_margin_bottom = 50.0
+region_rect = Rect2(0, -1, 97, 97)
+
+[sub_resource type="LabelSettings" id="LabelSettings_y112w"]
+font_size = 30
+
+[node name="Tutorial" type="CanvasLayer"]
+script = ExtResource("1_w0eua")
+display_event = ExtResource("2_wn265")
+
+[node name="DisplayLayout" type="Panel" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 12.0
+offset_right = 404.0
+offset_bottom = 227.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ihby2")
+
+[node name="ColorRect" type="ColorRect" parent="DisplayLayout"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.792157)
+
+[node name="Label" type="Label" parent="DisplayLayout"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -21.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press \"Arrow key\" to move"
+label_settings = SubResource("LabelSettings_y112w")
+horizontal_alignment = 1

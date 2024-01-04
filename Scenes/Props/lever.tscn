@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://claac11ehxcxv"]
+
+[ext_resource type="Script" path="res://Script/Props/lever.gd" id="1_1upam"]
+[ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="2_q7cwo"]
+[ext_resource type="Texture2D" uid="uid://dn2mr8l32hfdl" path="res://Art/Environment/Mechanical gate.png" id="3_2ux4s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2gs3m"]
+size = Vector2(126, 146)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xv0j"]
+atlas = ExtResource("3_2ux4s")
+region = Rect2(585, 131, 137, 262)
+
+[node name="Lever" type="Node2D"]
+position = Vector2(2186, 946)
+script = ExtResource("1_1upam")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("2_q7cwo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("RectangleShape2D_2gs3m")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-2, 36)
+scale = Vector2(0.332117, 0.335878)
+texture = SubResource("AtlasTexture_6xv0j")

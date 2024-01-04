@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://drdar867wl5hj"]
+
+[ext_resource type="Texture2D" uid="uid://b2ghjo6da5elg" path="res://Art/UI/panel-001.png" id="1_ji3ph"]
+[ext_resource type="Script" path="res://Script/System/MenuTrigger/to_scene_button.gd" id="2_6vqwc"]
+[ext_resource type="Texture2D" uid="uid://o4426trj0b4j" path="res://Art/UI/panel-border-023.png" id="2_155t2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_522je"]
+texture = ExtResource("1_ji3ph")
+texture_margin_left = 50.0
+texture_margin_top = 10.0
+texture_margin_right = 50.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eftub"]
+texture = ExtResource("1_ji3ph")
+texture_margin_left = 50.0
+texture_margin_top = 20.0
+texture_margin_right = 50.0
+texture_margin_bottom = 20.0
+modulate_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q5ytg"]
+texture = ExtResource("2_155t2")
+texture_margin_left = 50.0
+texture_margin_top = 50.0
+texture_margin_right = 50.0
+texture_margin_bottom = 50.0
+region_rect = Rect2(0, -1, 97, 97)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dh4jd"]
+font_size = 30
+
+[node name="FinishGameScene" type="CanvasLayer"]
+
+[node name="Control" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.027451, 0.0235294, 0.0705882, 1)
+
+[node name="ToCreditScene" type="Button" parent="."]
+offset_left = 857.0
+offset_top = 933.0
+offset_right = 1051.0
+offset_bottom = 995.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_522je")
+theme_override_styles/hover = SubResource("StyleBoxTexture_eftub")
+text = "Next"
+script = ExtResource("2_6vqwc")
+next_scene_file = "res://Scenes/Menu/credit.tscn"
+
+[node name="DisplayPanel" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -402.0
+offset_top = -251.0
+offset_right = 402.0
+offset_bottom = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_q5ytg")
+
+[node name="Label" type="Label" parent="DisplayPanel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -21.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "The eldritch creture has slain.
+But unknow voice are still calling you.
+
+To be continue...
+Thank you for playing."
+label_settings = SubResource("LabelSettings_dh4jd")
+horizontal_alignment = 1

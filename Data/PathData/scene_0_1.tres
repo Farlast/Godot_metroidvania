@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SceneHandle" load_steps=4 format=3 uid="uid://cwhx2ybwa51p4"]
+
+[ext_resource type="Script" path="res://Script/Levels/scene_Handle.gd" id="1_0rqqt"]
+[ext_resource type="Script" path="res://Script/Levels/passage_Handle.gd" id="1_ljefv"]
+
+[sub_resource type="Resource" id="Resource_y60rj"]
+script = ExtResource("1_ljefv")
+passage_name = "Left passage"
+target_scene_path = ""
+
+[resource]
+script = ExtResource("1_0rqqt")
+scene_path = "res://Scenes/Level/level_0_1.tscn"
+passage_list = Array[ExtResource("1_ljefv")]([SubResource("Resource_y60rj")])

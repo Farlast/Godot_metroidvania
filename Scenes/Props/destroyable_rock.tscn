@@ -1,0 +1,100 @@
+[gd_scene load_steps=14 format=3 uid="uid://u2gva4q2gqcl"]
+
+[ext_resource type="Script" path="res://Script/Props/DestroyableWall.gd" id="1_jy470"]
+[ext_resource type="Texture2D" uid="uid://b8rswny1mumgh" path="res://Art/Environment/DashToDestoryRock.png" id="1_y1k8p"]
+[ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="3_8xlta"]
+[ext_resource type="Texture2D" uid="uid://demujs3obt28j" path="res://Art/Effect/Rock_Set2.png" id="4_26pjp"]
+[ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="5_n8dtj"]
+[ext_resource type="AudioStream" uid="uid://cb3k4nctkeh1y" path="res://Audio/Rock/sfx_dropping-rocks.wav" id="6_jy7mh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_irtwm"]
+atlas = ExtResource("1_y1k8p")
+region = Rect2(958.451, 217.313, 334.4, 621.641)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_02m63"]
+size = Vector2(306.519, 598.784)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4mx4t"]
+size = Vector2(274.81, 588.204)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvodn"]
+atlas = ExtResource("4_26pjp")
+region = Rect2(26.0512, 385.244, 90.8408, 84.6937)
+
+[sub_resource type="Curve" id="Curve_luau4"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 200), 0.0, 0.0, 0, 0, Vector2(1, -98.9474), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_f0sa1"]
+offsets = PackedFloat32Array(0, 0.764873, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.114897, 0.114897, 0.114897, 1, 1, 1, 1, 0)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_66a3n"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 4
+particles_anim_loop = true
+
+[node name="DestroyableRock" type="Node2D"]
+z_index = 2
+position = Vector2(1029, 916)
+scale = Vector2(0.473054, 0.472625)
+script = ExtResource("1_jy470")
+
+[node name="Art" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_irtwm")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-3.1709, -5.28955)
+shape = SubResource("RectangleShape2D_02m63")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 10
+script = ExtResource("3_8xlta")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-4.22778, -2.11572)
+shape = SubResource("RectangleShape2D_4mx4t")
+debug_color = Color(0.290196, 0.619608, 0.337255, 0.419608)
+
+[node name="hit_effect" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 10
+lifetime = 0.7
+one_shot = true
+explosiveness = 0.81
+texture = SubResource("AtlasTexture_mvodn")
+emission_shape = 1
+emission_sphere_radius = 96.01
+direction = Vector2(1, -1)
+spread = 77.4
+initial_velocity_min = 480.0
+initial_velocity_max = 1000.0
+linear_accel_curve = SubResource("Curve_luau4")
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+color = Color(0.0117647, 0.603922, 1, 1)
+color_ramp = SubResource("Gradient_f0sa1")
+
+[node name="slash_effect" type="CPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_66a3n")
+emitting = false
+amount = 1
+lifetime = 0.3
+one_shot = true
+local_coords = true
+draw_order = 1
+texture = ExtResource("5_n8dtj")
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[node name="DestroySound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_jy7mh")

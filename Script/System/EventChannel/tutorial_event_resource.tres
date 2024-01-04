@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="CustomEventChannel" load_steps=2 format=3 uid="uid://o61lla2xmbd2"]
+
+[ext_resource type="Script" path="res://Script/System/EventChannel/custom_event_channel.gd" id="1_83642"]
+
+[resource]
+script = ExtResource("1_83642")

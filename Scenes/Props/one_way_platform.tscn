@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dt8k0y2ux3c2k"]
+
+[ext_resource type="Texture2D" uid="uid://dx6pt6n4t7bj6" path="res://Art/Environment/Platform/wood_platfrom.png" id="1_ex4j3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iudwj"]
+size = Vector2(130, 1)
+
+[node name="OneWayPlatform" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.300071, 0.306818)
+texture = ExtResource("1_ex4j3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_iudwj")
+one_way_collision = true

@@ -1,0 +1,274 @@
+[gd_scene load_steps=20 format=3 uid="uid://cum7w8dfwf8ku"]
+
+[ext_resource type="Script" path="res://Script/Enemy/StaticEnemy/static_enemy.gd" id="1_qnp7s"]
+[ext_resource type="Material" uid="uid://cmv24i1lrmfiw" path="res://Shader/enemy.tres" id="2_yjw6n"]
+[ext_resource type="Texture2D" uid="uid://brk1b5mbfdu7q" path="res://Art/Player/summon_water.png" id="3_vlurf"]
+[ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="4_5py86"]
+[ext_resource type="Texture2D" uid="uid://dbffa3d86qrba" path="res://Art/Effect/Tex_random.png" id="5_qhwq1"]
+[ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="6_wp828"]
+[ext_resource type="PackedScene" uid="uid://bkijr6cnrf2dy" path="res://Scenes/Effect/dead_particle.tscn" id="7_kstvv"]
+[ext_resource type="AudioStream" uid="uid://da6uvbkcwulcl" path="res://Audio/HitSound/metal_punch_06.wav" id="7_uikp5"]
+[ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/HitSound/body_hit_finisher_23.wav" id="9_berc7"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v6c0t"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cnvpx"]
+radius = 14.0
+height = 72.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t1nkx"]
+radius = 24.0
+height = 72.0
+
+[sub_resource type="Animation" id="Animation_8yx8m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("3_vlurf"), ExtResource("3_vlurf")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:material:shader_parameter/active")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:skew")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:hframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_gqul1"]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_vlurf")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:material:shader_parameter/active")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:skew")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.527089, 0.0, -0.438078, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:hframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_my8w0"]
+resource_name = "idle"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_vlurf")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:material:shader_parameter/active")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:hframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pg47t"]
+_data = {
+"RESET": SubResource("Animation_8yx8m"),
+"hit": SubResource("Animation_gqul1"),
+"idle": SubResource("Animation_my8w0")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q4b7m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8u7e1"]
+atlas = ExtResource("5_qhwq1")
+region = Rect2(40.1037, 196.189, 117.956, 113.449)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_s2u52"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 4
+particles_anim_loop = true
+
+[node name="StaticEnemy" type="StaticBody2D"]
+position = Vector2(0, 348)
+collision_layer = 0
+physics_material_override = SubResource("PhysicsMaterial_v6c0t")
+script = ExtResource("1_qnp7s")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("2_yjw6n")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_vlurf")
+
+[node name="GroundCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_cnvpx")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 10
+script = ExtResource("4_5py86")
+
+[node name="HurtArea" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CapsuleShape2D_t1nkx")
+debug_color = Color(0.258824, 0.619608, 0.384314, 0.419608)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pg47t")
+}
+autoplay = "RESET"
+
+[node name="Particle" type="Node2D" parent="."]
+
+[node name="HitEffect" type="CPUParticles2D" parent="Particle"]
+material = SubResource("CanvasItemMaterial_q4b7m")
+emitting = false
+lifetime = 0.5
+one_shot = true
+preprocess = 0.03
+explosiveness = 0.73
+randomness = 0.79
+local_coords = true
+texture = SubResource("AtlasTexture_8u7e1")
+emission_shape = 3
+emission_rect_extents = Vector2(50, 50)
+gravity = Vector2(0, 0)
+initial_velocity_min = 185.0
+initial_velocity_max = 1000.0
+damping_min = 9.0
+damping_max = 9.0
+scale_amount_min = 0.01
+scale_amount_max = 0.3
+
+[node name="SlashEffect" type="CPUParticles2D" parent="Particle"]
+material = SubResource("CanvasItemMaterial_s2u52")
+rotation = 0.565487
+emitting = false
+amount = 1
+lifetime = 0.3
+one_shot = true
+local_coords = true
+draw_order = 1
+texture = ExtResource("6_wp828")
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+scale_amount_min = 0.5
+scale_amount_max = 0.7
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[node name="DeadParticle" parent="Particle" instance=ExtResource("7_kstvv")]
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("7_uikp5")
+
+[node name="DeadSound" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("9_berc7")
+bus = &"Effect"

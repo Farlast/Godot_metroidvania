@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://bkijr6cnrf2dy"]
+
+[ext_resource type="Texture2D" uid="uid://dbffa3d86qrba" path="res://Art/Effect/Tex_random.png" id="1_4fjv5"]
+[ext_resource type="Texture2D" uid="uid://6e81taqf2j70" path="res://Art/Effect/Splits.png" id="2_f02na"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_paqry"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 40.61
+direction = Vector3(0, -1, 0)
+spread = 56.25
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 1000, 0)
+scale_min = 0.1
+scale_max = 0.2
+color = Color(0.929412, 0.556863, 0, 1)
+collision_mode = 2
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ta2r"]
+atlas = ExtResource("1_4fjv5")
+region = Rect2(244.088, 361.021, 60.7882, 108.599)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xe52r"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 3
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7kcbv"]
+resource_local_to_scene = true
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 0.3
+scale_max = 0.3
+color = Color(1, 0.52549, 0.109804, 1)
+anim_speed_min = 2.04
+anim_speed_max = 2.04
+
+[node name="DeadParticle" type="GPUParticles2D"]
+emitting = false
+amount = 20
+sub_emitter = NodePath("Splash")
+process_material = SubResource("ParticleProcessMaterial_paqry")
+texture = SubResource("AtlasTexture_1ta2r")
+one_shot = true
+explosiveness = 0.9
+metadata/_edit_group_ = true
+
+[node name="Splash" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_xe52r")
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_7kcbv")
+texture = ExtResource("2_f02na")
+lifetime = 0.3
+one_shot = true
+randomness = 1.0
