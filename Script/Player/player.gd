@@ -66,7 +66,7 @@ func _ready():
 	shader.set_shader_parameter("active",false)
 	
 	hp_event.change_HP.emit(player_data.current_health,player_data.max_health)
-	SceneManager.set_player_position.connect(set_position)
+	SceneManager.set_player_position.connect(setup_after_enter_room)
 	SceneManager.respawn_at_position.connect(respawn_after_dead)
 	
 func _process(delta):
@@ -76,6 +76,10 @@ func _process(delta):
 ###############
 ## CUSTOM
 ###############
+func setup_after_enter_room(exit_position):
+	global_position = exit_position
+	state_machine.current_state.transition.emit(state_machine.current_state,"fall")
+
 func set_last_ground_position():
 	last_ground_position = global_position
 
@@ -148,6 +152,7 @@ func check_jumpbuffer_time():
 #region Attack and damage
 func take_damage(damage_data : DamageData):
 	if is_iframe_active: return
+	is_iframe_active = true
 	iframe_timer = 0
 	player_data.current_health -= damage_data.damage
 	slash_effect.restart()

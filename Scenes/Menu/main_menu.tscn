@@ -12,7 +12,7 @@ font_size = 150
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_adq35")
-first_area = "res://Scenes/Level/level_1-0.tscn"
+first_area = "res://Scenes/Level/level_0_0.tscn"
 
 [node name="CoveBg" type="TextureRect" parent="."]
 offset_right = 1920.0

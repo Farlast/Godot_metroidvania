@@ -856,6 +856,7 @@ _data = {
 [sub_resource type="Resource" id="Resource_asfkc"]
 script = ExtResource("19_v6ssd")
 damage = 1.0
+impact = 0.0
 knockback = 0.0
 sender_position = Vector2(0, 0)
 take_damage_rule = 0

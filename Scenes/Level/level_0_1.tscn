@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bojh7e62kgbcf"]
+[gd_scene load_steps=18 format=3 uid="uid://bojh7e62kgbcf"]
 
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_cu66m"]
 [ext_resource type="PackedScene" uid="uid://b0byka5d5aixx" path="res://Scenes/Player/player.tscn" id="2_0d18w"]
@@ -10,11 +10,16 @@
 [ext_resource type="PackedScene" uid="uid://ccwgdqlbypx40" path="res://Scenes/Enemy/patrol_enemy.tscn" id="7_qjm6f"]
 [ext_resource type="PackedScene" uid="uid://c1hwcuglxktfc" path="res://Scenes/Enemy/living_vine.tscn" id="9_trscy"]
 [ext_resource type="Script" path="res://Script/Levels/next_area_path.gd" id="10_atym3"]
-[ext_resource type="Resource" uid="uid://2pkpv1ug4wrr" path="res://Data/PathData/1-0_to_1-1_path.tres" id="11_0cs78"]
-[ext_resource type="Resource" uid="uid://cb2b1jiec548y" path="res://Data/PathData/1-0_to_1-1_path_2.tres" id="12_cuao1"]
+[ext_resource type="Resource" uid="uid://cwhx2ybwa51p4" path="res://Data/Passage/level_0/scene_0_1.tres" id="12_3i1bi"]
+[ext_resource type="Resource" uid="uid://2nkndsnwrmsi" path="res://Data/Passage/level_0/scene_0_0.tres" id="12_t3rjh"]
+[ext_resource type="Resource" uid="uid://bsckjck4envwv" path="res://Data/Passage/level_0/scene_0_2.tres" id="13_x3yr8"]
+[ext_resource type="AudioStream" uid="uid://csk6rh1tb4t2i" path="res://Audio/Ambient/Ambiance_Cave_Dark_Loop_Stereo.wav" id="14_ider6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k04ss"]
-size = Vector2(60, 406)
+size = Vector2(60, 384)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_csmta"]
+load_path = "res://.godot/imported/Gradient light.png-9aaf2fd178fa7e8c49f99711a8b8b0aa.ctex"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mqovu"]
 size = Vector2(96, 256)
@@ -81,36 +86,60 @@ position = Vector2(2976, 1088)
 
 [node name="Area path" type="Node2D" parent="."]
 
-[node name="NextAreaPath" type="Area2D" parent="Area path" node_paths=PackedStringArray("exit_position", "cinematic_camera", "virtual_camera")]
-position = Vector2(32, 888)
+[node name="Left passage" type="Area2D" parent="Area path" node_paths=PackedStringArray("cinematic_camera", "virtual_camera", "exit_position")]
+position = Vector2(32, 896)
 collision_layer = 16
 collision_mask = 16
 script = ExtResource("10_atym3")
-next_scene_file = "res://Scenes/Level/level_0_0.tscn"
-exit_position = NodePath("exit")
-path_data = ExtResource("11_0cs78")
 cinematic_camera = NodePath("../../camera/CinematicCamera2D")
 virtual_camera = NodePath("../../camera/CameraZone1")
+exit_position = NodePath("exit")
+this_scene_passage_handle = ExtResource("12_3i1bi")
+next_scene_passage_handle = ExtResource("12_t3rjh")
+this_passage_index = 0
+next_passage_target = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area path/NextAreaPath"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area path/Left passage"]
 shape = SubResource("RectangleShape2D_k04ss")
 
-[node name="exit" type="Node2D" parent="Area path/NextAreaPath"]
+[node name="exit" type="Node2D" parent="Area path/Left passage"]
 position = Vector2(160, 200)
 
-[node name="NextAreaPath2" type="Area2D" parent="Area path" node_paths=PackedStringArray("exit_position", "cinematic_camera", "virtual_camera")]
+[node name="Light" type="Sprite2D" parent="Area path/Left passage"]
+modulate = Color(1, 1, 1, 0.788235)
+position = Vector2(0, 1.52588e-05)
+scale = Vector2(1, 0.75)
+texture = SubResource("CompressedTexture2D_csmta")
+
+[node name="Right passage" type="Area2D" parent="Area path" node_paths=PackedStringArray("cinematic_camera", "virtual_camera", "exit_position")]
 position = Vector2(4416, 816)
 collision_layer = 16
 collision_mask = 16
 script = ExtResource("10_atym3")
-exit_position = NodePath("Exit")
-path_data = ExtResource("12_cuao1")
 cinematic_camera = NodePath("../../camera/CinematicCamera2D")
 virtual_camera = NodePath("../../camera/CameraZone1")
+exit_position = NodePath("Exit")
+this_scene_passage_handle = ExtResource("12_3i1bi")
+next_scene_passage_handle = ExtResource("13_x3yr8")
+this_passage_index = 1
+next_passage_target = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area path/NextAreaPath2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area path/Right passage"]
 position = Vector2(16, 16)
 shape = SubResource("RectangleShape2D_mqovu")
 
-[node name="Exit" type="Node2D" parent="Area path/NextAreaPath2"]
+[node name="Exit" type="Node2D" parent="Area path/Right passage"]
 position = Vector2(-256, 144)
+
+[node name="Light" type="Sprite2D" parent="Area path/Right passage"]
+modulate = Color(1, 1, 1, 0.788235)
+position = Vector2(-224, 16)
+scale = Vector2(1.15654, 0.5)
+texture = SubResource("CompressedTexture2D_csmta")
+flip_h = true
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="Ambiance" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("14_ider6")
+autoplay = true

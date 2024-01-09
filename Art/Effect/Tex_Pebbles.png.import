@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://17nhh4vnknm7"
-path="res://.godot/imported/attack_effect.png-4f207e1c734ee8ca51866ad3d8495177.ctex"
+uid="uid://c0gdvjutq7a46"
+path="res://.godot/imported/Tex_Pebbles.png-1caa717886ae4ccf8cdbf3995dce7bb5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Effect/attack_effect.png"
-dest_files=["res://.godot/imported/attack_effect.png-4f207e1c734ee8ca51866ad3d8495177.ctex"]
+source_file="res://Art/Effect/Tex_Pebbles.png"
+dest_files=["res://.godot/imported/Tex_Pebbles.png-1caa717886ae4ccf8cdbf3995dce7bb5.ctex"]
 
 [params]
 

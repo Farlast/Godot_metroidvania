@@ -1,10 +1,8 @@
 extends Area2D
 class_name SavePoint
 
-@export_file("*.tscn") var current_scene_file : String
-
 @export var spawn_position : Node2D
-@export var path_data : PathData
+@export var path_data : PassageHandle
 
 @export var cinematic_camera: CinematicCamera2D
 @export var virtual_camera: VirtualCamera2D
@@ -22,10 +20,10 @@ func _ready():
 func on_save(_body):
 	effect.restart()
 	SceneManager.last_savepoint_visit = path_data
-	SceneManager.savepoint_scene = current_scene_file
+	SceneManager.savepoint_scene = path_data.target_scene_path
 	player.refill_health()
 
-func respawn_player(loacation_data : PathData):
+func respawn_player(loacation_data : PassageHandle):
 	if loacation_data == path_data:
 		cinematic_camera.virtual_camera = virtual_camera
 		cinematic_camera.transition_speed = 0

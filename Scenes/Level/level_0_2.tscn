@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b1hfhmjj8hau"]
+[gd_scene load_steps=27 format=3 uid="uid://b1hfhmjj8hau"]
 
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_jmmh4"]
 [ext_resource type="PackedScene" uid="uid://b0byka5d5aixx" path="res://Scenes/Player/player.tscn" id="2_3ne8u"]
@@ -13,13 +13,16 @@
 [ext_resource type="Texture2D" uid="uid://d2mosp34qr7db" path="res://Art/Environment/Thorns/thorns.png" id="10_pwukc"]
 [ext_resource type="PackedScene" uid="uid://ccwgdqlbypx40" path="res://Scenes/Enemy/patrol_enemy.tscn" id="11_s1sjr"]
 [ext_resource type="PackedScene" uid="uid://ccjhhha2fppvf" path="res://Scenes/Path/next_area_path.tscn" id="13_a3ee8"]
-[ext_resource type="Script" path="res://Script/Levels/path_data.gd" id="14_67ley"]
+[ext_resource type="Resource" uid="uid://bsckjck4envwv" path="res://Data/Passage/level_0/scene_0_2.tres" id="14_470sd"]
 [ext_resource type="Script" path="res://Script/Levels/next_area_path.gd" id="15_d1uj4"]
-[ext_resource type="Resource" uid="uid://c6ijskigdrblg" path="res://Data/PathData/1-0_to_boss_1a_path.tres" id="16_mut2v"]
+[ext_resource type="Resource" uid="uid://cwhx2ybwa51p4" path="res://Data/Passage/level_0/scene_0_1.tres" id="15_qcae6"]
+[ext_resource type="Resource" uid="uid://2nkndsnwrmsi" path="res://Data/Passage/level_0/scene_0_0.tres" id="17_5q3df"]
+[ext_resource type="Resource" uid="uid://claqc3vwlxgxx" path="res://Data/Passage/level_0/scene_0_3.tres" id="18_pihmi"]
 
 [sub_resource type="Resource" id="Resource_crgbc"]
 script = ExtResource("9_g573n")
 damage = 1.0
+impact = 0.0
 knockback = 300.0
 sender_position = Vector2(0, 0)
 take_damage_rule = 1
@@ -34,14 +37,17 @@ region = Rect2(5.77194, 319.888, 503.118, 195.657)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_afvc1"]
 size = Vector2(811, 56)
 
-[sub_resource type="Resource" id="Resource_x3ewy"]
-script = ExtResource("14_67ley")
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cf3ao"]
+load_path = "res://.godot/imported/Gradient light.png-9aaf2fd178fa7e8c49f99711a8b8b0aa.ctex"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h81ma"]
 size = Vector2(256, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2h5cr"]
 size = Vector2(192, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_coj2n"]
+size = Vector2(256, 20)
 
 [node name="level_0-2" type="Node2D"]
 
@@ -101,7 +107,7 @@ max_hp = 3.0
 
 [node name="Audio" type="Node2D" parent="."]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Audio"]
+[node name="Ambiance" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("7_bytml")
 autoplay = true
 
@@ -177,44 +183,103 @@ position = Vector2(4384, 768)
 
 [node name="Path" type="Node2D" parent="."]
 
-[node name="NextAreaPath" parent="Path" node_paths=PackedStringArray("exit_position", "cinematic_camera", "virtual_camera") instance=ExtResource("13_a3ee8")]
+[node name="Left passage" parent="Path" node_paths=PackedStringArray("cinematic_camera", "virtual_camera", "exit_position") instance=ExtResource("13_a3ee8")]
 position = Vector2(40, 976)
-next_scene_file = "res://Scenes/Level/level_0_1.tscn"
-exit_position = NodePath("Exit")
-path_data = SubResource("Resource_x3ewy")
 cinematic_camera = NodePath("../../Camera/CinematicCamera2D")
 virtual_camera = NodePath("../../Camera/CameraZone1")
+exit_position = NodePath("Exit")
+this_scene_passage_handle = ExtResource("14_470sd")
+next_scene_passage_handle = ExtResource("15_qcae6")
+this_passage_index = 0
+next_passage_target = 1
 
-[node name="Exit" type="Node2D" parent="Path/NextAreaPath"]
+[node name="Exit" type="Node2D" parent="Path/Left passage"]
 position = Vector2(112, 112)
 
-[node name="NextAreaPath2" type="Area2D" parent="Path" node_paths=PackedStringArray("exit_position", "cinematic_camera", "virtual_camera")]
+[node name="Light" type="Sprite2D" parent="Path/Left passage"]
+modulate = Color(1, 1, 1, 0.788235)
+position = Vector2(72, -16)
+scale = Vector2(1.15654, 0.5)
+texture = SubResource("CompressedTexture2D_cf3ao")
+
+[node name="Right mid" type="Area2D" parent="Path" node_paths=PackedStringArray("cinematic_camera", "virtual_camera", "exit_position")]
 position = Vector2(3584, 1248)
+collision_layer = 0
+collision_mask = 16
 script = ExtResource("15_d1uj4")
-next_scene_file = "res://Scenes/Level/boss_room_1a.tscn"
-exit_position = NodePath("Exit")
-path_data = ExtResource("16_mut2v")
 cinematic_camera = NodePath("../../Camera/CinematicCamera2D")
 virtual_camera = NodePath("../../Camera/CameraZone1")
+exit_position = NodePath("Exit")
+this_scene_passage_handle = ExtResource("14_470sd")
+next_scene_passage_handle = ExtResource("18_pihmi")
+this_passage_index = 1
+next_passage_target = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Path/NextAreaPath2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path/Right mid"]
 shape = SubResource("RectangleShape2D_h81ma")
 
-[node name="Exit" type="Node2D" parent="Path/NextAreaPath2"]
+[node name="Exit" type="Node2D" parent="Path/Right mid"]
 position = Vector2(64, -160)
 
-[node name="NextAreaPath3" type="Area2D" parent="Path" node_paths=PackedStringArray("exit_position", "cinematic_camera", "virtual_camera")]
+[node name="Light" type="Sprite2D" parent="Path/Right mid"]
+modulate = Color(1, 1, 1, 0.788235)
+position = Vector2(-3.00407e-05, 4.57764e-05)
+rotation = 1.5708
+scale = Vector2(1.15654, 0.525374)
+texture = SubResource("CompressedTexture2D_cf3ao")
+flip_h = true
+
+[node name="Right far" type="Area2D" parent="Path" node_paths=PackedStringArray("cinematic_camera", "virtual_camera", "exit_position")]
 position = Vector2(4888, 1248)
+collision_layer = 0
+collision_mask = 16
 script = ExtResource("15_d1uj4")
-next_scene_file = "res://Scenes/Level/boss_room_1a.tscn"
-exit_position = NodePath("Exit")
-path_data = ExtResource("16_mut2v")
 cinematic_camera = NodePath("../../Camera/CinematicCamera2D")
 virtual_camera = NodePath("../../Camera/CameraZone1")
+exit_position = NodePath("Exit")
+this_scene_passage_handle = ExtResource("14_470sd")
+next_scene_passage_handle = ExtResource("18_pihmi")
+this_passage_index = 2
+next_passage_target = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Path/NextAreaPath3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path/Right far"]
 position = Vector2(8, 0)
 shape = SubResource("RectangleShape2D_2h5cr")
 
-[node name="Exit" type="Node2D" parent="Path/NextAreaPath3"]
+[node name="Exit" type="Node2D" parent="Path/Right far"]
 position = Vector2(40, -232)
+
+[node name="Light" type="Sprite2D" parent="Path/Right far"]
+modulate = Color(1, 1, 1, 0.788235)
+position = Vector2(7.99997, 4.57764e-05)
+rotation = 1.5708
+scale = Vector2(1.15654, 0.372251)
+texture = SubResource("CompressedTexture2D_cf3ao")
+flip_h = true
+
+[node name="Right top" type="Area2D" parent="Path" node_paths=PackedStringArray("cinematic_camera", "virtual_camera", "exit_position")]
+position = Vector2(4160, -768)
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("15_d1uj4")
+cinematic_camera = NodePath("../../Camera/CinematicCamera2D")
+virtual_camera = NodePath("../../Camera/CameraZone1")
+exit_position = NodePath("../Right far/Exit")
+this_scene_passage_handle = ExtResource("14_470sd")
+next_scene_passage_handle = ExtResource("17_5q3df")
+this_passage_index = 3
+next_passage_target = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path/Right top"]
+position = Vector2(0, -64)
+shape = SubResource("RectangleShape2D_coj2n")
+
+[node name="Exit" type="Node2D" parent="Path/Right top"]
+position = Vector2(0, 128)
+
+[node name="Light" type="Sprite2D" parent="Path/Right top"]
+modulate = Color(1, 1, 1, 0.788235)
+position = Vector2(-3.02494e-05, -64)
+rotation = 1.5708
+scale = Vector2(1.15654, 0.490501)
+texture = SubResource("CompressedTexture2D_cf3ao")

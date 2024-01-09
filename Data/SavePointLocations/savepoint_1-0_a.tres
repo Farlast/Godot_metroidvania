@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="PathData" load_steps=2 format=3 uid="uid://w0bwbdlfpd2x"]
-
-[ext_resource type="Script" path="res://Script/Levels/path_data.gd" id="1_rd2kk"]
-
-[resource]
-script = ExtResource("1_rd2kk")

@@ -1,0 +1,96 @@
+[gd_scene load_steps=15 format=3 uid="uid://ct3mfmxhkrx6"]
+
+[ext_resource type="Texture2D" uid="uid://bn4irctbcfc32" path="res://Art/Environment/Walls/Tex_destoryable_wall.png" id="1_c8rng"]
+[ext_resource type="Script" path="res://Script/Props/one_way_destoryable_wall.gd" id="1_ymia2"]
+[ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="2_705hr"]
+[ext_resource type="AudioStream" uid="uid://cb3k4nctkeh1y" path="res://Audio/Rock/sfx_dropping-rocks.wav" id="2_lcd7s"]
+[ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/HitSound/face_hit_small_78.wav" id="3_rl22c"]
+[ext_resource type="AudioStream" uid="uid://da6uvbkcwulcl" path="res://Audio/HitSound/metal_punch_06.wav" id="4_ey32n"]
+[ext_resource type="Texture2D" uid="uid://c0gdvjutq7a46" path="res://Art/Effect/Tex_Pebbles.png" id="7_wl78j"]
+[ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="8_2pbor"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1gc2u"]
+size = Vector2(98, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5fo3d"]
+size = Vector2(80, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3qxko"]
+atlas = ExtResource("7_wl78j")
+region = Rect2(0, 0, 45, 45)
+
+[sub_resource type="Curve" id="Curve_t8qm0"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 200), 0.0, 0.0, 0, 0, Vector2(1, -98.9474), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_kyfjo"]
+offsets = PackedFloat32Array(0, 0.764873, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.114897, 0.114897, 0.114897, 1, 1, 1, 1, 0)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5d6s4"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 4
+particles_anim_loop = true
+
+[node name="OneWay Destoryable wall" type="StaticBody2D"]
+collision_mask = 49
+script = ExtResource("1_ymia2")
+audio_destory = ExtResource("2_lcd7s")
+audio_hit = ExtResource("3_rl22c")
+audio_block = ExtResource("4_ey32n")
+max_hp = 3.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_c8rng")
+vframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-39, 0)
+shape = SubResource("RectangleShape2D_1gc2u")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 10
+script = ExtResource("2_705hr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("RectangleShape2D_5fo3d")
+debug_color = Color(0.254902, 0.615686, 0.431373, 0.419608)
+
+[node name="Effect" type="Node2D" parent="."]
+
+[node name="hit_effect" type="CPUParticles2D" parent="Effect"]
+emitting = false
+amount = 10
+one_shot = true
+explosiveness = 0.81
+texture = SubResource("AtlasTexture_3qxko")
+emission_shape = 1
+emission_sphere_radius = 96.01
+direction = Vector2(1, -1)
+spread = 77.4
+initial_velocity_min = 480.0
+initial_velocity_max = 1000.0
+linear_accel_curve = SubResource("Curve_t8qm0")
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+color_ramp = SubResource("Gradient_kyfjo")
+
+[node name="slash_effect" type="CPUParticles2D" parent="Effect"]
+material = SubResource("CanvasItemMaterial_5d6s4")
+emitting = false
+amount = 1
+lifetime = 0.3
+one_shot = true
+local_coords = true
+draw_order = 1
+texture = ExtResource("8_2pbor")
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

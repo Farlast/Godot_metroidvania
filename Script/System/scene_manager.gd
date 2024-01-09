@@ -12,18 +12,18 @@ signal respawn_same_level(loacation_data : PathData)
 signal respawn_at_position(position : Vector2)
 
 var animation_player : AnimationPlayer
-var path_data : PathData
+var entered_passage : PassageHandle
 var current_scene : String
 
 #region Respawn System
 
 var need_respawn : bool = false
-var last_savepoint_visit : PathData
+var last_savepoint_visit : PassageHandle
 var savepoint_scene : String
 #reset on player dead
 func respawn_last_savepoint():
 	#if in current scene reset position
-	path_data = last_savepoint_visit
+	entered_passage = last_savepoint_visit
 	if savepoint_scene == current_scene:
 		animation_player.play_backwards("dissolve")
 		await  animation_player.animation_finished
@@ -47,16 +47,17 @@ func change_scene_by_name(scene : String):
 	current_scene = scene
 	scene_load_finished.emit()
 
-func change_scene_by_name_no_fadeout(scene : String, entered_path :PathData):
+func change_scene_by_name_no_fadeout(scene : String, entered_path :PassageHandle):
 	animation_player.play_backwards("dissolve")
 	await  animation_player.animation_finished
 	get_tree().change_scene_to_file(scene)
-	path_data = entered_path
+	entered_passage = entered_path
 	current_scene = scene
 	scene_load_finished.emit()
 
-func is_exit_path(exit_path :PathData):
-	return path_data == exit_path
-	
 func callback_test(callback := Callable()):
 	callback.call()
+
+func is_exit_path(_passage : PassageHandle):
+	if entered_passage == null: return false
+	return entered_passage.target_passage_id == _passage.target_passage_id

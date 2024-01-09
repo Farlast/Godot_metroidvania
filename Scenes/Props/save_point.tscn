@@ -1,7 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://b08nxbr1cmil6"]
+[gd_scene load_steps=14 format=3 uid="uid://b08nxbr1cmil6"]
 
 [ext_resource type="Script" path="res://Script/SaveSystem/save_point.gd" id="1_ryjke"]
-[ext_resource type="Resource" uid="uid://bt44ro4ornsba" path="res://Data/SavePointLocations/savepoint_1-2_a.tres" id="2_jg03j"]
 [ext_resource type="Texture2D" uid="uid://byku3155bejsl" path="res://Art/Effect/hollow fade circle.png" id="3_pq3t6"]
 [ext_resource type="Texture2D" uid="uid://dbffa3d86qrba" path="res://Art/Effect/Tex_random.png" id="4_74mvu"]
 [ext_resource type="Texture2D" uid="uid://btvol0m6766cr" path="res://Art/Environment/SavePoint/save_point.png" id="5_gtfc2"]
@@ -58,8 +57,6 @@ position = Vector2(1607, 918)
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("1_ryjke")
-current_scene_file = "res://Scenes/Level/level_1-2.tscn"
-path_data = ExtResource("2_jg03j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -1)
