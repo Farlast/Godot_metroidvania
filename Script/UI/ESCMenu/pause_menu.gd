@@ -1,28 +1,42 @@
 extends Panel
 class_name PauseMenu
 
+@onready var defualt_button : Button = $VBoxContainer2/MarginContainer2/VBoxContainer/Continue
 var fullscreen_btt : CheckButton
+var is_focus : bool
 
 func _ready():
 	hide()
+	is_focus = false
 
 func _input(event):
 	if event.is_action_released("ui_cancel") && !visible:
 		TimeManager.freeze()
-		show()
+		display_state(true)
+		defualt_button.grab_focus()
 	elif event.is_action_released("ui_cancel") && visible: 
 		TimeManager.unfreeze()
-		hide()
+		display_state(false)
 	
 func _on_continue_pressed():
 	TimeManager.unfreeze()
-	hide()
+	display_state(false)
 
 func _on_quit_pressed():
 	TimeManager.unfreeze()
 	get_tree().quit()
 
-
 func _on_settings_pressed():
 	SettingsMenu.show_Settings()
-	hide()
+	display_state(false)
+
+func display_state(state : bool):
+	if state:
+		is_focus = true
+		GameManager.game_state = GameManager.GameState.Stop
+		show()
+	else:
+		is_focus = false
+		GameManager.game_state = GameManager.GameState.Gameplay
+		hide()
+	

@@ -106,6 +106,7 @@ script = ExtResource("1_4r7wr")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
 scale = Vector2(0.33101, 0.306667)
 texture = SubResource("AtlasTexture_wqomj")
 

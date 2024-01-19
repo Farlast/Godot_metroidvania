@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c1hwcuglxktfc"]
+[gd_scene load_steps=26 format=3 uid="uid://c1hwcuglxktfc"]
 
 [ext_resource type="Script" path="res://Script/Enemy/StaticEnemy/living_vine/living_vine.gd" id="1_xkl8g"]
 [ext_resource type="Material" uid="uid://cmv24i1lrmfiw" path="res://Shader/enemy.tres" id="2_56ybp"]
@@ -11,11 +11,13 @@
 [ext_resource type="PackedScene" uid="uid://bkijr6cnrf2dy" path="res://Scenes/Effect/dead_particle.tscn" id="8_x6ri7"]
 [ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/HitSound/body_hit_finisher_23.wav" id="10_5wceh"]
 [ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/HitSound/face_hit_small_78.wav" id="10_rv2xl"]
+[ext_resource type="AudioStream" uid="uid://cxl6a1s8kp2ar" path="res://Audio/Effect/SFX_whoosh-1.wav" id="11_jmli6"]
 [ext_resource type="Texture2D" uid="uid://ckeioj5qdml8r" path="res://Art/Enemy/vineRed/attack.png" id="12_7h8u1"]
 
 [sub_resource type="Resource" id="Resource_mm4jx"]
 script = ExtResource("4_2what")
 damage = 1.0
+impact = 0.0
 knockback = 300.0
 sender_position = Vector2(0, 0)
 take_damage_rule = 0
@@ -142,6 +144,18 @@ tracks/7/keys = {
 "update": 0,
 "values": [Vector2(203.5, 171)]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Audio/AttackSound:playing")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_sdqg2"]
 resource_name = "attack"
@@ -241,6 +255,18 @@ tracks/7/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Audio/AttackSound:playing")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_jshf1"]
@@ -427,6 +453,9 @@ anim_speed_max = 1.0
 
 [node name="HitSound" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("10_rv2xl")
+
+[node name="AttackSound" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("11_jmli6")
 
 [node name="DeadSound" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("10_5wceh")

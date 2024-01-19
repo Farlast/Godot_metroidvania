@@ -1,0 +1,230 @@
+[gd_scene load_steps=23 format=3 uid="uid://5su73c7q4ter"]
+
+[ext_resource type="Script" path="res://Script/Enemy/StaticEnemy/turret.gd" id="1_tmegy"]
+[ext_resource type="Texture2D" uid="uid://br1k4qwaxu20a" path="res://Art/Enemy/Turret_coral/Turret_coral.png" id="2_i1h70"]
+[ext_resource type="Material" uid="uid://cmv24i1lrmfiw" path="res://Shader/enemy.tres" id="2_kpceb"]
+[ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="3_8twna"]
+[ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="4_int1g"]
+[ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="5_cb3l8"]
+[ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="6_1pev1"]
+[ext_resource type="Texture2D" uid="uid://dbffa3d86qrba" path="res://Art/Effect/Tex_random.png" id="7_vllwt"]
+[ext_resource type="PackedScene" uid="uid://bkijr6cnrf2dy" path="res://Scenes/Effect/dead_particle.tscn" id="8_71iv1"]
+[ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/HitSound/face_hit_small_78.wav" id="9_n0k20"]
+[ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/HitSound/body_hit_finisher_23.wav" id="10_ycofd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mpf70"]
+size = Vector2(64, 10)
+
+[sub_resource type="Resource" id="Resource_c6fpb"]
+script = ExtResource("4_int1g")
+damage = 1.0
+impact = 0.0
+knockback = 300.0
+sender_position = Vector2(0, 0)
+take_damage_rule = 0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqbqp"]
+size = Vector2(64, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nc8nq"]
+size = Vector2(80, 64)
+
+[sub_resource type="Animation" id="Animation_22r4a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_i1h70")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_eh8de"]
+resource_name = "attack"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_i1h70")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_jjtdg"]
+resource_name = "idle"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_i1h70")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5qjbi"]
+_data = {
+"RESET": SubResource("Animation_22r4a"),
+"attack": SubResource("Animation_eh8de"),
+"idle": SubResource("Animation_jjtdg")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vnflh"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 4
+particles_anim_loop = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f0xrc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3hcf"]
+atlas = ExtResource("7_vllwt")
+region = Rect2(40.1037, 196.189, 117.956, 113.449)
+
+[node name="Turret Coral" type="StaticBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_tmegy")
+fire_rate = 1.0
+max_hp = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_mpf70")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+material = ExtResource("2_kpceb")
+position = Vector2(0, 32)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_i1h70")
+hframes = 4
+
+[node name="AttackBox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("3_8twna")
+damage_data = SubResource("Resource_c6fpb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
+position = Vector2(0, 24)
+shape = SubResource("RectangleShape2D_yqbqp")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 10
+script = ExtResource("5_cb3l8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, 32)
+shape = SubResource("RectangleShape2D_nc8nq")
+debug_color = Color(0.294118, 0.611765, 0.407843, 0.419608)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5qjbi")
+}
+
+[node name="Particle" type="Node2D" parent="."]
+
+[node name="SlashEffect" type="CPUParticles2D" parent="Particle"]
+material = SubResource("CanvasItemMaterial_vnflh")
+emitting = false
+amount = 1
+lifetime = 0.3
+one_shot = true
+local_coords = true
+draw_order = 1
+texture = ExtResource("6_1pev1")
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[node name="HitEffect" type="CPUParticles2D" parent="Particle"]
+material = SubResource("CanvasItemMaterial_f0xrc")
+emitting = false
+lifetime = 0.5
+one_shot = true
+preprocess = 0.03
+explosiveness = 0.73
+randomness = 0.79
+local_coords = true
+texture = SubResource("AtlasTexture_k3hcf")
+emission_shape = 3
+emission_rect_extents = Vector2(50, 50)
+gravity = Vector2(0, 0)
+initial_velocity_min = 185.0
+initial_velocity_max = 1000.0
+damping_min = 9.0
+damping_max = 9.0
+scale_amount_min = 0.01
+scale_amount_max = 0.3
+
+[node name="DeadParticle" parent="Particle" instance=ExtResource("8_71iv1")]
+position = Vector2(0, 32)
+rotation = 3.14159
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("9_n0k20")
+
+[node name="DeadSound" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("10_ycofd")
+bus = &"Effect"
+
+[node name="AttackPoint" type="Node2D" parent="."]
+position = Vector2(0, 72)

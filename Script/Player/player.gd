@@ -4,8 +4,9 @@ class_name Player
 @export_group("component")
 @export var state_machine : StateMachine
 @onready var player_sprite :Sprite2D = $PlayerArt
-@onready var pulse_effect : GPUParticles2D = $Effect/Pulse
-@onready var slash_effect : CPUParticles2D = $Effect/SlashEffect
+@onready var pulse_effect : GPUParticles2D = $Directions/Effect/Pulse
+@onready var slash_effect : CPUParticles2D = $Directions/Effect/SlashEffect
+@onready var direction_holder : Node2D = $Directions
 
 @export_group("Move")
 @export var walk_speed :float = 400.0
@@ -19,7 +20,6 @@ class_name Player
 
 @export_group("Attack")
 @export var attack_speed : float = 0.15
-@onready var attackBox : Area2D = $AttackBox
 
 @export_group("Health")
 @export var hp_event : HealthEvent
@@ -35,9 +35,6 @@ var Is_can_dash : bool
 
 var iframe_timer : float
 var is_iframe_active : bool
-
-@onready var attack_area : CollisionShape2D = $AttackBox/AttackArea
-@onready var absorb_area : CollisionShape2D = $"GetElementBox/Absorb Area"
 
 var Is_dead : bool
 var Is_doublejump_used : bool
@@ -57,9 +54,9 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 func _ready():
 	Is_can_attack = true
 	Is_can_dash = true
+	Is_can_coyote_time = true
 	Is_doublejump_used = false
 	Is_can_bufferjump = false
-	Is_can_coyote_time = false
 	is_iframe_active = false
 	last_ground_position = global_position
 	var shader = player_sprite.material as ShaderMaterial
@@ -96,14 +93,13 @@ func respawn_after_dead(new_position : Vector2):
 	hp_event.change_HP.emit(player_data.current_health,player_data.max_health)
 	state_machine.current_state.transition.emit(state_machine.current_state,"idle")
 	
-func pick_up_upgrade():
-	pass
+func pick_up_upgrade(unlock : Unlockable):
+	match unlock.unlock_type:
+		Unlockable.TYPE.DASH:
+			player_data.is_dash_unlock = true
+		Unlockable.TYPE.DOUBLE_JUMP:
+			player_data.is_doublejump_unlock = true
 
-func pick_up_doublejump_unlock():
-	player_data.is_doublejump_unlock = true
-
-func pick_up_dash_unlock():
-	player_data.is_dash_unlock = true
 #endregion
 #region Statemacthaine
 func add_fall_gravity(delta):
@@ -129,14 +125,11 @@ func flip_sprite(direction : float):
 		player_sprite.flip_h = true
 		
 func update_area():
-	if attack_area == null: return
-	if absorb_area == null: return
+	if not direction_holder: return
 	if player_sprite.flip_h:
-		attack_area.position.x = -abs(attack_area.position.x)
-		absorb_area.position.x = -abs(attack_area.position.x)
+		direction_holder.scale.x = -abs(direction_holder.scale.x)
 	else:
-		attack_area.position.x = abs(attack_area.position.x)
-		absorb_area.position.x = abs(absorb_area.position.x)
+		direction_holder.scale.x = abs(direction_holder.scale.x)
 
 func check_coyote_time():
 	Is_can_coyote_time = true
@@ -151,7 +144,9 @@ func check_jumpbuffer_time():
 #endregion
 #region Attack and damage
 func take_damage(damage_data : DamageData):
-	if is_iframe_active: return
+	if is_iframe_active and damage_data.take_damage_rule != DamageData.TakeDamageRule.RESET:
+		return
+	
 	is_iframe_active = true
 	iframe_timer = 0
 	player_data.current_health -= damage_data.damage
@@ -189,6 +184,7 @@ func countdown_iframe(delta : float):
 			shader.set_shader_parameter("active",true)
 		else: 
 			shader.set_shader_parameter("active",false)
+
 func attack_feedback(hurtbox:HurtBox):
 	if hurtbox == null : return 
 	get_hit_direction = (hurtbox.global_position - global_position).normalized()

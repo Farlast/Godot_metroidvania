@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="3_8xlta"]
 [ext_resource type="Texture2D" uid="uid://demujs3obt28j" path="res://Art/Effect/Rock_Set2.png" id="4_26pjp"]
 [ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="5_n8dtj"]
-[ext_resource type="AudioStream" uid="uid://cb3k4nctkeh1y" path="res://Audio/Rock/sfx_dropping-rocks.wav" id="6_jy7mh"]
+[ext_resource type="AudioStream" uid="uid://cb3k4nctkeh1y" path="res://Audio/Effect/Rock/sfx_dropping-rocks.wav" id="6_jy7mh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_irtwm"]
 atlas = ExtResource("1_y1k8p")
@@ -38,7 +38,7 @@ particles_anim_v_frames = 4
 particles_anim_loop = true
 
 [node name="DestroyableRock" type="Node2D"]
-z_index = 2
+z_index = -2
 position = Vector2(1029, 916)
 scale = Vector2(0.473054, 0.472625)
 script = ExtResource("1_jy470")

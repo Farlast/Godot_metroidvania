@@ -14,6 +14,7 @@ func on_exit():
 
 func on_update(_delta : float):
 	if boss.front_ray.is_colliding():
+		boss.room_trigger.switch_triggered.emit()
 		boss.target = boss.front_ray.get_collider() as Node2D
 		transition.emit(self,"idle")
 

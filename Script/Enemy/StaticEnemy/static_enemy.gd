@@ -24,7 +24,7 @@ func take_damage(damage_data: DamageData):
 	hit_effect.restart()
 	slash_effect.restart()
 	hit_sound.play()
-	if hp <=0:
+	if hp <= 0:
 		dead()
 
 func dead():

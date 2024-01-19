@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bojh7e62kgbcf"]
+[gd_scene load_steps=25 format=3 uid="uid://bojh7e62kgbcf"]
 
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_cu66m"]
 [ext_resource type="PackedScene" uid="uid://b0byka5d5aixx" path="res://Scenes/Player/player.tscn" id="2_0d18w"]
@@ -13,7 +13,12 @@
 [ext_resource type="Resource" uid="uid://cwhx2ybwa51p4" path="res://Data/Passage/level_0/scene_0_1.tres" id="12_3i1bi"]
 [ext_resource type="Resource" uid="uid://2nkndsnwrmsi" path="res://Data/Passage/level_0/scene_0_0.tres" id="12_t3rjh"]
 [ext_resource type="Resource" uid="uid://bsckjck4envwv" path="res://Data/Passage/level_0/scene_0_2.tres" id="13_x3yr8"]
-[ext_resource type="AudioStream" uid="uid://csk6rh1tb4t2i" path="res://Audio/Ambient/Ambiance_Cave_Dark_Loop_Stereo.wav" id="14_ider6"]
+[ext_resource type="AudioStream" uid="uid://jbvp240wbo24" path="res://Audio/Ambient/Ambiance_Sea_Loop_Stereo.wav" id="14_4i8es"]
+[ext_resource type="Texture2D" uid="uid://dm1k3wuihhcxr" path="res://Art/BG/Cove/clound.png" id="15_8ebx7"]
+[ext_resource type="Texture2D" uid="uid://du48stxnnlxb3" path="res://Art/BG/Cove/coast_rock.png" id="15_hbtk3"]
+[ext_resource type="Texture2D" uid="uid://djhgo1gnoqtqg" path="res://Art/BG/Cove/coast_rock_1.png" id="16_l3khg"]
+[ext_resource type="Texture2D" uid="uid://c0p10hjw8tiwc" path="res://Art/BG/Cove/clound_2.png" id="16_pp2lo"]
+[ext_resource type="Texture2D" uid="uid://d25imgknvqk0g" path="res://Art/BG/Cove/sea.png" id="17_xaqyd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k04ss"]
 size = Vector2(60, 384)
@@ -23,6 +28,13 @@ load_path = "res://.godot/imported/Gradient light.png-9aaf2fd178fa7e8c49f99711a8
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mqovu"]
 size = Vector2(96, 256)
+
+[sub_resource type="Gradient" id="Gradient_xcgm5"]
+offsets = PackedFloat32Array(0, 0.555556, 1)
+colors = PackedColorArray(0.181056, 0.484276, 0.828882, 1, 0.391404, 0.700252, 0.894733, 1, 0.745142, 0.894217, 0.986693, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kwsv6"]
+gradient = SubResource("Gradient_xcgm5")
 
 [node name="level_0-1" type="Node2D"]
 
@@ -141,5 +153,118 @@ flip_h = true
 [node name="Audio" type="Node2D" parent="."]
 
 [node name="Ambiance" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("14_ider6")
+stream = ExtResource("14_4i8es")
 autoplay = true
+bus = &"Effect"
+
+[node name="Backgrounds" type="Node2D" parent="."]
+
+[node name="1" type="CanvasLayer" parent="Backgrounds"]
+follow_viewport_enabled = true
+follow_viewport_scale = 1.1
+
+[node name="Group1" type="Node2D" parent="Backgrounds/1"]
+modulate = Color(0.12549, 0.12549, 0.12549, 1)
+
+[node name="CoastRock" type="Sprite2D" parent="Backgrounds/1/Group1"]
+position = Vector2(1120, 1207.27)
+texture = ExtResource("15_hbtk3")
+
+[node name="CoastRock1" type="Sprite2D" parent="Backgrounds/1/Group1"]
+position = Vector2(1876.36, 1040)
+texture = ExtResource("16_l3khg")
+
+[node name="CoastRock3" type="Sprite2D" parent="Backgrounds/1/Group1"]
+position = Vector2(2349.09, 1170.91)
+texture = ExtResource("16_l3khg")
+
+[node name="CoastRock4" type="Sprite2D" parent="Backgrounds/1/Group1"]
+position = Vector2(2989.09, 1207.27)
+rotation = -0.128376
+texture = ExtResource("16_l3khg")
+flip_v = true
+
+[node name="CoastRock2" type="Sprite2D" parent="Backgrounds/1/Group1"]
+position = Vector2(3861.82, 1069.09)
+texture = ExtResource("16_l3khg")
+
+[node name="0" type="CanvasLayer" parent="Backgrounds"]
+layer = 0
+
+[node name="-1" type="CanvasLayer" parent="Backgrounds"]
+layer = -1
+follow_viewport_enabled = true
+follow_viewport_scale = 0.9
+
+[node name="CoastRock" type="Sprite2D" parent="Backgrounds/-1"]
+position = Vector2(648.889, 1075.56)
+texture = ExtResource("15_hbtk3")
+
+[node name="CoastRock1" type="Sprite2D" parent="Backgrounds/-1"]
+position = Vector2(2124.44, 1111.11)
+texture = ExtResource("16_l3khg")
+flip_h = true
+
+[node name="CoastRock2" type="Sprite2D" parent="Backgrounds/-1"]
+position = Vector2(3768.89, 1128.89)
+texture = ExtResource("16_l3khg")
+flip_h = true
+
+[node name="-2" type="CanvasLayer" parent="Backgrounds"]
+layer = -2
+follow_viewport_enabled = true
+follow_viewport_scale = 0.8
+
+[node name="Sea" type="Sprite2D" parent="Backgrounds/-2"]
+position = Vector2(830, 1190)
+texture = ExtResource("17_xaqyd")
+
+[node name="Sea2" type="Sprite2D" parent="Backgrounds/-2"]
+position = Vector2(2750, 1190)
+texture = ExtResource("17_xaqyd")
+
+[node name="Sea3" type="Sprite2D" parent="Backgrounds/-2"]
+position = Vector2(4630, 1190)
+texture = ExtResource("17_xaqyd")
+
+[node name="-3" type="CanvasLayer" parent="Backgrounds"]
+layer = -3
+follow_viewport_enabled = true
+follow_viewport_scale = 0.7
+
+[node name="Clound" type="Sprite2D" parent="Backgrounds/-3"]
+position = Vector2(1531.43, 605.714)
+texture = ExtResource("15_8ebx7")
+
+[node name="Clound2" type="Sprite2D" parent="Backgrounds/-3"]
+position = Vector2(2994.29, 205.714)
+texture = ExtResource("15_8ebx7")
+
+[node name="Clound3" type="Sprite2D" parent="Backgrounds/-3"]
+position = Vector2(422.857, 228.571)
+texture = ExtResource("16_pp2lo")
+
+[node name="-4" type="CanvasLayer" parent="Backgrounds"]
+layer = -4
+
+[node name="Control" type="Control" parent="Backgrounds/-4"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Backgrounds/-4/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1920.0
+offset_right = 1080.0
+offset_bottom = 840.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+texture = SubResource("GradientTexture1D_kwsv6")
+expand_mode = 1

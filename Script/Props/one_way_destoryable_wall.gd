@@ -3,7 +3,7 @@ extends StaticBody2D
 @onready var hurt_box : CollisionShape2D = $HurtBox/CollisionShape2D
 @onready var collition : CollisionShape2D = $CollisionShape2D
 
-var destory_effect : GPUParticles2D
+@onready var destory_effect : CPUParticles2D = $Effect/Destory_effect
 @onready var hit_effect : CPUParticles2D = $Effect/hit_effect
 @onready var slash_effect : CPUParticles2D = $Effect/slash_effect
 var block_effect : CPUParticles2D
@@ -55,15 +55,14 @@ func hited(damage_data):
 	hp -= damage_data.damage
 	audio_player.stream = audio_hit
 	audio_player.play()
-	pass
 	
 func dead():
+	set_deferred("hurt_box.disabled",true)
+	set_deferred("collition.disabled",true)
 	audio_player.stream = audio_destory
 	audio_player.play()
-	
+	if destory_effect : destory_effect.restart()
 	$Sprite2D.visible = false
-	set_deferred("hurt_box.disabled",false)
-	set_deferred("collition.disabled",false)
 	
 	await get_tree().create_timer(free_dalay).timeout
 	queue_free()

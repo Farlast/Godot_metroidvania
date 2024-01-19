@@ -3,7 +3,7 @@ extends Node
 # GameManager
 # Autoload
 ##############
-enum GameState{Gameplay,Stop}
+enum GameState {Gameplay,Stop}
 var game_state : GameState = GameState.Gameplay
 
 var registered_objects: Dictionary#[String, bool]

@@ -13,6 +13,7 @@ func on_enter():
 	await get_tree().create_timer(0.5).timeout
 	player.is_iframe_active = true
 	player.iframe_timer = 0
+	
 	if player.temp_damage_data.take_damage_rule == player.temp_damage_data.TakeDamageRule.RESET:
 		player.reset_position()
 	else:
@@ -30,6 +31,7 @@ func on_enter():
 		else:
 			player.velocity.x = player.knockback_force * 2 * -get_hit_direction.x
 			player.velocity.y = -(player.knockback_force * get_hit_direction.y * 2)
+	
 	await get_tree().create_timer(0.3).timeout
 	if player.is_on_floor():
 		transition.emit(self,"idle")

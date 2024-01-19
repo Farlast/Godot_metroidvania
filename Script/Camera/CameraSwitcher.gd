@@ -1,4 +1,5 @@
 extends Area2D
+class_name CameraSwitcher
 
 enum PathMode {HORIZONTAL,VERTICAL}
 @export var mode : PathMode

@@ -27,6 +27,7 @@ size = Vector2(178, 340)
 [sub_resource type="Resource" id="Resource_oshs2"]
 script = ExtResource("5_6niub")
 damage = 1.0
+impact = 0.0
 knockback = 0.0
 sender_position = Vector2(0, 0)
 take_damage_rule = 0

@@ -12,7 +12,6 @@ atlas = ExtResource("3_2ux4s")
 region = Rect2(585, 131, 137, 262)
 
 [node name="Lever" type="Node2D"]
-position = Vector2(2186, 946)
 script = ExtResource("1_1upam")
 
 [node name="HurtBox" type="Area2D" parent="."]

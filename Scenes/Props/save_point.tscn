@@ -1,8 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://b08nxbr1cmil6"]
+[gd_scene load_steps=11 format=3 uid="uid://b08nxbr1cmil6"]
 
 [ext_resource type="Script" path="res://Script/SaveSystem/save_point.gd" id="1_ryjke"]
+[ext_resource type="Texture2D" uid="uid://c1qhwi8ewswm4" path="res://Art/Effect/Tex_circle_small.png" id="3_hrp75"]
 [ext_resource type="Texture2D" uid="uid://byku3155bejsl" path="res://Art/Effect/hollow fade circle.png" id="3_pq3t6"]
-[ext_resource type="Texture2D" uid="uid://dbffa3d86qrba" path="res://Art/Effect/Tex_random.png" id="4_74mvu"]
 [ext_resource type="Texture2D" uid="uid://btvol0m6766cr" path="res://Art/Environment/SavePoint/save_point.png" id="5_gtfc2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_smktp"]
@@ -10,7 +10,7 @@ size = Vector2(161, 194)
 
 [sub_resource type="Gradient" id="Gradient_u5bpx"]
 offsets = PackedFloat32Array(0, 0.916914, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.197937, 0.197937, 0.197937, 1, 0.0705882, 0.0705882, 0.0705882, 0)
+colors = PackedColorArray(1, 1, 1, 1, 0.260049, 0.668074, 0.779904, 1, 0.0705882, 0.0705882, 0.0705882, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_eormu"]
 gradient = SubResource("Gradient_u5bpx")
@@ -22,14 +22,6 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_4dl6i"]
 curve = SubResource("Curve_yhams")
 
-[sub_resource type="Curve" id="Curve_gyfrf"]
-max_value = 1024.0
-_data = [Vector2(0, 1024), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_6236h"]
-curve = SubResource("Curve_gyfrf")
-
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b4445"]
 lifetime_randomness = 0.4
 particle_flag_disable_z = true
@@ -39,18 +31,12 @@ direction = Vector3(0, -1, 0)
 spread = 180.0
 initial_velocity_min = 110.24
 initial_velocity_max = 365.35
-velocity_limit_curve = SubResource("CurveTexture_6236h")
-gravity = Vector3(0, -98, 0)
-linear_accel_max = 100.0
-scale_min = 0.01
-scale_max = 0.3
+gravity = Vector3(0, 0, 0)
+damping_min = 100.0
+damping_max = 100.0
+scale_min = 0.1
 scale_curve = SubResource("CurveTexture_4dl6i")
-color = Color(0, 0.803922, 0.964706, 1)
 color_ramp = SubResource("GradientTexture1D_eormu")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3q8je"]
-atlas = ExtResource("4_74mvu")
-region = Rect2(41.5117, 196.086, 115.429, 114.746)
 
 [node name="SavePoint" type="Area2D"]
 position = Vector2(1607, 918)
@@ -69,10 +55,11 @@ scale = Vector2(0.435547, 0.435547)
 texture = ExtResource("3_pq3t6")
 
 [node name="Dust" type="GPUParticles2D" parent="."]
+position = Vector2(0, -42)
 emitting = false
 amount = 40
 process_material = SubResource("ParticleProcessMaterial_b4445")
-texture = SubResource("AtlasTexture_3q8je")
+texture = ExtResource("3_hrp75")
 one_shot = true
 explosiveness = 0.76
 randomness = 0.26

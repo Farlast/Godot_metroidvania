@@ -1,0 +1,82 @@
+[gd_scene load_steps=12 format=3 uid="uid://cqow16cipyw6e"]
+
+[ext_resource type="Script" path="res://Script/PickUp/pickupable.gd" id="1_6kv1j"]
+[ext_resource type="Resource" uid="uid://byoer52eg2g0h" path="res://Script/System/EventChannel/powerup_event_resource.tres" id="2_k74v3"]
+[ext_resource type="Script" path="res://Script/Player/Item/Unlockable/unlockable.gd" id="3_vitah"]
+[ext_resource type="Texture2D" uid="uid://b58vau1im1n4k" path="res://Art/Effect/Tex_circle.png" id="4_oddqr"]
+[ext_resource type="Texture2D" uid="uid://c1qhwi8ewswm4" path="res://Art/Effect/Tex_circle_small.png" id="5_dpiqo"]
+
+[sub_resource type="Resource" id="Resource_iur1w"]
+script = ExtResource("3_vitah")
+unlock_type = 0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ndrt0"]
+
+[sub_resource type="Curve" id="Curve_7bfs8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_1pf2x"]
+_data = [Vector2(0.00701755, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.295292), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_matpf"]
+max_value = 100.0
+_data = [Vector2(0, 100), 0.0, 0.0, 0, 0, Vector2(1, 64.7646), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_cmpir"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Pickup_upgrade" type="Area2D"]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("1_6kv1j")
+display_event = ExtResource("2_k74v3")
+text_to_display = "Dash unlock!"
+unlock_type = SubResource("Resource_iur1w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ndrt0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1875, 0.1875)
+texture = ExtResource("4_oddqr")
+
+[node name="IdleParticles" type="CPUParticles2D" parent="."]
+amount = 10
+lifetime = 1.5
+explosiveness = 0.12
+randomness = 0.28
+texture = ExtResource("5_dpiqo")
+emission_shape = 1
+emission_sphere_radius = 15.05
+direction = Vector2(0, -1)
+spread = 18.95
+gravity = Vector2(0, 0)
+initial_velocity_min = 32.21
+initial_velocity_max = 32.21
+linear_accel_min = -32.9
+linear_accel_curve = SubResource("Curve_7bfs8")
+scale_amount_min = 0.5
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_1pf2x")
+
+[node name="PickupParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 30
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("5_dpiqo")
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 203.95
+initial_velocity_max = 296.06
+damping_min = 1.316
+damping_max = 3.289
+damping_curve = SubResource("Curve_matpf")
+scale_amount_min = 0.1
+scale_amount_curve = SubResource("Curve_cmpir")

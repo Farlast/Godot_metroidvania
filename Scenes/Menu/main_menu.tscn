@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Script/UI/MainMenu/main_menu.gd" id="1_adq35"]
 [ext_resource type="StyleBox" uid="uid://dmmoqnu1vcbi" path="res://Data/StyleBox/button_main_menu.tres" id="2_a34wg"]
 [ext_resource type="Texture2D" uid="uid://ddeunloua3u6r" path="res://Art/BG/Cove/cove_bg.png" id="2_ihup7"]
-[ext_resource type="FontFile" uid="uid://c5fpksk7u1rcn" path="res://Font/Maitree-Bold.ttf" id="3_63bhw"]
+[ext_resource type="FontFile" uid="uid://c5fpksk7u1rcn" path="res://Data/Font/Maitree-Bold.ttf" id="3_63bhw"]
 [ext_resource type="Script" path="res://Script/System/MenuTrigger/to_scene_button.gd" id="3_wkkbp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hhcby"]

@@ -18,11 +18,13 @@ func _ready():
 func _process(delta):
 	if current_state:
 		current_state.on_update(delta)
+
 func  _physics_process(delta):
 	if current_state:
 		current_state.on_physics_update(delta)
 		
 func on_child_transition(state : State , new_state_name : String):
+	if GameManager.game_state != GameManager.GameState.Gameplay: return
 	if state != current_state : return
 	var new_state : State = states.get(new_state_name.to_lower())
 	if !new_state: return

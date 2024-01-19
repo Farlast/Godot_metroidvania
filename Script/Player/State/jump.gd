@@ -39,6 +39,7 @@ func on_physics_update(_delta : float):
 		
 func _unhandled_input(event):
 	if not active_input : return
+	player.update_area()
 	if event.is_action_released("jump") && not player.is_on_floor():
 		if player.velocity.y < 0:
 			player.velocity.y += abs(player.velocity.y)

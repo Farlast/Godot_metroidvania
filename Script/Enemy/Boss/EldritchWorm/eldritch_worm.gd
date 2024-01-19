@@ -17,6 +17,7 @@ signal on_dead
 
 @export_group("RayCast2D")
 @export var front_ray : RayCast2D
+@export var room_trigger : TriggerSwitch
 #raycast2D
 @onready var hitbox : CollisionShape2D = $AttackBox/CollisionShape2D
 @onready var hurtbox : CollisionShape2D = $HurtBox/CollisionShape2D
@@ -43,10 +44,8 @@ func take_damage(damage_data : DamageData):
 		dead()
 	else :
 		get_hit_direction = (damage_data.sender_position - global_position).normalized()
-		#state_machine.current_state.transition.emit(state_machine.current_state,"stagger")
 
 func dead():
-	
 	dead_sound.play()
 	dead_particle.restart()
 	pulse_particle.restart()
@@ -58,6 +57,7 @@ func dead():
 	hurtbox.set_deferred("disabled",true)
 	collion.set_deferred("disabled",true)
 	on_dead.emit()
+	room_trigger.switch_triggered.emit()
 	state_machine.current_state.transition.emit(state_machine.current_state,"dead")
 	animator.play("dead")
 	await animator.animation_finished

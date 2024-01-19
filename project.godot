@@ -18,7 +18,7 @@ config/icon="res://Art/Icon/GameIcon.png"
 
 [audio]
 
-buses/default_bus_layout="res://AudioBus/default_bus_layout.tres"
+buses/default_bus_layout="res://Data/AudioBus/default_bus_layout.tres"
 
 [autoload]
 
@@ -31,7 +31,6 @@ TimeManager="*res://Script/System/time_manager.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=3
 window/size/window_width_override=1152
 window/size/window_height_override=648
 window/stretch/mode="canvas_items"
@@ -43,6 +42,19 @@ project/assembly_name="Platformer"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/cinematic_camera_2d/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://Art/": "purple",
+"res://Audio/": "green",
+"res://Data/": "blue",
+"res://Data/AudioBus/": "blue",
+"res://Data/Font/": "blue",
+"res://Scenes/": "red",
+"res://Script/": "orange",
+"res://addons/": "gray"
+}
 
 [input]
 

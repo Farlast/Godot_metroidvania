@@ -3,9 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://bn4irctbcfc32" path="res://Art/Environment/Walls/Tex_destoryable_wall.png" id="1_c8rng"]
 [ext_resource type="Script" path="res://Script/Props/one_way_destoryable_wall.gd" id="1_ymia2"]
 [ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="2_705hr"]
-[ext_resource type="AudioStream" uid="uid://cb3k4nctkeh1y" path="res://Audio/Rock/sfx_dropping-rocks.wav" id="2_lcd7s"]
-[ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/HitSound/face_hit_small_78.wav" id="3_rl22c"]
-[ext_resource type="AudioStream" uid="uid://da6uvbkcwulcl" path="res://Audio/HitSound/metal_punch_06.wav" id="4_ey32n"]
+[ext_resource type="AudioStream" uid="uid://g8ksiiifye16" path="res://Audio/Effect/Rock/SFX_Rocks_Destory.wav" id="2_htejr"]
+[ext_resource type="AudioStream" uid="uid://cb3k4nctkeh1y" path="res://Audio/Effect/Rock/sfx_dropping-rocks.wav" id="3_obsul"]
+[ext_resource type="AudioStream" uid="uid://wsygtcj8idtm" path="res://Audio/Effect/SFX_block_large_71.wav" id="4_1w61n"]
 [ext_resource type="Texture2D" uid="uid://c0gdvjutq7a46" path="res://Art/Effect/Tex_Pebbles.png" id="7_wl78j"]
 [ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="8_2pbor"]
 
@@ -38,9 +38,9 @@ particles_anim_loop = true
 [node name="OneWay Destoryable wall" type="StaticBody2D"]
 collision_mask = 49
 script = ExtResource("1_ymia2")
-audio_destory = ExtResource("2_lcd7s")
-audio_hit = ExtResource("3_rl22c")
-audio_block = ExtResource("4_ey32n")
+audio_destory = ExtResource("2_htejr")
+audio_hit = ExtResource("3_obsul")
+audio_block = ExtResource("4_1w61n")
 max_hp = 3.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -81,6 +81,7 @@ color_ramp = SubResource("Gradient_kyfjo")
 
 [node name="slash_effect" type="CPUParticles2D" parent="Effect"]
 material = SubResource("CanvasItemMaterial_5d6s4")
+position = Vector2(24, 0)
 emitting = false
 amount = 1
 lifetime = 0.3
@@ -92,5 +93,24 @@ direction = Vector2(0, 0)
 gravity = Vector2(0, 0)
 anim_speed_min = 1.0
 anim_speed_max = 1.0
+
+[node name="Destory_effect" type="CPUParticles2D" parent="Effect"]
+position = Vector2(-40, 0)
+emitting = false
+amount = 15
+one_shot = true
+explosiveness = 1.0
+texture = SubResource("AtlasTexture_3qxko")
+emission_shape = 1
+emission_sphere_radius = 96.01
+direction = Vector2(0, -1)
+spread = 77.4
+initial_velocity_min = 349.56
+initial_velocity_max = 527.19
+angular_velocity_min = 217.89
+angular_velocity_max = 217.89
+linear_accel_curve = SubResource("Curve_t8qm0")
+scale_amount_min = 0.1
+color_ramp = SubResource("Gradient_kyfjo")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

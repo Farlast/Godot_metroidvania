@@ -3,7 +3,7 @@ class_name Dash
 
 @export var dash_duration : float = 0.5
 @export var dash_speed : float = 500
-@export var dash_effect : CPUParticles2D
+@export var dash_effect : GPUParticles2D
 
 var dash_timer : float
 var direction : int
@@ -22,7 +22,6 @@ func on_enter():
 
 func on_exit():
 	super.on_exit()
-	player.velocity = Vector2.ZERO
 	player.dash_cooldown()
 
 func on_update(_delta : float):
