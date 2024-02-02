@@ -175,7 +175,7 @@ position = Vector2(6752, 256)
 position = Vector2(640, 768)
 
 [node name="OneWayPlatform3" parent="." instance=ExtResource("10_mveyr")]
-position = Vector2(704, 456)
+position = Vector2(704, 512)
 
 [node name="Hazard" type="Node2D" parent="."]
 

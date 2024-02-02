@@ -7,51 +7,11 @@
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="3_qumw4"]
 [ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="6_o1wfs"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_131gw"]
-size = Vector2(32, 48)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s7mtm"]
-size = Vector2(32, 48)
+size = Vector2(32, 32)
 
-[sub_resource type="Animation" id="Animation_waiw8"]
-resource_name = "idle"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("1_nwb1c")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:vframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_131gw"]
+size = Vector2(56, 64)
 
 [sub_resource type="Animation" id="Animation_c0v2l"]
 length = 0.001
@@ -132,6 +92,46 @@ tracks/2/keys = {
 "values": [0, 1, 2]
 }
 
+[sub_resource type="Animation" id="Animation_waiw8"]
+resource_name = "idle"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_nwb1c")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_70wx2"]
 _data = {
 "RESET": SubResource("Animation_c0v2l"),
@@ -146,13 +146,16 @@ impact = 0.0
 knockback = 300.0
 sender_position = Vector2(0, 0)
 take_damage_rule = 0
+take_damage_mask = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kgh44"]
 size = Vector2(32, 32)
 
 [node name="Bullet Acid" type="Area2D"]
-position = Vector2(968, 24)
 script = ExtResource("1_248ix")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_s7mtm")
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 8
@@ -160,11 +163,9 @@ collision_mask = 8
 script = ExtResource("6_o1wfs")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+visible = false
 shape = SubResource("RectangleShape2D_131gw")
 debug_color = Color(0, 0.647059, 0.180392, 0.419608)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_s7mtm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0.705882, 0.258824, 1)
@@ -187,3 +188,5 @@ damage_data = SubResource("Resource_j024n")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
 shape = SubResource("RectangleShape2D_kgh44")
 debug_color = Color(0.901961, 0.207843, 0.580392, 0.419608)
+
+[connection signal="body_entered" from="." to="." method="grounded"]

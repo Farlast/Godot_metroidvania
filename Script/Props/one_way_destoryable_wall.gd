@@ -57,8 +57,8 @@ func hited(damage_data):
 	audio_player.play()
 	
 func dead():
-	set_deferred("hurt_box.disabled",true)
-	set_deferred("collition.disabled",true)
+	hurt_box.set_deferred("disabled",true)
+	collition.set_deferred("disabled",true)
 	audio_player.stream = audio_destory
 	audio_player.play()
 	if destory_effect : destory_effect.restart()

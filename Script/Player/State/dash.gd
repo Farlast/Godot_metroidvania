@@ -10,16 +10,19 @@ var direction : int
 
 func on_enter():
 	super.on_enter()
-	animator.play("dash")
+	if not player.is_on_floor():
+		player.is_airdash_used = true
+		
 	dash_effect.emitting = true
 	dash_timer = 0
+	animator.play("dash")
 	player.velocity = Vector2.ZERO
+	
 	if player.player_sprite.flip_h:
 		direction = -1
 	else:
 		direction = 1
 	
-
 func on_exit():
 	super.on_exit()
 	player.dash_cooldown()

@@ -1,8 +1,6 @@
 extends State
 class_name Duck
 
-var get_hit_direction : Vector2
-var is_unfreeze : bool
 var active_input : bool
 
 func on_enter():
@@ -27,10 +25,11 @@ func on_exit():
 	super.on_exit()
 	active_input = false
 	player.velocity = Vector2.ZERO
-	player.get_hit_direction = Vector2.ZERO
 
 func _unhandled_input(event):
 	if not active_input: return
 	if not player.is_on_floor(): return
 	if event.is_action_pressed("jump"):
 		player.position.y += 1
+	elif event.is_action_pressed("attack"):
+		transition.emit(self,"crouch_attack")

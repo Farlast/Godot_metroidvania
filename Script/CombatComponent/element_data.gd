@@ -1,10 +1,13 @@
 extends Resource
 class_name ElementData
 
-@export var element : ElementType
-
 enum ElementType {
+	NONE,
 	WATER,
 	FIRE,
-	PLANT,
+	POISON,
+	ICE
 }
+
+@export var element : ElementType
+

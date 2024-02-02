@@ -1,5 +1,4 @@
 extends CanvasLayer
-
 ##############
 # SceneManager
 # Autoload

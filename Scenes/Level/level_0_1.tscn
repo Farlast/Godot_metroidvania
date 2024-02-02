@@ -41,7 +41,7 @@ gradient = SubResource("Gradient_xcgm5")
 [node name="HUD" parent="." instance=ExtResource("1_cu66m")]
 
 [node name="Player" parent="." instance=ExtResource("2_0d18w")]
-position = Vector2(192, 1080)
+position = Vector2(192, 1088)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("3_awo1q")
@@ -85,16 +85,20 @@ position = Vector2(1984, 136)
 [node name="enemy" type="Node2D" parent="."]
 
 [node name="ChaseEnemy" parent="enemy" instance=ExtResource("6_vy3ms")]
-position = Vector2(3176, 1032)
+position = Vector2(2960, 1040)
+move_speed = 350.0
+
+[node name="ChaseEnemy2" parent="enemy" instance=ExtResource("6_vy3ms")]
+position = Vector2(3440, 1040)
 
 [node name="PatrolEnemy" parent="enemy" instance=ExtResource("7_qjm6f")]
-position = Vector2(2632, 1080)
+position = Vector2(2632, 1088)
+
+[node name="PatrolEnemy2" parent="enemy" instance=ExtResource("7_qjm6f")]
+position = Vector2(2184, 1088)
 
 [node name="LivingVine" parent="enemy" instance=ExtResource("9_trscy")]
 position = Vector2(984, 1088)
-
-[node name="LivingVine2" parent="enemy" instance=ExtResource("9_trscy")]
-position = Vector2(2976, 1088)
 
 [node name="Area path" type="Node2D" parent="."]
 

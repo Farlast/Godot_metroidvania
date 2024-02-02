@@ -74,6 +74,8 @@ func fire_bullet(_delta):
 	current_state = STATE.Idle
 	$AnimationPlayer.play("attack")
 	var bullet_ins := bullet.instantiate() as Bullet
+	bullet_ins.direction = Vector2(0,1)
+	bullet_ins.speed = 900
 	add_child(bullet_ins)
 	bullet_ins.global_position = attack_point.global_position
 	await $AnimationPlayer.animation_finished

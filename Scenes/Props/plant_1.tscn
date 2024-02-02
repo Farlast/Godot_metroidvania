@@ -13,7 +13,7 @@ atlas = ExtResource("2_08jkn")
 region = Rect2(875, -8, 327, 535)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m0nnh"]
-size = Vector2(124, 124)
+size = Vector2(109, 158)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2mypl"]
 
@@ -39,10 +39,10 @@ particles_anim_loop = true
 
 [sub_resource type="Resource" id="Resource_4v52r"]
 script = ExtResource("7_afs3w")
-element = 2
+element = 3
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6fyug"]
-size = Vector2(122, 136)
+size = Vector2(108, 172)
 
 [node name="Plant_1" type="Node2D"]
 position = Vector2(749, 975)
@@ -58,7 +58,7 @@ collision_mask = 10
 script = ExtResource("3_2njo8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(-1, -4)
+position = Vector2(6.5, -1)
 shape = SubResource("RectangleShape2D_m0nnh")
 debug_color = Color(0.184314, 0.623529, 0.443137, 0.419608)
 
@@ -105,11 +105,12 @@ anim_speed_min = 1.0
 anim_speed_max = 1.0
 
 [node name="ElementBox" type="Area2D" parent="."]
-collision_layer = 32
-collision_mask = 32
+collision_layer = 256
+collision_mask = 256
 script = ExtResource("6_x56dh")
 element_data = SubResource("Resource_4v52r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ElementBox"]
+position = Vector2(7, -5)
 shape = SubResource("RectangleShape2D_6fyug")
 debug_color = Color(0.313726, 0.615686, 0.333333, 0.419608)

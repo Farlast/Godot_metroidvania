@@ -8,3 +8,7 @@ max_health = 3.0
 max_mana = 5.0
 is_doublejump_unlock = false
 is_dash_unlock = false
+last_scene_visit_path = ""
+uid = 0
+status = false
+position = Vector2(0, 0)

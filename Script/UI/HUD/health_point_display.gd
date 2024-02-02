@@ -7,7 +7,7 @@ extends Control
 var original_size : float = 96
 
 func _ready():
-	hp_event.change_HP.connect(update_hp)
+	hp_event.change.connect(update_hp)
 	
 func update_hp(_current,_max):
 	if _current <= 0:

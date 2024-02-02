@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjrcqgam3sibb"
-path="res://.godot/imported/summon_fire.png-11b82319fbba78a83485a6bbe211dc2c.ctex"
+uid="uid://lfrtx7l8kfve"
+path="res://.godot/imported/attack_1.png-b32950e809ae8ad7b1cbd3d77ed219ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Player/summon_fire.png"
-dest_files=["res://.godot/imported/summon_fire.png-11b82319fbba78a83485a6bbe211dc2c.ctex"]
+source_file="res://Art/Player/attack_1.png"
+dest_files=["res://.godot/imported/attack_1.png-b32950e809ae8ad7b1cbd3d77ed219ce.ctex"]
 
 [params]
 

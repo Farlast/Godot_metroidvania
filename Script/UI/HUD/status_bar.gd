@@ -6,7 +6,7 @@ class_name StatusBar
 func _ready():
 	value = 100
 	max_value = value
-	hp_event.change_HP.connect(update_hp)
+	hp_event.change.connect(update_hp)
 	
 func update_hp(_current,_max):
 	value = _current

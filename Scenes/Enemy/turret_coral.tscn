@@ -22,6 +22,7 @@ impact = 0.0
 knockback = 300.0
 sender_position = Vector2(0, 0)
 take_damage_rule = 0
+take_damage_mask = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yqbqp"]
 size = Vector2(64, 48)

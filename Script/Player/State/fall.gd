@@ -42,7 +42,9 @@ func _unhandled_input(event):
 	elif player.player_data.is_doublejump_unlock && event.is_action_pressed("jump") && not player.Is_doublejump_used && not player.is_on_floor():
 		player.Is_doublejump_used = true
 		transition.emit(self,"jump")
-	elif event.is_action_pressed("absorp"):
+	elif player.is_can_use_skill(event):
 		transition.emit(self,"absorb")
-	elif player.player_data.is_dash_unlock && event.is_action_pressed("dash") && player.Is_can_dash:
+	elif player.player_data.is_dash_unlock && event.is_action_pressed("dash") && player.is_can_dash():
 		transition.emit(self,"dash")
+	elif player.is_can_cast_skill(event):
+		player.set_cast_state()

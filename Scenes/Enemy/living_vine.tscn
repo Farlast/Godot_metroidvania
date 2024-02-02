@@ -375,7 +375,7 @@ script = ExtResource("3_nl542")
 damage_data = SubResource("Resource_mm4jx")
 
 [node name="AttackArea" type="CollisionShape2D" parent="Direction/AttackBox"]
-position = Vector2(78.75, -61.5)
+position = Vector2(82.5, -61.5)
 shape = SubResource("RectangleShape2D_afwn2")
 disabled = true
 debug_color = Color(0.964706, 0, 0.490196, 0.419608)
@@ -468,6 +468,6 @@ libraries = {
 autoplay = "idle"
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2(-183, -25)
-target_position = Vector2(370, 0)
+position = Vector2(-176, -24)
+target_position = Vector2(344, 0)
 collision_mask = 16

@@ -29,6 +29,11 @@ func _on_quit_pressed():
 func _on_settings_pressed():
 	SettingsMenu.show_Settings()
 	display_state(false)
+	
+func on_to_menu_press():
+	TimeManager.unfreeze()
+	display_state(false)
+	SceneManager.change_scene_by_name("res://Scenes/Menu/main_menu.tscn")
 
 func display_state(state : bool):
 	if state:

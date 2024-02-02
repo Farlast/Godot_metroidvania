@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c62j7aiwvcjda"]
+[gd_scene load_steps=25 format=3 uid="uid://c62j7aiwvcjda"]
 
 [ext_resource type="Script" path="res://Script/UI/ESCMenu/pause_menu.gd" id="1_aisc1"]
 [ext_resource type="Texture2D" uid="uid://icea78fevp0o" path="res://Art/UI/tex_hp_bar.png" id="2_citt6"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://dot44gd0wwyic" path="res://Script/Player/Event/HP_Event.tres" id="5_5wbci"]
 [ext_resource type="Texture2D" uid="uid://dp51kcti6v6g5" path="res://Art/UI/panel-border-024.png" id="5_7wb03"]
 [ext_resource type="StyleBox" uid="uid://dmmoqnu1vcbi" path="res://Data/StyleBox/button_main_menu.tres" id="7_20wfa"]
+[ext_resource type="Resource" uid="uid://cyla5i0xjaskn" path="res://Script/Player/Event/MP_Event.tres" id="8_dr1ct"]
 [ext_resource type="Texture2D" uid="uid://dudek0jhjuukx" path="res://Art/UI/Health/health_fill.png" id="8_o4lag"]
 [ext_resource type="Script" path="res://Script/UI/HUD/health_point_display.gd" id="8_yeblj"]
 [ext_resource type="Texture2D" uid="uid://b3px4xmuhut2e" path="res://Art/UI/Health/health_empty.png" id="9_g0gx2"]
@@ -64,6 +65,7 @@ texture_margin_bottom = 20.0
 modulate_color = Color(0, 0, 0, 1)
 
 [node name="HUD" type="CanvasLayer"]
+layer = 50
 
 [node name="Health" type="Control" parent="."]
 layout_mode = 3
@@ -79,9 +81,9 @@ hp_event = ExtResource("5_5wbci")
 
 [node name="health_empty" type="TextureRect" parent="Health"]
 layout_mode = 2
-offset_left = 240.0
+offset_left = 221.25
 offset_top = 80.0
-offset_right = 336.0
+offset_right = 317.25
 offset_bottom = 176.0
 size_flags_horizontal = 4
 texture = ExtResource("9_g0gx2")
@@ -89,9 +91,9 @@ stretch_mode = 1
 
 [node name="health_fill" type="TextureRect" parent="Health"]
 layout_mode = 2
-offset_left = 240.0
+offset_left = 221.25
 offset_top = 80.0
-offset_right = 336.0
+offset_right = 317.25
 offset_bottom = 176.0
 size_flags_horizontal = 4
 texture = ExtResource("8_o4lag")
@@ -108,10 +110,9 @@ theme_override_styles/fill = SubResource("StyleBoxTexture_fndpf")
 value = 50.0
 show_percentage = false
 script = ExtResource("3_1dtdw")
-hp_event = ExtResource("5_5wbci")
+hp_event = ExtResource("8_dr1ct")
 
 [node name="Pause" type="Panel" parent="."]
-visible = false
 offset_left = 741.5
 offset_top = 293.0
 offset_right = 1178.5
@@ -171,6 +172,7 @@ alignment = 1
 [node name="Continue" type="Button" parent="Pause/VBoxContainer2/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+focus_neighbor_top = NodePath("../Quit")
 focus_neighbor_bottom = NodePath("../Settings")
 focus_next = NodePath("../Settings")
 theme_override_styles/hover = ExtResource("7_20wfa")
@@ -180,14 +182,23 @@ text = "Continue"
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 focus_neighbor_top = NodePath("../Continue")
-focus_neighbor_bottom = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../Main menu")
 theme_override_styles/hover = ExtResource("7_20wfa")
 text = "Settings"
+
+[node name="Main menu" type="Button" parent="Pause/VBoxContainer2/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+focus_neighbor_top = NodePath("../Settings")
+focus_neighbor_bottom = NodePath("../Quit")
+theme_override_styles/hover = ExtResource("7_20wfa")
+text = "Exit to main menu"
 
 [node name="Quit" type="Button" parent="Pause/VBoxContainer2/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-focus_neighbor_top = NodePath("../Settings")
+focus_neighbor_top = NodePath("../Main menu")
+focus_neighbor_bottom = NodePath("../Continue")
 theme_override_styles/hover = ExtResource("7_20wfa")
 text = "Exit Game"
 
@@ -247,5 +258,6 @@ text = "Close"
 
 [connection signal="pressed" from="Pause/VBoxContainer2/MarginContainer2/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
 [connection signal="pressed" from="Pause/VBoxContainer2/MarginContainer2/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]
+[connection signal="pressed" from="Pause/VBoxContainer2/MarginContainer2/VBoxContainer/Main menu" to="Pause" method="on_to_menu_press"]
 [connection signal="pressed" from="Pause/VBoxContainer2/MarginContainer2/VBoxContainer/Quit" to="Pause" method="_on_quit_pressed"]
 [connection signal="pressed" from="DisplayPanel/Button" to="DisplayPanel" method="hide_layout"]

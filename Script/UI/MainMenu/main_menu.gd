@@ -12,7 +12,10 @@ func set_button_focus():
 	first_select_button.grab_focus()
 
 func start_game():
-	SceneManager.change_scene_by_name(first_area)
+	GameManager.new_game()
+	
+func continue_game():
+	GameManager.continue_game()
 
 func option_menu():
 	SettingsMenu.show_Settings()

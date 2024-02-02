@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://cxjlx3xpq35k8"]
+[gd_scene load_steps=47 format=3 uid="uid://cxjlx3xpq35k8"]
 
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_6uc0w"]
 [ext_resource type="TileSet" uid="uid://dfn081kuhi648" path="res://Data/base_tileset.tres" id="2_a3mte"]
@@ -21,6 +21,8 @@
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="11_f1jbr"]
 [ext_resource type="Texture2D" uid="uid://d2mosp34qr7db" path="res://Art/Environment/Thorns/thorns.png" id="12_cba2d"]
 [ext_resource type="PackedScene" uid="uid://c1hwcuglxktfc" path="res://Scenes/Enemy/living_vine.tscn" id="13_5sp8v"]
+[ext_resource type="Script" path="res://Script/CombatComponent/element_box.gd" id="13_ugy8v"]
+[ext_resource type="Script" path="res://Script/CombatComponent/element_data.gd" id="14_03lqy"]
 [ext_resource type="PackedScene" uid="uid://ccwgdqlbypx40" path="res://Scenes/Enemy/patrol_enemy.tscn" id="14_7cwkq"]
 [ext_resource type="Script" path="res://Script/System/DisplayText/text_display_requester.gd" id="15_xxv1k"]
 [ext_resource type="Resource" uid="uid://o61lla2xmbd2" path="res://Script/System/EventChannel/tutorial_event_resource.tres" id="16_7adn1"]
@@ -39,6 +41,13 @@ colors = PackedColorArray(0.181056, 0.484276, 0.828882, 1, 0.391404, 0.700252, 0
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_xe6i1"]
 gradient = SubResource("Gradient_bn7mm")
 
+[sub_resource type="Resource" id="Resource_crtcx"]
+script = ExtResource("14_03lqy")
+element = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dn8bm"]
+size = Vector2(128, 386)
+
 [sub_resource type="Resource" id="Resource_8ar3r"]
 script = ExtResource("5_ta213")
 passage_name = "Save point"
@@ -55,6 +64,7 @@ impact = 0.0
 knockback = 300.0
 sender_position = Vector2(0, 0)
 take_damage_rule = 1
+take_damage_mask = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kjysj"]
 size = Vector2(230, 57)
@@ -314,8 +324,28 @@ position = Vector2(5975, 835)
 modulate = Color(0.192157, 0.192157, 0.192157, 1)
 position = Vector2(7167, 969)
 
+[node name="Water" type="Node2D" parent="Parallax/0/Decorations"]
+position = Vector2(2424, 584)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/0/Decorations/Water"]
+modulate = Color(0.301961, 0.647059, 0.858824, 1)
+position = Vector2(10.2903, 184.385)
+rotation = 1.5708
+scale = Vector2(0.748461, 0.252697)
+texture = ExtResource("22_xvo7b")
+
+[node name="ElementBox" type="Area2D" parent="Parallax/0/Decorations/Water"]
+collision_layer = 256
+collision_mask = 256
+script = ExtResource("13_ugy8v")
+element_data = SubResource("Resource_crtcx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Parallax/0/Decorations/Water/ElementBox"]
+position = Vector2(8, 183)
+shape = SubResource("RectangleShape2D_dn8bm")
+
 [node name="Player" parent="." instance=ExtResource("3_ntfep")]
-position = Vector2(3276, 945)
+position = Vector2(3184, 960)
 
 [node name="SavePoint" parent="." node_paths=PackedStringArray("spawn_position", "cinematic_camera", "virtual_camera", "player") instance=ExtResource("4_qm7om")]
 position = Vector2(3416, 866)
