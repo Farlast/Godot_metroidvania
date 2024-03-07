@@ -54,6 +54,10 @@ custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "Fullscreen"
 
+[node name="Resolution" type="OptionButton" parent="Margin/VBoxContainer/TabContainer/Display"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
 [node name="Audio" type="VBoxContainer" parent="Margin/VBoxContainer/TabContainer"]
 visible = false
 custom_minimum_size = Vector2(500, 20)

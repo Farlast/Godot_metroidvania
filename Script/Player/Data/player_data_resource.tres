@@ -5,10 +5,22 @@
 [resource]
 script = ExtResource("1_4unau")
 max_health = 3.0
+max_health_extend = 0.0
+current_health = 0.0
 max_mana = 5.0
+max_mana_extend = 0.0
+current_mana = 0.0
 is_doublejump_unlock = false
 is_dash_unlock = false
+is_skill_unlock = false
+is_water_unlock = false
+is_fire_unlock = false
+is_plant_unlock = false
+is_electricit_unlock = false
 last_scene_visit_path = ""
-uid = 0
+orb_status = 0
+current_orb_element = 0
+current_used_element = 0
+id = ""
 status = false
 position = Vector2(0, 0)

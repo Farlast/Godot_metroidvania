@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c62j7aiwvcjda"]
+[gd_scene load_steps=27 format=3 uid="uid://c62j7aiwvcjda"]
 
 [ext_resource type="Script" path="res://Script/UI/ESCMenu/pause_menu.gd" id="1_aisc1"]
 [ext_resource type="Texture2D" uid="uid://icea78fevp0o" path="res://Art/UI/tex_hp_bar.png" id="2_citt6"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://Script/System/DisplayText/popup.gd" id="12_jdfm0"]
 [ext_resource type="Resource" uid="uid://byoer52eg2g0h" path="res://Script/System/EventChannel/powerup_event_resource.tres" id="13_h60o1"]
 [ext_resource type="Texture2D" uid="uid://b2ghjo6da5elg" path="res://Art/UI/panel-001.png" id="14_ssfhs"]
+[ext_resource type="Script" path="res://Script/System/fps_counter.gd" id="17_041yv"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hcr42"]
 texture = ExtResource("2_citt6")
@@ -64,10 +65,14 @@ texture_margin_right = 50.0
 texture_margin_bottom = 20.0
 modulate_color = Color(0, 0, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_ipdu6"]
+font_size = 25
+
 [node name="HUD" type="CanvasLayer"]
 layer = 50
 
 [node name="Health" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0
@@ -99,12 +104,25 @@ size_flags_horizontal = 4
 texture = ExtResource("8_o4lag")
 stretch_mode = 1
 
+[node name="HP bar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(100, 20)
+offset_left = 192.0
+offset_top = 64.0
+offset_right = 448.0
+offset_bottom = 96.0
+theme_override_styles/background = SubResource("StyleBoxTexture_hcr42")
+theme_override_styles/fill = SubResource("StyleBoxTexture_fndpf")
+value = 50.0
+show_percentage = false
+script = ExtResource("3_1dtdw")
+hp_event = ExtResource("5_5wbci")
+
 [node name="MP bar" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(100, 20)
 offset_left = 192.0
-offset_top = 152.0
-offset_right = 470.0
-offset_bottom = 172.0
+offset_top = 104.0
+offset_right = 384.0
+offset_bottom = 124.0
 theme_override_styles/background = SubResource("StyleBoxTexture_hcr42")
 theme_override_styles/fill = SubResource("StyleBoxTexture_fndpf")
 value = 50.0
@@ -113,6 +131,7 @@ script = ExtResource("3_1dtdw")
 hp_event = ExtResource("8_dr1ct")
 
 [node name="Pause" type="Panel" parent="."]
+visible = false
 offset_left = 741.5
 offset_top = 293.0
 offset_right = 1178.5
@@ -209,10 +228,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -402.0
-offset_top = -251.0
-offset_right = 402.0
-offset_bottom = 60.0
+offset_left = -464.0
+offset_top = -484.0
+offset_right = 464.0
+offset_bottom = 293.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_u1pg0")
@@ -245,16 +264,31 @@ horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="DisplayPanel"]
 layout_mode = 0
-offset_left = 299.0
-offset_top = 220.0
-offset_right = 493.0
-offset_bottom = 276.0
+offset_left = 368.0
+offset_top = 672.0
+offset_right = 562.0
+offset_bottom = 734.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxTexture_xq3v1")
 theme_override_styles/hover = SubResource("StyleBoxTexture_rhhvw")
 text = "Close"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(100, 0)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -49.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="FPSCounter" type="Label" parent="MarginContainer"]
+layout_mode = 2
+text = "FPS:"
+label_settings = SubResource("LabelSettings_ipdu6")
+script = ExtResource("17_041yv")
 
 [connection signal="pressed" from="Pause/VBoxContainer2/MarginContainer2/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
 [connection signal="pressed" from="Pause/VBoxContainer2/MarginContainer2/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]

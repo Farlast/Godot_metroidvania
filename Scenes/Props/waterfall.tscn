@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://cl663tye2vgke"]
+
+[ext_resource type="Script" path="res://Script/CombatComponent/element_box.gd" id="2_amufq"]
+[ext_resource type="Texture2D" uid="uid://doxbn3m5i8dh6" path="res://Art/Player/Skill/water_orb.png" id="3_gpjw2"]
+[ext_resource type="Script" path="res://Script/CombatComponent/element_data.gd" id="3_qovy2"]
+
+[sub_resource type="Resource" id="Resource_crtcx"]
+script = ExtResource("3_qovy2")
+element = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dn8bm"]
+size = Vector2(128, 386)
+
+[node name="Water" type="Node2D"]
+
+[node name="ElementBox" type="Area2D" parent="."]
+collision_layer = 256
+collision_mask = 256
+script = ExtResource("2_amufq")
+element_data = SubResource("Resource_crtcx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElementBox"]
+position = Vector2(8, 183)
+shape = SubResource("RectangleShape2D_dn8bm")
+
+[node name="Wet" type="CPUParticles2D" parent="."]
+z_index = -2
+lifetime = 0.8
+texture = ExtResource("3_gpjw2")
+emission_shape = 3
+emission_rect_extents = Vector2(50, 1)
+direction = Vector2(0, 1)
+spread = 23.68
+scale_amount_min = 0.2
+scale_amount_max = 0.2

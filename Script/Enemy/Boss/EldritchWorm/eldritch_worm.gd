@@ -1,37 +1,26 @@
-extends CharacterBody2D
+extends Enemy
 class_name EldritchWorm
-
-signal on_dead
-
-@export var health : float = 30
-
-@onready var hit_sound : AudioStreamPlayer2D = $Audio/HitSound
-@onready var dead_sound : AudioStreamPlayer2D = $Audio/DeadSound
-@onready var animator : AnimationPlayer = $AnimationPlayer
-
-#@export_group("Particle")
-@onready var hit_effect : CPUParticles2D = $Particle/HitEffect
-@onready var slash_effect : CPUParticles2D = $Particle/SlashEffect
-@onready var dead_particle : GPUParticles2D = $Particle/DeadParticle
-@onready var pulse_particle : GPUParticles2D = $Particle/Pulse
 
 @export_group("RayCast2D")
 @export var front_ray : RayCast2D
 @export var room_trigger : TriggerSwitch
-#raycast2D
-@onready var hitbox : CollisionShape2D = $AttackBox/CollisionShape2D
-@onready var hurtbox : CollisionShape2D = $HurtBox/CollisionShape2D
-@onready var collion : CollisionShape2D = $GroundCollision
 
-@onready var state_machine : EnemyStateMachine = $EnemyStateMachine
-
-var get_hit_direction : Vector2
 var target : Node2D
-var shader : ShaderMaterial
+
+var stage_2: bool = false
+var data : NodeSaveData
 #region Damage
 func _ready():
-	shader = $Sprite2D.material as ShaderMaterial
+	shader = $Direction/Sprite2D.material as ShaderMaterial
 	
+	var id = GameManager.get_object_id(self)
+	data = NodeSaveData.new()
+	data.id = id
+	data.status = false
+	
+	if GameManager.is_object_stored(id):
+		queue_free()
+
 func take_damage(damage_data : DamageData):
 	health -= damage_data.damage
 	hit_effect.rotation = get_angle_to(damage_data.sender_position) + PI
@@ -40,12 +29,17 @@ func take_damage(damage_data : DamageData):
 	hit_sound.play()
 	flash_on_hit()
 	
+	if not stage_2 and health < 20:
+		stage_2 = true
+	
 	if health <= 0:
 		dead()
 	else :
 		get_hit_direction = (damage_data.sender_position - global_position).normalized()
 
 func dead():
+	data.status = true
+	GameManager.store_object(data.id,data)
 	dead_sound.play()
 	dead_particle.restart()
 	pulse_particle.restart()

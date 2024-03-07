@@ -38,10 +38,10 @@ func on_to_menu_press():
 func display_state(state : bool):
 	if state:
 		is_focus = true
-		GameManager.game_state = GameManager.GameState.Stop
+		GameManager.game_state = GameManager.GameState.FREEZE
 		show()
 	else:
 		is_focus = false
-		GameManager.game_state = GameManager.GameState.Gameplay
+		GameManager.game_state = GameManager.GameState.GAMEPLAY
 		hide()
 	

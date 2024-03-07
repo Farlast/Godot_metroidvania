@@ -1,25 +1,45 @@
-[gd_scene load_steps=47 format=3 uid="uid://cwtxhoydrofhh"]
+[gd_scene load_steps=55 format=3 uid="uid://cwtxhoydrofhh"]
 
 [ext_resource type="Script" path="res://Script/Enemy/ChaseEnemy/chase_enemy.gd" id="1_aur87"]
 [ext_resource type="Material" uid="uid://cmv24i1lrmfiw" path="res://Shader/enemy.tres" id="2_pg0cq"]
+[ext_resource type="Script" path="res://Script/CombatComponent/status_value.gd" id="2_pipmt"]
+[ext_resource type="Script" path="res://Script/CombatComponent/health_system.gd" id="3_m7twa"]
 [ext_resource type="Texture2D" uid="uid://c752ycim1kuwh" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0001.png" id="3_onr4q"]
 [ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="4_6vqly"]
 [ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="5_52qco"]
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="6_wg7p8"]
 [ext_resource type="Script" path="res://Script/Enemy/State/enemy_state_machine.gd" id="7_7wij7"]
 [ext_resource type="Script" path="res://Script/Enemy/State/enemy_idle.gd" id="8_kk3ql"]
-[ext_resource type="Script" path="res://Script/Enemy/State/enemy_stagger.gd" id="9_1llv7"]
+[ext_resource type="Script" path="res://Script/Enemy/State/stagger_state.gd" id="9_1llv7"]
 [ext_resource type="Script" path="res://Script/Enemy/ChaseEnemy/State/chase.gd" id="10_naq1y"]
 [ext_resource type="Texture2D" uid="uid://bsn8dtb8jl10c" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0004.png" id="10_pplfq"]
+[ext_resource type="Script" path="res://Script/Enemy/State/melee_attack.gd" id="11_6kniw"]
 [ext_resource type="Texture2D" uid="uid://dbffa3d86qrba" path="res://Art/Effect/Tex_random.png" id="11_mqkoj"]
 [ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="12_gtaqg"]
 [ext_resource type="Texture2D" uid="uid://dtytbqyts58yo" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0003.png" id="12_q0lwj"]
+[ext_resource type="Script" path="res://Script/Enemy/State/ramp_attack.gd" id="12_qx0l6"]
 [ext_resource type="Texture2D" uid="uid://nwb4oqf22xe4" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0005.png" id="13_2boxu"]
 [ext_resource type="PackedScene" uid="uid://bkijr6cnrf2dy" path="res://Scenes/Effect/dead_particle.tscn" id="13_c4nw1"]
 [ext_resource type="Texture2D" uid="uid://byku3155bejsl" path="res://Art/Effect/hollow fade circle.png" id="14_1lm6k"]
 [ext_resource type="Texture2D" uid="uid://doth3t75naxmf" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0006.png" id="14_fd7l2"]
 [ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/HitSound/face_hit_small_78.wav" id="15_dwilf"]
 [ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/HitSound/body_hit_finisher_23.wav" id="16_n1t41"]
+
+[sub_resource type="Resource" id="Resource_hv358"]
+resource_local_to_scene = true
+script = ExtResource("2_pipmt")
+max_value = 3.0
+
+[sub_resource type="Resource" id="Resource_00whe"]
+resource_local_to_scene = true
+script = ExtResource("2_pipmt")
+max_value = 3.0
+
+[sub_resource type="Resource" id="Resource_kcrr3"]
+resource_local_to_scene = true
+script = ExtResource("3_m7twa")
+health = SubResource("Resource_hv358")
+stance = SubResource("Resource_00whe")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_remti"]
 size = Vector2(74, 18)
@@ -31,9 +51,9 @@ size = Vector2(80.9999, 153)
 script = ExtResource("6_wg7p8")
 damage = 1.0
 impact = 0.0
-knockback = 0.0
-sender_position = Vector2(0, 0)
 take_damage_rule = 0
+take_damage_mask = 0
+element = 0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4wowp"]
 radius = 26.0
@@ -44,7 +64,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Directions/Sprite2D:material:shader_parameter/active")
+tracks/0/path = NodePath("Direction/Sprite2D:material:shader_parameter/active")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -56,7 +76,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Directions/Sprite2D:texture")
+tracks/1/path = NodePath("Direction/Sprite2D:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -68,7 +88,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Directions/Sprite2D:visible")
+tracks/2/path = NodePath("Direction/Sprite2D:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -76,6 +96,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Direction/MeleeAttackBox/ramp_area:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_3bqu4"]
@@ -85,7 +117,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Directions/Sprite2D:texture")
+tracks/0/path = NodePath("Direction/Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -101,23 +133,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Directions/Sprite2D:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_ujcuo"]
-resource_name = "hit"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Directions/Sprite2D:material:shader_parameter/active")
+tracks/0/path = NodePath("Direction/Sprite2D:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -129,14 +145,14 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Directions/Sprite2D:texture")
+tracks/1/path = NodePath("Direction/MeleeAttackBox/ramp_area:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("10_pplfq")]
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_30aem"]
@@ -145,7 +161,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Directions/Sprite2D:texture")
+tracks/0/path = NodePath("Direction/Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -155,13 +171,58 @@ tracks/0/keys = {
 "values": [ExtResource("3_onr4q")]
 }
 
+[sub_resource type="Animation" id="Animation_l2l8v"]
+resource_name = "melee_attack"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Direction/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("10_pplfq"), ExtResource("13_2boxu"), ExtResource("3_onr4q")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Direction/Sprite2D:material:shader_parameter/active")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemyStateMachine/RampAttack")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"start_attack"
+}, {
+"args": [],
+"method": &"stop_attack"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r264x"]
 _data = {
 "RESET": SubResource("Animation_51hf3"),
 "chase": SubResource("Animation_3bqu4"),
 "dead": SubResource("Animation_j288b"),
-"hit": SubResource("Animation_ujcuo"),
-"idle": SubResource("Animation_30aem")
+"idle": SubResource("Animation_30aem"),
+"ramp_attack": SubResource("Animation_l2l8v")
 }
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mhcwc"]
@@ -242,26 +303,15 @@ color_ramp = SubResource("GradientTexture1D_1a63i")
 atlas = ExtResource("11_mqkoj")
 region = Rect2(41.5117, 196.086, 115.429, 114.746)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c5jhj"]
+size = Vector2(73, 153)
+
 [node name="ChaseEnemy" type="CharacterBody2D"]
 collision_layer = 0
 script = ExtResource("1_aur87")
 move_speed = 400.0
-
-[node name="Directions" type="Node2D" parent="."]
-
-[node name="FrontRay" type="RayCast2D" parent="Directions"]
-position = Vector2(-71, 8)
-target_position = Vector2(-500, 0)
-collision_mask = 16
-
-[node name="GroundRay" type="RayCast2D" parent="Directions"]
-position = Vector2(-70, 44)
-target_position = Vector2(0, 20)
-
-[node name="Sprite2D" type="Sprite2D" parent="Directions"]
-material = ExtResource("2_pg0cq")
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("3_onr4q")
+max_health = 3.0
+health_system = SubResource("Resource_kcrr3")
 
 [node name="GroundCollision" type="CollisionShape2D" parent="."]
 position = Vector2(-12, 38)
@@ -271,6 +321,7 @@ shape = SubResource("RectangleShape2D_remti")
 collision_layer = 8
 collision_mask = 10
 script = ExtResource("4_6vqly")
+object_tag = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(6.49999, 9.50002)
@@ -294,22 +345,26 @@ debug_color = Color(0.823529, 0.345098, 0.537255, 0.419608)
 script = ExtResource("7_7wij7")
 InitialState = NodePath("idle")
 
-[node name="idle" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("animator", "agent")]
+[node name="idle" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("8_kk3ql")
-animator = NodePath("../../AnimationPlayer")
-agent = NodePath("../..")
 
-[node name="stagger" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("animator", "agent")]
+[node name="stagger" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("9_1llv7")
-animator = NodePath("../../AnimationPlayer")
-agent = NodePath("../..")
 
-[node name="chase" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("animator", "agent")]
+[node name="chase" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("down_ray")]
 script = ExtResource("10_naq1y")
-animator = NodePath("../../AnimationPlayer")
-agent = NodePath("../..")
+down_ray = NodePath("../../Direction/DownRay")
+
+[node name="MeleeAttack" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("attack_box_col")]
+script = ExtResource("11_6kniw")
+attack_box_col = NodePath("../../Direction/MeleeAttackBox/ramp_area")
+
+[node name="RampAttack" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("attack_box_col")]
+script = ExtResource("12_qx0l6")
+attack_box_col = NodePath("../../Direction/MeleeAttackBox/ramp_area")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 libraries = {
 "": SubResource("AnimationLibrary_r264x")
 }
@@ -388,3 +443,31 @@ bus = &"Effect"
 [node name="DeadSound" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("16_n1t41")
 bus = &"Effect"
+
+[node name="Direction" type="Node2D" parent="."]
+
+[node name="DownRay" type="RayCast2D" parent="Direction"]
+position = Vector2(-70, 44)
+target_position = Vector2(0, 20)
+
+[node name="FrontRay" type="RayCast2D" parent="Direction"]
+position = Vector2(-71, 8)
+target_position = Vector2(-500, 0)
+collision_mask = 16
+
+[node name="Sprite2D" type="Sprite2D" parent="Direction"]
+material = ExtResource("2_pg0cq")
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_onr4q")
+
+[node name="MeleeAttackBox" type="Area2D" parent="Direction"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("5_52qco")
+damage_data = SubResource("Resource_o3ql3")
+
+[node name="ramp_area" type="CollisionShape2D" parent="Direction/MeleeAttackBox"]
+position = Vector2(6.49999, 5.50001)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_c5jhj")
+debug_color = Color(0.823529, 0.345098, 0.537255, 0.419608)

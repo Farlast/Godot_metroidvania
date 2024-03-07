@@ -18,8 +18,10 @@ extends NodeSaveData
 		return current_health
 	set(value):
 		current_health = value
-		if value < 0:
+		if current_health < 0:
 			current_health = 0
+		if current_health > max_health:
+			max_health = value
 #endregion
 
 #region Mana
@@ -43,6 +45,12 @@ extends NodeSaveData
 @export_group("Unlockables")
 @export var is_doublejump_unlock : bool = false
 @export var is_dash_unlock : bool = false
+### element
+@export var is_skill_unlock : bool = false
+@export var is_water_unlock : bool = false
+@export var is_fire_unlock : bool = false
+@export var is_plant_unlock : bool = false
+@export var is_electricit_unlock : bool = false
 
 @export_group("start position")
 @export var last_scene_visit_path : String
@@ -60,3 +68,14 @@ func replace_data(data : PlayerData):
 	max_mana = data.max_mana
 	max_mana_extend = data.max_mana_extend
 	current_mana = data.current_mana
+	
+	position = data.position
+	last_scene_visit_path = data.last_scene_visit_path
+	
+	is_doublejump_unlock = data.is_doublejump_unlock
+	is_skill_unlock = data.is_skill_unlock
+	is_dash_unlock = data.is_dash_unlock
+	is_water_unlock = data.is_water_unlock
+	is_fire_unlock = data.is_fire_unlock
+	is_plant_unlock = data.is_plant_unlock
+	is_electricit_unlock = data.is_electricit_unlock

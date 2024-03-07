@@ -1,9 +1,11 @@
-[gd_scene load_steps=47 format=3 uid="uid://cch1si6xtrxif"]
+[gd_scene load_steps=52 format=3 uid="uid://cch1si6xtrxif"]
 
 [ext_resource type="Script" path="res://Script/Enemy/Boss/EldritchWorm/eldritch_worm.gd" id="1_0t231"]
 [ext_resource type="Material" uid="uid://cmv24i1lrmfiw" path="res://Shader/enemy.tres" id="2_8nwje"]
+[ext_resource type="Script" path="res://Script/CombatComponent/status_value.gd" id="2_bh1d6"]
 [ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="2_doyyx"]
 [ext_resource type="Texture2D" uid="uid://twec2pin0neo" path="res://Art/Enemy/WormBoss/worm_boss.png" id="2_jdswt"]
+[ext_resource type="Script" path="res://Script/CombatComponent/health_system.gd" id="3_4xxt7"]
 [ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="3_i14tl"]
 [ext_resource type="Script" path="res://Script/Enemy/State/enemy_state_machine.gd" id="4_3ttws"]
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="5_6niub"]
@@ -19,6 +21,22 @@
 [ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/HitSound/body_hit_finisher_23.wav" id="10_xbivy"]
 [ext_resource type="Script" path="res://Script/Enemy/Boss/EldritchWorm/State/boss_dead.gd" id="12_8tdos"]
 
+[sub_resource type="Resource" id="Resource_evyiw"]
+resource_local_to_scene = true
+script = ExtResource("2_bh1d6")
+max_value = 60.0
+
+[sub_resource type="Resource" id="Resource_ph414"]
+resource_local_to_scene = true
+script = ExtResource("2_bh1d6")
+max_value = 20.0
+
+[sub_resource type="Resource" id="Resource_ymud7"]
+resource_local_to_scene = true
+script = ExtResource("3_4xxt7")
+health = SubResource("Resource_evyiw")
+stance = SubResource("Resource_ph414")
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_e787n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lk51e"]
@@ -28,9 +46,9 @@ size = Vector2(178, 340)
 script = ExtResource("5_6niub")
 damage = 1.0
 impact = 0.0
-knockback = 0.0
-sender_position = Vector2(0, 0)
 take_damage_rule = 0
+take_damage_mask = 0
+element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fo6ov"]
 size = Vector2(144, 320)
@@ -51,14 +69,14 @@ particles_anim_loop = true
 offsets = PackedFloat32Array(0, 0.916914, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0.197937, 0.197937, 0.197937, 1, 0.0705882, 0.0705882, 0.0705882, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_1a63i"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nmn73"]
 gradient = SubResource("Gradient_w5baj")
 
 [sub_resource type="Curve" id="Curve_032xl"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.389474), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_fy66m"]
+[sub_resource type="CurveTexture" id="CurveTexture_oen3d"]
 curve = SubResource("Curve_032xl")
 
 [sub_resource type="Curve" id="Curve_tikh8"]
@@ -66,7 +84,7 @@ max_value = 1024.0
 _data = [Vector2(0, 1024), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_rveq2"]
+[sub_resource type="CurveTexture" id="CurveTexture_x4fid"]
 curve = SubResource("Curve_tikh8")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ea5uh"]
@@ -77,14 +95,14 @@ emission_box_extents = Vector3(50, 1, 1)
 direction = Vector3(0, -1, 0)
 initial_velocity_min = 110.24
 initial_velocity_max = 365.35
-velocity_limit_curve = SubResource("CurveTexture_rveq2")
+velocity_limit_curve = SubResource("CurveTexture_x4fid")
 gravity = Vector3(0, 500, 0)
 linear_accel_max = 100.0
 scale_min = 0.01
 scale_max = 0.3
-scale_curve = SubResource("CurveTexture_fy66m")
+scale_curve = SubResource("CurveTexture_oen3d")
 color = Color(0.466667, 0.560784, 0.639216, 1)
-color_ramp = SubResource("GradientTexture1D_1a63i")
+color_ramp = SubResource("GradientTexture1D_nmn73")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t43v5"]
 atlas = ExtResource("5_c0xio")
@@ -92,14 +110,14 @@ region = Rect2(41.5117, 196.086, 115.429, 114.746)
 
 [sub_resource type="Gradient" id="Gradient_icaya"]
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_80i21"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_adgti"]
 gradient = SubResource("Gradient_icaya")
 
 [sub_resource type="Curve" id="Curve_dg0qp"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.649457, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.936842), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_4wyov"]
+[sub_resource type="CurveTexture" id="CurveTexture_3vtbx"]
 curve = SubResource("Curve_dg0qp")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4dy4h"]
@@ -107,8 +125,8 @@ particle_flag_disable_z = true
 gravity = Vector3(0, 0, 0)
 scale_min = 0.5
 scale_max = 0.5
-scale_curve = SubResource("CurveTexture_4wyov")
-color_ramp = SubResource("GradientTexture1D_80i21")
+scale_curve = SubResource("CurveTexture_3vtbx")
+color_ramp = SubResource("GradientTexture1D_adgti")
 sub_emitter_mode = 2
 sub_emitter_amount_at_end = 20
 
@@ -117,7 +135,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/path = NodePath("Direction/Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -129,7 +147,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/path = NodePath("Direction/Sprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -177,7 +195,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Sprite2D:vframes")
+tracks/5/path = NodePath("Direction/Sprite2D:vframes")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -201,7 +219,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Sprite2D:visible")
+tracks/7/path = NodePath("Direction/Sprite2D:visible")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -217,7 +235,7 @@ length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/path = NodePath("Direction/Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -229,7 +247,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/path = NodePath("Direction/Sprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -293,7 +311,7 @@ length = 0.03
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/path = NodePath("Direction/Sprite2D:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -310,7 +328,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Direction/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -349,6 +367,57 @@ resource_name = "intro"
 
 [sub_resource type="Animation" id="Animation_rdx11"]
 resource_name = "split_projectile"
+length = 0.6
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyStateMachine/split_projectile")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_bullet"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Direction/Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_jdswt")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Direction/Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Direction/Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 1, 2, 0, 1]
+}
 
 [sub_resource type="Animation" id="Animation_epgs2"]
 resource_name = "standby"
@@ -356,7 +425,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/path = NodePath("Direction/Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -368,7 +437,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/path = NodePath("Direction/Sprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -393,12 +462,15 @@ _data = {
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_0t231")
+health_system = SubResource("Resource_ymud7")
 
 [node name="GroundCollision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -45)
 shape = SubResource("CircleShape2D_e787n")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Direction" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Direction"]
 material = ExtResource("2_8nwje")
 position = Vector2(0, -166)
 texture = ExtResource("2_jdswt")
@@ -408,6 +480,7 @@ vframes = 5
 collision_layer = 8
 collision_mask = 10
 script = ExtResource("2_doyyx")
+object_tag = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(-3, -160)
@@ -429,31 +502,22 @@ debug_color = Color(0.94902, 0, 0.584314, 0.419608)
 script = ExtResource("4_3ttws")
 InitialState = NodePath("standby")
 
-[node name="standby" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("animator", "agent")]
+[node name="standby" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("7_bm3r6")
-animator = NodePath("../../AnimationPlayer")
-agent = NodePath("../..")
 
-[node name="idle" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("animator", "agent")]
+[node name="idle" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("6_5jewi")
-animator = NodePath("../../AnimationPlayer")
-agent = NodePath("../..")
 
-[node name="dig_underground" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("animator", "agent")]
+[node name="dig_underground" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("8_t1of4")
 move_speed = 400.0
-animator = NodePath("../../AnimationPlayer")
-agent = NodePath("../..")
 
-[node name="split_projectile" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("animator", "agent")]
+[node name="split_projectile" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("mouth")]
 script = ExtResource("9_uphaw")
-animator = NodePath("../../AnimationPlayer")
-agent = NodePath("../..")
+mouth = NodePath("../../mouth")
 
-[node name="dead" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("animator", "agent")]
+[node name="dead" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("12_8tdos")
-animator = NodePath("../../AnimationPlayer")
-agent = NodePath("../..")
 
 [node name="Particle" type="Node2D" parent="."]
 position = Vector2(0, -104)
@@ -534,7 +598,11 @@ stream = ExtResource("10_xbivy")
 bus = &"Effect"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 libraries = {
 "": SubResource("AnimationLibrary_28f3p")
 }
 autoplay = "idle"
+
+[node name="mouth" type="Node2D" parent="."]
+position = Vector2(1, -328)

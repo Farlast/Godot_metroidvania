@@ -1,8 +1,9 @@
 extends CharacterBody2D
 class_name Player
 
-@export_group("component")
-@export var state_machine : StateMachine
+signal attack_success
+
+@onready var state_machine : StateMachine = $StateMachine
 @onready var player_sprite :Sprite2D = $PlayerArt
 @onready var pulse_effect : GPUParticles2D = $Directions/Effect/Pulse
 @onready var slash_effect : CPUParticles2D = $Directions/Effect/SlashEffect
@@ -52,21 +53,20 @@ var current_element : ElementData
 var last_ground_position : Vector2
 var temp_damage_data : DamageData
 var is_airdash_used : bool = false
-
 var busy_duration: float = 0.5
-
+var dash_iframe : bool
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 #region OVERRIDE
-###############
-## OVERRIDE
-###############
 func _ready():
 	SceneManager.set_player_position.connect(setup_after_enter_room)
 	SceneManager.respawn_at_position.connect(respawn_after_dead)
 	skill_system.setup(self)
 	var shader = player_sprite.material as ShaderMaterial
+	
+	Engine.max_fps = 60
+	
 	shader.set_shader_parameter("active",false)
 	last_ground_position = global_position
 	
@@ -78,6 +78,7 @@ func _ready():
 func _process(delta):
 	countdown_iframe(delta)
 	dash_refill()
+	jitter_fix(delta)
 #endregion
 #region Set Position and Status
 ###############
@@ -113,14 +114,18 @@ func respawn_after_dead(new_position : Vector2):
 func update_hud_display():
 	hp_event.change.emit(player_data.current_health,player_data.max_health)
 	mp_event.change.emit(player_data.current_mana,player_data.max_mana)
-	
-func pick_up_upgrade(unlock : Unlockable):
-	match unlock.unlock_type:
-		Unlockable.TYPE.DASH:
-			player_data.is_dash_unlock = true
-		Unlockable.TYPE.DOUBLE_JUMP:
-			player_data.is_doublejump_unlock = true
 
+var globals_sprites_position: Vector2
+func jitter_fix(delta):
+	var FPS = Engine.get_frames_per_second()
+	var lerp_interval = velocity / FPS
+	var lerp_position = global_position + lerp_interval
+	globals_sprites_position = globals_sprites_position.lerp(lerp_position, 30 * delta)
+	if FPS > 60:
+		player_sprite.position = globals_sprites_position - global_position
+		player_sprite.position.y += -68.88
+	else:
+		player_sprite.position = Vector2(0, -68.88)
 #endregion
 #region Statemacthaine
 func add_fall_gravity(delta):
@@ -128,14 +133,15 @@ func add_fall_gravity(delta):
 		velocity.y += gravity * gravity_multiply * delta
 	else:
 		Is_doublejump_used = false
+	if velocity.y > 1500:
+		velocity.y = 1500
 
 func move_horizontal(flip : bool = true):
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction:
 		velocity.x = direction * walk_speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, walk_speed)
-	
+		velocity.x = move_toward(velocity.x, 0, walk_speed)	
 	if flip:
 		flip_sprite(direction)
 
@@ -173,16 +179,22 @@ func dash_cooldown():
 	Is_can_dash = true
 
 func is_can_dash():
-	return Is_can_dash && not is_airdash_used
+	if not player_data.is_dash_unlock and not is_on_floor():
+		return false
+	else:
+		return Is_can_dash && not is_airdash_used
 
+### Ghost call
 func  is_can_use_skill(event : InputEvent):
 	if not event.is_action_pressed("absorp"): return false
+	if not player_data.is_skill_unlock: return
 	if skill_system.orb_status == skill_system.OrbStatus.Active:
 		return true
 	return skill_system.is_can_used_skill()
-
+### Skill
 func is_can_cast_skill(event : InputEvent):
 	if not event.is_action_pressed("skill"): return false
+	if not player_data.is_skill_unlock: return
 	return skill_system.is_can_used_skill()
 	
 func set_cast_state():
@@ -190,18 +202,42 @@ func set_cast_state():
 	busy_duration = 0.3
 	state_machine.current_state.transition.emit(state_machine.current_state,"busy")
 	skill_system.activate_skill()
+
+#region heal
+func is_can_heal(event : InputEvent)-> bool:
+	if not event.is_action_pressed("heal"): return false
+	if not skill_system.is_have_mana_for_skill(1): return false
+	return true
+
+func start_heal():
+	$AnimationPlayer.play("heal")
+	busy_duration = 1.0
+	state_machine.current_state.transition.emit(state_machine.current_state,"busy")
+	
+
+func heal():
+	if player_data.current_health < player_data.max_health:
+		player_data.current_mana -= 1
+		player_data.current_health += 1
+	update_hud_display()
+#endregion
 #endregion
 #region Attack and damage
-func take_damage(damage_data : DamageData):
-	if is_iframe_active and damage_data.take_damage_rule != DamageData.TakeDamageRule.RESET:
-		return
+func take_damage(damage_data : DamageData)->bool:
+	if damage_data.take_damage_rule != DamageData.TakeDamageRule.RESET:
+		if is_iframe_active:
+			return false
+		if dash_iframe :
+			return false
 	
 	is_iframe_active = true
 	iframe_timer = 0
 	player_data.current_health -= damage_data.damage
+	
 	slash_effect.restart()
 	pulse_effect.restart()
 	hurt_audio.play()
+	
 	if player_data.current_health <= 0:
 		hp_event.change.emit(player_data.current_health,player_data.max_health)
 		on_dead()
@@ -209,6 +245,7 @@ func take_damage(damage_data : DamageData):
 		temp_damage_data = damage_data
 		hp_event.change.emit(player_data.current_health,player_data.max_health)
 		state_machine.current_state.transition.emit(state_machine.current_state,"knockback")
+	return true
 
 func on_dead():
 	state_machine.current_state.transition.emit(state_machine.current_state,"empty")
@@ -233,20 +270,27 @@ func countdown_iframe(delta : float):
 		else: 
 			shader.set_shader_parameter("active",false)
 
-func attack_feedback(hurtbox:HurtBox):
-	if hurtbox == null : return 
+func attack_feedback(report:AttackReport):
+	if report.object_tag == AttackReport.ObjectTag.ENEMY:
+		player_data.current_mana += 0.5
+		mp_event.change.emit(player_data.current_mana,player_data.max_mana)
 	
-	player_data.current_mana += 0.5
-	mp_event.change.emit(player_data.current_mana,player_data.max_mana)
-	
-	if state_machine.current_state is CrouchAttack: return
-	get_hit_direction = (hurtbox.global_position - global_position).normalized()
-	if get_hit_direction != Vector2.ZERO:
-		velocity.x = knockback_force/2 * -get_hit_direction.x
+	get_hit_direction = (report.receiver_position - global_position).normalized()
+	attack_success.emit()
 
 func attack_cooldown():
 	Is_can_attack = false
 	await get_tree().create_timer(attack_speed).timeout
 	Is_can_attack = true
 
+#endregion
+#region Unlockable
+func pick_up_upgrade(unlock : Unlockable):
+	match unlock.unlock_type:
+		Unlockable.UnlockType.DASH:
+			player_data.is_dash_unlock = true
+		Unlockable.UnlockType.DOUBLE_JUMP:
+			player_data.is_doublejump_unlock = true
+		Unlockable.UnlockType.SPIRIT_CALL:
+			player_data.is_skill_unlock = true
 #endregion

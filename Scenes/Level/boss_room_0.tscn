@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dwqyvpi2otqkk"]
+[gd_scene load_steps=29 format=3 uid="uid://dwqyvpi2otqkk"]
 
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_ltpbt"]
 [ext_resource type="PackedScene" uid="uid://b0byka5d5aixx" path="res://Scenes/Player/player.tscn" id="2_2yt8e"]
@@ -12,7 +12,13 @@
 [ext_resource type="Resource" uid="uid://claqc3vwlxgxx" path="res://Data/Passage/level_0/scene_0_3.tres" id="11_mwr3u"]
 [ext_resource type="PackedScene" uid="uid://cch1si6xtrxif" path="res://Scenes/Enemy/Boss/eldritch_worm.tscn" id="12_fe2lt"]
 [ext_resource type="Script" path="res://Script/System/Trigger/trigger_switch.gd" id="13_4kewg"]
+[ext_resource type="Script" path="res://Script/CombatComponent/status_value.gd" id="13_bytpb"]
 [ext_resource type="Resource" uid="uid://d0hu10hex47us" path="res://Data/Passage/level_0/scene_0_9.tres" id="13_drier"]
+[ext_resource type="PackedScene" uid="uid://cqow16cipyw6e" path="res://Scenes/Player/pickup_upgrade.tscn" id="14_iby04"]
+[ext_resource type="Script" path="res://Script/CombatComponent/health_system.gd" id="14_ma2fo"]
+[ext_resource type="Script" path="res://Script/Player/Item/Unlockable/unlockable.gd" id="15_5wraq"]
+[ext_resource type="Texture2D" uid="uid://d1saga0euoj4u" path="res://Art/BG/Cave/bg_mid.png" id="16_dm6mp"]
+[ext_resource type="Texture2D" uid="uid://bbctbcoto4a3v" path="res://Art/BG/Cave/rock_01.png" id="17_0mnmc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tjf6e"]
 size = Vector2(112, 448)
@@ -22,6 +28,33 @@ size = Vector2(64, 192)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_koqq6"]
 load_path = "res://.godot/imported/Gradient light.png-9aaf2fd178fa7e8c49f99711a8b8b0aa.ctex"
+
+[sub_resource type="Resource" id="Resource_xp22s"]
+resource_local_to_scene = true
+script = ExtResource("13_bytpb")
+max_value = 60.0
+
+[sub_resource type="Resource" id="Resource_0nm8n"]
+resource_local_to_scene = true
+script = ExtResource("13_bytpb")
+max_value = 20.0
+
+[sub_resource type="Resource" id="Resource_1d01d"]
+resource_local_to_scene = true
+script = ExtResource("14_ma2fo")
+health = SubResource("Resource_xp22s")
+stance = SubResource("Resource_0nm8n")
+
+[sub_resource type="Resource" id="Resource_du6wo"]
+script = ExtResource("15_5wraq")
+unlock_type = 2
+
+[sub_resource type="Gradient" id="Gradient_l7ym6"]
+offsets = PackedFloat32Array(0.00766284, 1)
+colors = PackedColorArray(0.208778, 0.509643, 0.687258, 1, 0.0395356, 0.159976, 0.229901, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_oalen"]
+gradient = SubResource("Gradient_l7ym6")
 
 [node name="Boss_room_0" type="Node2D"]
 
@@ -39,24 +72,24 @@ layer_0/tile_data = PackedInt32Array(917504, 65536, 1, 983040, 65536, 1, 1048576
 
 [node name="Zone1" type="Node2D" parent="Camera"]
 script = ExtResource("4_uany3")
-zoom = Vector2(1.5, 1.5)
+zoom = Vector2(1.2, 1.2)
 limit_left = 0
 limit_top = 0
 limit_right = 3700
 limit_bottom = 1050
 
 [node name="Zone_boss" type="Node2D" parent="Camera"]
-position = Vector2(328, 0)
+position = Vector2(336, -24)
 script = ExtResource("4_uany3")
-zoom = Vector2(1.5, 1.5)
+zoom = Vector2(1.2, 1.2)
 limit_left = 0
 limit_top = 0
 limit_right = 1700
-limit_bottom = 1050
+limit_bottom = 1100
 
 [node name="CinematicCamera2D" type="Camera2D" parent="Camera" node_paths=PackedStringArray("follow_node", "virtual_camera")]
-position = Vector2(688, 536)
-zoom = Vector2(1.5, 1.5)
+position = Vector2(848, 472)
+zoom = Vector2(1.2, 1.2)
 script = ExtResource("5_1uel5")
 follow_node = NodePath("../../Player")
 virtual_camera = NodePath("../Zone1")
@@ -87,19 +120,8 @@ shape = SubResource("RectangleShape2D_tjf6e")
 
 [node name="Door" parent="." node_paths=PackedStringArray("trigger") instance=ExtResource("7_8ij4x")]
 position = Vector2(1952, 800)
-trigger = NodePath("../FightTrigger")
+trigger = NodePath("../EldritchWorm/FightTrigger")
 open = true
-
-[node name="FightTrigger" type="RayCast2D" parent="."]
-position = Vector2(832, -64)
-target_position = Vector2(0, 984)
-collision_mask = 16
-script = ExtResource("13_4kewg")
-
-[node name="EldritchWorm" parent="." node_paths=PackedStringArray("front_ray", "room_trigger") instance=ExtResource("12_fe2lt")]
-position = Vector2(1344, 896)
-front_ray = NodePath("../FightTrigger")
-room_trigger = NodePath("../FightTrigger")
 
 [node name="Passage" type="Node2D" parent="."]
 
@@ -153,3 +175,104 @@ position = Vector2(0, -3.05176e-05)
 scale = Vector2(1.15654, 0.372251)
 texture = SubResource("CompressedTexture2D_koqq6")
 flip_h = true
+
+[node name="EldritchWorm" parent="." node_paths=PackedStringArray("front_ray", "room_trigger") instance=ExtResource("12_fe2lt")]
+position = Vector2(1216, 896)
+front_ray = NodePath("FightTrigger")
+room_trigger = NodePath("FightTrigger")
+health_system = SubResource("Resource_1d01d")
+
+[node name="FightTrigger" type="RayCast2D" parent="EldritchWorm"]
+position = Vector2(-384, -960)
+target_position = Vector2(0, 984)
+collision_mask = 16
+script = ExtResource("13_4kewg")
+
+[node name="Pickup_upgrade3" parent="." instance=ExtResource("14_iby04")]
+position = Vector2(2560, 792)
+text_to_display = "Elemental absorb and Skill unlock!
+press 'D' or joypad right action button
+to get the element
+press 'S' for use the element skill"
+unlock_type = SubResource("Resource_du6wo")
+
+[node name="Scene Decor" type="Node2D" parent="."]
+position = Vector2(16, 0)
+
+[node name="-4" type="CanvasLayer" parent="Scene Decor"]
+layer = -4
+
+[node name="Control" type="Control" parent="Scene Decor/-4"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Scene Decor/-4/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1920.0
+offset_right = 1080.0
+offset_bottom = 840.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+texture = SubResource("GradientTexture1D_oalen")
+expand_mode = 1
+
+[node name="-3" type="CanvasLayer" parent="Scene Decor"]
+layer = -3
+follow_viewport_enabled = true
+follow_viewport_scale = 0.7
+
+[node name="-2" type="CanvasLayer" parent="Scene Decor"]
+layer = -2
+follow_viewport_enabled = true
+follow_viewport_scale = 0.8
+
+[node name="BgMid" type="Sprite2D" parent="Scene Decor/-2"]
+modulate = Color(0.376471, 0.376471, 0.376471, 1)
+position = Vector2(160, 679)
+texture = ExtResource("16_dm6mp")
+
+[node name="BgMid2" type="Sprite2D" parent="Scene Decor/-2"]
+modulate = Color(0.376471, 0.376471, 0.376471, 1)
+position = Vector2(2070, 690)
+texture = ExtResource("16_dm6mp")
+
+[node name="BgMid3" type="Sprite2D" parent="Scene Decor/-2"]
+modulate = Color(0.376471, 0.376471, 0.376471, 1)
+position = Vector2(3930, 679)
+texture = ExtResource("16_dm6mp")
+
+[node name="-1" type="CanvasLayer" parent="Scene Decor"]
+layer = -1
+follow_viewport_enabled = true
+follow_viewport_scale = 0.9
+
+[node name="Rock01" type="Sprite2D" parent="Scene Decor/-1"]
+position = Vector2(124.444, 836.056)
+texture = ExtResource("17_0mnmc")
+
+[node name="Rock02" type="Sprite2D" parent="Scene Decor/-1"]
+position = Vector2(2035.56, 836.056)
+texture = ExtResource("17_0mnmc")
+flip_h = true
+
+[node name="Rock03" type="Sprite2D" parent="Scene Decor/-1"]
+position = Vector2(3937.78, 836.056)
+texture = ExtResource("17_0mnmc")
+
+[node name="0" type="CanvasLayer" parent="Scene Decor"]
+visible = false
+follow_viewport_enabled = true
+
+[node name="1" type="CanvasLayer" parent="Scene Decor"]
+layer = 2
+visible = false
+follow_viewport_enabled = true
+follow_viewport_scale = 1.1

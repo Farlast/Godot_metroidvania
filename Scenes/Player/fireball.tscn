@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://g8s4vwr1xt5"]
+
+[ext_resource type="Script" path="res://Script/Player/Skill/fireball.gd" id="1_xoksn"]
+[ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="2_m4tt3"]
+
+[sub_resource type="Resource" id="Resource_mljss"]
+script = ExtResource("2_m4tt3")
+damage = 3.0
+impact = 0.0
+knockback = 400.0
+sender_position = Vector2(0, 0)
+take_damage_rule = 0
+take_damage_mask = 1
+element = 2
+
+[node name="Fireball" type="Node2D"]
+script = ExtResource("1_xoksn")
+bullet_path = "res://Scenes/Effect/fire_bullet.tscn"
+damage_data = SubResource("Resource_mljss")

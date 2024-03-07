@@ -3,7 +3,9 @@ class_name Enemy
 
 signal on_dead
 
-@export var health : float = 3
+var health : float
+@export var max_health : float = 1
+@export var health_system : HealthSystem 
 @export var gravity_multiply :float = 2.5
 @export var stagger_duration : float = 0.3
 
@@ -23,24 +25,39 @@ signal on_dead
 @onready var collion : CollisionShape2D = $GroundCollision
 
 @onready var state_machine : EnemyStateMachine = $EnemyStateMachine
-@onready var on_screen : VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
-@onready var direction_holder : Node2D = $Directions
+@onready var direction_holder : Node2D = $Direction
+@onready var sprite : Sprite2D = $Direction/Sprite2D
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var get_hit_direction : Vector2
 
-func take_damage(damage_data : DamageData):
-	health -= damage_data.damage
-	hit_effect.rotation = get_angle_to(damage_data.sender_position) + PI
-	hit_effect.restart()
-	slash_effect.restart()
-	hit_sound.play()
-	if health <= 0:
-		dead()
-	else :
-		get_hit_direction = (damage_data.sender_position - global_position).normalized()
-		state_machine.current_state.transition.emit(state_machine.current_state,"stagger")
+var shader : ShaderMaterial
+var flashing_duration : float = 0.1
+
+func _ready():
+	health_system.setup()
+	health_system.dead.connect(dead)
+	shader = sprite.material as ShaderMaterial
+
+func take_damage(damage_data : DamageData)->bool:
+	var is_hit:bool = calculate_damage(damage_data)
+	if is_hit:
+		flash_on_hit()
+		hit_effect.rotation = get_angle_to(damage_data.sender_position) + PI
+		hit_effect.restart()
+		slash_effect.restart()
+		hit_sound.play()
+	return is_hit
+
+func calculate_damage(damage_data : DamageData)-> bool:
+	health_system.calculate_damage(damage_data)
+	return true
+
+func flash_on_hit():
+	shader.set_shader_parameter("active",true)
+	await get_tree().create_timer(flashing_duration).timeout
+	shader.set_shader_parameter("active",false)
 	
 func add_gravity(delta):
 	if not is_on_floor() :

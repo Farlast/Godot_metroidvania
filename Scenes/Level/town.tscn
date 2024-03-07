@@ -1,0 +1,265 @@
+[gd_scene load_steps=24 format=3 uid="uid://c2suymblxl347"]
+
+[ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_lx0pb"]
+[ext_resource type="PackedScene" uid="uid://b0byka5d5aixx" path="res://Scenes/Player/player.tscn" id="2_fidp3"]
+[ext_resource type="TileSet" uid="uid://dfn081kuhi648" path="res://Data/base_tileset.tres" id="2_jypaw"]
+[ext_resource type="PackedScene" uid="uid://b08nxbr1cmil6" path="res://Scenes/Props/save_point.tscn" id="3_dl4bu"]
+[ext_resource type="Script" path="res://Script/Levels/passage_Handle.gd" id="5_qywsw"]
+[ext_resource type="Script" path="res://Script/Levels/next_area_path.gd" id="6_1xkvo"]
+[ext_resource type="Resource" uid="uid://c53dkk1xrm567" path="res://Data/Passage/level_0/scene_0_12.tres" id="7_5yjhf"]
+[ext_resource type="Resource" uid="uid://3logo416qkrj" path="res://Data/Passage/Town/town.tres" id="9_lmuux"]
+[ext_resource type="Script" path="res://addons/cinematic_camera_2d/scripts/cinematic_camera_2d.gd" id="9_txmud"]
+[ext_resource type="Script" path="res://addons/cinematic_camera_2d/scripts/virtual_camera_2d.gd" id="10_nes08"]
+[ext_resource type="Texture2D" uid="uid://dm1k3wuihhcxr" path="res://Art/BG/Cove/clound.png" id="11_j3ova"]
+[ext_resource type="Script" path="res://Script/System/MenuTrigger/finish_game.gd" id="11_txs7p"]
+[ext_resource type="Texture2D" uid="uid://c0p10hjw8tiwc" path="res://Art/BG/Cove/clound_2.png" id="12_kqak5"]
+[ext_resource type="Texture2D" uid="uid://d1saga0euoj4u" path="res://Art/BG/Cave/bg_mid.png" id="13_1wfo2"]
+[ext_resource type="Texture2D" uid="uid://bbctbcoto4a3v" path="res://Art/BG/Cave/rock_01.png" id="14_s4vup"]
+[ext_resource type="Texture2D" uid="uid://csouy237idcsv" path="res://Art/BG/Cave/rock_02.png" id="15_dk86y"]
+[ext_resource type="AudioStream" uid="uid://csk6rh1tb4t2i" path="res://Audio/Ambient/Ambiance_Cave_Dark_Loop_Stereo.wav" id="17_1pcfa"]
+
+[sub_resource type="Resource" id="Resource_2b0im"]
+script = ExtResource("5_qywsw")
+passage_name = "SavePoint"
+target_scene_path = "res://Scenes/Level/town.tscn"
+target_passage_id = -1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_foevi"]
+size = Vector2(64, 256)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rt7a2"]
+load_path = "res://.godot/imported/Gradient light.png-9aaf2fd178fa7e8c49f99711a8b8b0aa.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4md2u"]
+size = Vector2(80, 256)
+
+[sub_resource type="Gradient" id="Gradient_jlbfk"]
+offsets = PackedFloat32Array(0, 0.555556, 1)
+colors = PackedColorArray(0.0309593, 0.179886, 0.343047, 1, 0.208778, 0.509643, 0.687258, 1, 0.745142, 0.894217, 0.986693, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ofvuu"]
+gradient = SubResource("Gradient_jlbfk")
+
+[node name="Town" type="Node2D"]
+
+[node name="HUD" parent="." instance=ExtResource("1_lx0pb")]
+
+[node name="Player" parent="." instance=ExtResource("2_fidp3")]
+position = Vector2(152, 832)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("2_jypaw")
+format = 2
+layer_0/tile_data = PackedInt32Array(65534, 196608, 2, 1245183, 65536, 2, 1179647, 65536, 1, 1114111, 65536, 1, 1048575, 65536, 1, 983039, 65536, 1, 917503, 65536, 0, 1245182, 0, 2, 1179646, 0, 1, 1114110, 0, 1, 1048574, 0, 1, 983038, 0, 1, 917502, 0, 1, 851966, 196608, 2, 786430, 196608, 2, 720894, 196608, 2, 655358, 196608, 2, 589822, 196608, 2, 524286, 196608, 2, 458750, 196608, 2, 393214, 196608, 2, 327678, 196608, 2, 262142, 196608, 2, 196606, 196608, 2, 131070, 196608, 2, 1179649, 65536, 2, 1114113, 65536, 1, 1048577, 65536, 1, 983041, 65536, 1, 917505, 65536, 1, 851969, 65536, 0, 1179648, 65536, 2, 1114112, 65536, 1, 1048576, 65536, 1, 983040, 65536, 1, 917504, 65536, 1, 851968, 65536, 0, 1179679, 65536, 2, 1114143, 65536, 1, 1048607, 65536, 1, 983071, 65536, 1, 917535, 65536, 1, 851999, 65536, 0, 1179678, 65536, 2, 1114142, 65536, 1, 1048606, 65536, 1, 983070, 65536, 1, 917534, 65536, 1, 851998, 65536, 0, 1179677, 65536, 2, 1114141, 65536, 1, 1048605, 65536, 1, 983069, 65536, 1, 917533, 65536, 1, 851997, 65536, 0, 1179676, 65536, 2, 1114140, 65536, 1, 1048604, 65536, 1, 983068, 65536, 1, 917532, 65536, 1, 851996, 65536, 0, 1179675, 65536, 2, 1114139, 65536, 1, 1048603, 65536, 1, 983067, 65536, 1, 917531, 65536, 1, 851995, 65536, 0, 1179674, 65536, 2, 1114138, 65536, 1, 1048602, 65536, 1, 983066, 65536, 1, 917530, 65536, 1, 851994, 65536, 0, 1179673, 65536, 2, 1114137, 65536, 1, 1048601, 65536, 1, 983065, 65536, 1, 917529, 65536, 1, 851993, 65536, 0, 1179672, 65536, 2, 1114136, 65536, 1, 1048600, 65536, 1, 983064, 65536, 1, 917528, 65536, 1, 851992, 65536, 0, 1179671, 65536, 2, 1114135, 65536, 1, 1048599, 65536, 1, 983063, 65536, 1, 917527, 65536, 1, 851991, 65536, 0, 1179670, 65536, 2, 1114134, 65536, 1, 1048598, 65536, 1, 983062, 65536, 1, 917526, 65536, 1, 851990, 65536, 0, 1179669, 65536, 2, 1114133, 65536, 1, 1048597, 65536, 1, 983061, 65536, 1, 917525, 65536, 1, 851989, 65536, 0, 1179668, 65536, 2, 1114132, 65536, 1, 1048596, 65536, 1, 983060, 65536, 1, 917524, 65536, 1, 851988, 65536, 0, 1179667, 65536, 2, 1114131, 65536, 1, 1048595, 65536, 1, 983059, 65536, 1, 917523, 65536, 1, 851987, 65536, 0, 1179666, 65536, 2, 1114130, 65536, 1, 1048594, 65536, 1, 983058, 65536, 1, 917522, 65536, 1, 851986, 65536, 0, 1179665, 65536, 2, 1114129, 65536, 1, 1048593, 65536, 1, 983057, 65536, 1, 917521, 65536, 1, 851985, 65536, 0, 1179664, 65536, 2, 1114128, 65536, 1, 1048592, 65536, 1, 983056, 65536, 1, 917520, 65536, 1, 851984, 65536, 0, 1179663, 65536, 2, 1114127, 65536, 1, 1048591, 65536, 1, 983055, 65536, 1, 917519, 65536, 1, 851983, 65536, 0, 1179662, 65536, 2, 1114126, 65536, 1, 1048590, 65536, 1, 983054, 65536, 1, 917518, 65536, 1, 851982, 65536, 0, 1179661, 65536, 2, 1114125, 65536, 1, 1048589, 65536, 1, 983053, 65536, 1, 917517, 65536, 1, 851981, 65536, 0, 1179660, 65536, 2, 1114124, 65536, 1, 1048588, 65536, 1, 983052, 65536, 1, 917516, 65536, 1, 851980, 65536, 0, 1179659, 65536, 2, 1114123, 65536, 1, 1048587, 65536, 1, 983051, 65536, 1, 917515, 65536, 1, 851979, 65536, 0, 1179658, 65536, 2, 1114122, 65536, 1, 1048586, 65536, 1, 983050, 65536, 1, 917514, 65536, 1, 851978, 65536, 0, 1179657, 65536, 2, 1114121, 65536, 1, 1048585, 65536, 1, 983049, 65536, 1, 917513, 65536, 1, 851977, 65536, 0, 1179656, 65536, 2, 1114120, 65536, 1, 1048584, 65536, 1, 983048, 65536, 1, 917512, 65536, 1, 851976, 65536, 0, 1179655, 65536, 2, 1114119, 65536, 1, 1048583, 65536, 1, 983047, 65536, 1, 917511, 65536, 1, 851975, 65536, 0, 1179654, 65536, 2, 1114118, 65536, 1, 1048582, 65536, 1, 983046, 65536, 1, 917510, 65536, 1, 851974, 65536, 0, 1179653, 65536, 2, 1114117, 65536, 1, 1048581, 65536, 1, 983045, 65536, 1, 917509, 65536, 1, 851973, 65536, 0, 1179652, 65536, 2, 1114116, 65536, 1, 1048580, 65536, 1, 983044, 65536, 1, 917508, 65536, 1, 851972, 65536, 0, 1179651, 65536, 2, 1114115, 65536, 1, 1048579, 65536, 1, 983043, 65536, 1, 917507, 65536, 1, 851971, 65536, 0, 1179650, 65536, 2, 1114114, 65536, 1, 1048578, 65536, 1, 983042, 65536, 1, 917506, 65536, 1, 851970, 65536, 0, -2, 196608, 1, 1179709, 131072, 2, 1114173, 131072, 1, 1048637, 131072, 1, 983101, 131072, 1, 917565, 131072, 1, 852029, 131072, 1, 1179708, 65536, 2, 1114172, 65536, 1, 1048636, 65536, 1, 983100, 65536, 1, 917564, 65536, 1, 852028, 327680, 1, 1179707, 65536, 2, 1114171, 65536, 1, 1048635, 65536, 1, 983099, 65536, 1, 917563, 65536, 1, 852027, 65536, 0, 1179706, 65536, 2, 1114170, 65536, 1, 1048634, 65536, 1, 983098, 65536, 1, 917562, 65536, 1, 852026, 65536, 0, 1179705, 65536, 2, 1114169, 65536, 1, 1048633, 65536, 1, 983097, 65536, 1, 917561, 65536, 1, 852025, 65536, 0, 1179704, 65536, 2, 1114168, 65536, 1, 1048632, 65536, 1, 983096, 65536, 1, 917560, 65536, 1, 852024, 65536, 0, 1179703, 65536, 2, 1114167, 65536, 1, 1048631, 65536, 1, 983095, 65536, 1, 917559, 65536, 1, 852023, 65536, 0, 1179702, 65536, 2, 1114166, 65536, 1, 1048630, 65536, 1, 983094, 65536, 1, 917558, 65536, 1, 852022, 65536, 0, 1179701, 65536, 2, 1114165, 65536, 1, 1048629, 65536, 1, 983093, 65536, 1, 917557, 65536, 1, 852021, 65536, 0, 1179700, 65536, 2, 1114164, 65536, 1, 1048628, 65536, 1, 983092, 65536, 1, 917556, 65536, 1, 852020, 65536, 0, 1179699, 65536, 2, 1114163, 65536, 1, 1048627, 65536, 1, 983091, 65536, 1, 917555, 65536, 1, 852019, 65536, 0, 1179698, 65536, 2, 1114162, 65536, 1, 1048626, 65536, 1, 983090, 65536, 1, 917554, 65536, 1, 852018, 65536, 0, 1179697, 65536, 2, 1114161, 65536, 1, 1048625, 65536, 1, 983089, 65536, 1, 917553, 65536, 1, 852017, 65536, 0, 1179696, 65536, 2, 1114160, 65536, 1, 1048624, 65536, 1, 983088, 65536, 1, 917552, 65536, 1, 852016, 65536, 0, 1179695, 65536, 2, 1114159, 65536, 1, 1048623, 65536, 1, 983087, 65536, 1, 917551, 65536, 1, 852015, 65536, 0, 1179694, 65536, 2, 1114158, 65536, 1, 1048622, 65536, 1, 983086, 65536, 1, 917550, 65536, 1, 852014, 65536, 0, 1179693, 65536, 2, 1114157, 65536, 1, 1048621, 65536, 1, 983085, 65536, 1, 917549, 65536, 1, 852013, 65536, 0, 1179692, 65536, 2, 1114156, 65536, 1, 1048620, 65536, 1, 983084, 65536, 1, 917548, 65536, 1, 852012, 65536, 0, 1179691, 65536, 2, 1114155, 65536, 1, 1048619, 65536, 1, 983083, 65536, 1, 917547, 65536, 1, 852011, 65536, 0, 1179690, 65536, 2, 1114154, 65536, 1, 1048618, 65536, 1, 983082, 65536, 1, 917546, 65536, 1, 852010, 65536, 0, 1179689, 65536, 2, 1114153, 65536, 1, 1048617, 65536, 1, 983081, 65536, 1, 917545, 65536, 1, 852009, 65536, 0, 1179688, 65536, 2, 1114152, 65536, 1, 1048616, 65536, 1, 983080, 65536, 1, 917544, 65536, 1, 852008, 65536, 0, 1179687, 65536, 2, 1114151, 65536, 1, 1048615, 65536, 1, 983079, 65536, 1, 917543, 65536, 1, 852007, 65536, 0, 1179686, 65536, 2, 1114150, 65536, 1, 1048614, 65536, 1, 983078, 65536, 1, 917542, 65536, 1, 852006, 65536, 0, 1179685, 65536, 2, 1114149, 65536, 1, 1048613, 65536, 1, 983077, 65536, 1, 917541, 65536, 1, 852005, 65536, 0, 1179684, 65536, 2, 1114148, 65536, 1, 1048612, 65536, 1, 983076, 65536, 1, 917540, 65536, 1, 852004, 65536, 0, 1179683, 65536, 2, 1114147, 65536, 1, 1048611, 65536, 1, 983075, 65536, 1, 917539, 65536, 1, 852003, 65536, 0, 1179682, 65536, 2, 1114146, 65536, 1, 1048610, 65536, 1, 983074, 65536, 1, 917538, 65536, 1, 852002, 65536, 0, 1179681, 65536, 2, 1114145, 65536, 1, 1048609, 65536, 1, 983073, 65536, 1, 917537, 65536, 1, 852001, 65536, 0, 1179680, 65536, 2, 1114144, 65536, 1, 1048608, 65536, 1, 983072, 65536, 1, 917536, 65536, 1, 852000, 65536, 0, 458813, 131072, 1, 393277, 131072, 1, 327741, 131072, 1, 262205, 131072, 1, 196669, 131072, 1, 131133, 131072, 1, 65597, 131072, 1, 61, 131072, 1, 458812, 65536, 1, 393276, 65536, 1, 327740, 65536, 1, 262204, 65536, 1, 196668, 65536, 1, 131132, 65536, 1, 65596, 65536, 1, 60, 65536, 1, 458811, 65536, 1, 393275, 65536, 1, 327739, 65536, 1, 262203, 65536, 1, 196667, 65536, 1, 131131, 65536, 1, 65595, 65536, 1, 59, 65536, 1, 524349, 131072, 1, 524348, 327680, 0, 524347, 65536, 2, 589885, 131072, 1, 655421, 131072, 1, 720957, 131072, 1, 786493, 131072, 1, 589884, 0, 1, 655420, 0, 1, 720956, 0, 1, 786492, 0, 1, 524346, 65536, 2, 458810, 65536, 1, 393274, 65536, 1, 327738, 65536, 1, 262202, 65536, 1, 196666, 65536, 1, 131130, 65536, 1, 131129, 0, 1, 65593, 0, 1, 57, 0, 1, 58, 65536, 1, 65594, 65536, 1, 196665, 0, 1, 262201, 0, 1, 327737, 0, 1, 393273, 0, 1, 458809, 0, 1, 524345, 0, 2, -65479, 0, 0, -65478, 65536, 0, -65477, 65536, 0, -65476, 65536, 0, -65475, 131072, 0, 327716, 0, 3, 327717, 65536, 3, 327718, 65536, 3, 327719, 65536, 3, 327720, 65536, 3, 327721, 65536, 3, 327722, 65536, 3, 327723, 65536, 3, 327724, 65536, 3, 327725, 65536, 3, 327726, 65536, 3, 327727, 131072, 3, 393222, 0, 3, 393223, 65536, 3, 393224, 65536, 3, 393225, 65536, 3, 393226, 65536, 3, 393227, 131072, 3)
+
+[node name="SavePoint" parent="." node_paths=PackedStringArray("spawn_position", "cinematic_camera", "virtual_camera", "player") instance=ExtResource("3_dl4bu")]
+position = Vector2(1592, 832)
+spawn_position = NodePath(".")
+path_data = SubResource("Resource_2b0im")
+cinematic_camera = NodePath("../Camera/CinematicCamera2D")
+virtual_camera = NodePath("../Camera/zone")
+player = NodePath("../Player")
+
+[node name="Camera" type="Node2D" parent="."]
+position = Vector2(0, -64)
+
+[node name="CinematicCamera2D" type="Camera2D" parent="Camera" node_paths=PackedStringArray("follow_node", "virtual_camera")]
+position = Vector2(832, 792)
+offset = Vector2(0, -150)
+zoom = Vector2(1.2, 1.2)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_vertical_offset = -1.0
+drag_left_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.06
+editor_draw_drag_margin = true
+script = ExtResource("9_txmud")
+follow_node = NodePath("../../Player")
+virtual_camera = NodePath("../zone")
+transition_speed = 0.5
+
+[node name="zone" type="Node2D" parent="Camera"]
+script = ExtResource("10_nes08")
+zoom = Vector2(1.2, 1.2)
+limit_left = 0
+limit_top = 0
+limit_right = 3700
+limit_bottom = 1080
+
+[node name="Passage" type="Node2D" parent="."]
+
+[node name="Left" type="Area2D" parent="Passage" node_paths=PackedStringArray("cinematic_camera", "virtual_camera", "exit_position")]
+position = Vector2(32, 736)
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("6_1xkvo")
+cinematic_camera = NodePath("../../Camera/CinematicCamera2D")
+virtual_camera = NodePath("../../Camera/zone")
+exit_position = NodePath("Exit")
+this_scene_passage_handle = ExtResource("9_lmuux")
+next_scene_passage_handle = ExtResource("7_5yjhf")
+this_passage_index = 0
+next_passage_target = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Passage/Left"]
+position = Vector2(-72, -32)
+shape = SubResource("RectangleShape2D_foevi")
+
+[node name="Exit" type="Node2D" parent="Passage/Left"]
+position = Vector2(128, 96)
+
+[node name="Light" type="Sprite2D" parent="Passage/Left"]
+modulate = Color(1, 1, 1, 0.788235)
+position = Vector2(7.99997, -32.3519)
+scale = Vector2(1.15654, 0.498626)
+texture = SubResource("CompressedTexture2D_rt7a2")
+
+[node name="Right" type="Area2D" parent="Passage" node_paths=PackedStringArray("cinematic_camera", "virtual_camera", "exit_position")]
+position = Vector2(4344, 736)
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("6_1xkvo")
+cinematic_camera = NodePath("../../Camera/CinematicCamera2D")
+virtual_camera = NodePath("../../Camera/zone")
+exit_position = NodePath("Exit")
+this_scene_passage_handle = ExtResource("9_lmuux")
+next_scene_passage_handle = ExtResource("7_5yjhf")
+this_passage_index = 1
+next_passage_target = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Passage/Right"]
+position = Vector2(-80, -32)
+shape = SubResource("RectangleShape2D_foevi")
+
+[node name="Exit" type="Node2D" parent="Passage/Right"]
+position = Vector2(-304, 96)
+
+[node name="Light" type="Sprite2D" parent="Passage/Right"]
+modulate = Color(1, 1, 1, 0.788235)
+position = Vector2(7.99997, -32.3519)
+scale = Vector2(1.15654, 0.498626)
+texture = SubResource("CompressedTexture2D_rt7a2")
+flip_h = true
+
+[node name="End" type="Area2D" parent="Passage"]
+position = Vector2(3696, 704)
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("11_txs7p")
+next_scene_file = "res://Scenes/Menu/credit.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Passage/End"]
+position = Vector2(40, 0)
+shape = SubResource("RectangleShape2D_4md2u")
+
+[node name="Light" type="Sprite2D" parent="Passage/End"]
+modulate = Color(1, 1, 1, 0.788235)
+position = Vector2(-3.00407e-05, 3.05176e-05)
+scale = Vector2(1.15654, 0.498626)
+texture = SubResource("CompressedTexture2D_rt7a2")
+flip_h = true
+
+[node name="Scene Decor" type="Node2D" parent="."]
+position = Vector2(16, 0)
+
+[node name="-4" type="CanvasLayer" parent="Scene Decor"]
+layer = -4
+
+[node name="Control" type="Control" parent="Scene Decor/-4"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Scene Decor/-4/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1920.0
+offset_right = 1080.0
+offset_bottom = 840.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+texture = SubResource("GradientTexture1D_ofvuu")
+expand_mode = 1
+
+[node name="-3" type="CanvasLayer" parent="Scene Decor"]
+layer = -3
+follow_viewport_enabled = true
+follow_viewport_scale = 0.7
+
+[node name="Clound" type="Sprite2D" parent="Scene Decor/-3"]
+position = Vector2(1394.29, 685.714)
+texture = ExtResource("11_j3ova")
+
+[node name="Clound4" type="Sprite2D" parent="Scene Decor/-3"]
+position = Vector2(3714.29, 685.714)
+texture = ExtResource("11_j3ova")
+
+[node name="Clound2" type="Sprite2D" parent="Scene Decor/-3"]
+position = Vector2(728, 656)
+texture = ExtResource("12_kqak5")
+
+[node name="Clound3" type="Sprite2D" parent="Scene Decor/-3"]
+position = Vector2(22.8572, 834.286)
+texture = ExtResource("12_kqak5")
+
+[node name="-2" type="CanvasLayer" parent="Scene Decor"]
+layer = -2
+follow_viewport_enabled = true
+follow_viewport_scale = 0.8
+
+[node name="BgMid" type="Sprite2D" parent="Scene Decor/-2"]
+position = Vector2(160, 630)
+texture = ExtResource("13_1wfo2")
+
+[node name="BgMid2" type="Sprite2D" parent="Scene Decor/-2"]
+position = Vector2(2060, 630)
+texture = ExtResource("13_1wfo2")
+
+[node name="BgMid3" type="Sprite2D" parent="Scene Decor/-2"]
+position = Vector2(3930, 630)
+texture = ExtResource("13_1wfo2")
+
+[node name="-1" type="CanvasLayer" parent="Scene Decor"]
+layer = -1
+follow_viewport_enabled = true
+follow_viewport_scale = 0.9
+
+[node name="Rock01" type="Sprite2D" parent="Scene Decor/-1"]
+position = Vector2(115.556, 738.278)
+texture = ExtResource("14_s4vup")
+
+[node name="Rock02" type="Sprite2D" parent="Scene Decor/-1"]
+position = Vector2(2026.67, 738.278)
+texture = ExtResource("14_s4vup")
+flip_h = true
+
+[node name="Rock03" type="Sprite2D" parent="Scene Decor/-1"]
+position = Vector2(3928.89, 738.278)
+texture = ExtResource("14_s4vup")
+
+[node name="0" type="CanvasLayer" parent="Scene Decor"]
+follow_viewport_enabled = true
+
+[node name="1" type="CanvasLayer" parent="Scene Decor"]
+layer = 2
+follow_viewport_enabled = true
+follow_viewport_scale = 1.1
+
+[node name="Rock02" type="Sprite2D" parent="Scene Decor/1"]
+position = Vector2(632.727, 589.091)
+texture = ExtResource("15_dk86y")
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="Ambiance" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("17_1pcfa")
+autoplay = true
+bus = &"Effect"

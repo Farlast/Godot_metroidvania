@@ -4,9 +4,9 @@ extends Node2D
 @export var speed : float = 3
 @export var water : Texture2D
 @export var wood : Texture2D
+@export var fire : Texture2D
 
 var  lerp_target : Node2D
-
 
 func setup(start_position : Vector2, target : Node2D, element : ElementData.ElementType):
 	show()
@@ -17,6 +17,10 @@ func setup(start_position : Vector2, target : Node2D, element : ElementData.Elem
 			$Sprite2D.texture = water
 		ElementData.ElementType.POISON:
 			$Sprite2D.texture = wood
+		ElementData.ElementType.FIRE:
+			$Sprite2D.texture = fire
+		_:
+			$Sprite2D.texture = water
 
 func _physics_process(delta):
 	if lerp_target == null: return
@@ -24,5 +28,5 @@ func _physics_process(delta):
 
 func set_display_off():
 	hide()
-	lerp_target = null
-	queue_free()
+	#lerp_target = null
+	#queue_free()

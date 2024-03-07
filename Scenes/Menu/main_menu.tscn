@@ -1,94 +1,210 @@
-[gd_scene load_steps=6 format=3 uid="uid://pu8ioxa2h1wq"]
+[gd_scene load_steps=14 format=3 uid="uid://pu8ioxa2h1wq"]
 
 [ext_resource type="Script" path="res://Script/UI/MainMenu/main_menu.gd" id="1_adq35"]
 [ext_resource type="StyleBox" uid="uid://dmmoqnu1vcbi" path="res://Data/StyleBox/button_main_menu.tres" id="2_a34wg"]
+[ext_resource type="Texture2D" uid="uid://h5258aqk51xp" path="res://Art/BG/Menu/Coast.png" id="2_cubrm"]
 [ext_resource type="FontFile" uid="uid://c5fpksk7u1rcn" path="res://Data/Font/Maitree-Bold.ttf" id="3_63bhw"]
+[ext_resource type="FontFile" uid="uid://da2b4sg5he2xb" path="res://Data/Font/Roboto-Regular.ttf" id="3_ufej3"]
 [ext_resource type="Script" path="res://Script/System/MenuTrigger/to_scene_button.gd" id="3_wkkbp"]
+[ext_resource type="PackedScene" uid="uid://0rd41e8f6ghu" path="res://Scenes/UIComponent/save_slot.tscn" id="8_gt8yp"]
+[ext_resource type="AudioStream" uid="uid://jbvp240wbo24" path="res://Audio/Ambient/Ambiance_Sea_Loop_Stereo.wav" id="9_1q1tm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hhcby"]
 font = ExtResource("3_63bhw")
-font_size = 200
+font_size = 150
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.184314)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gt6m1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bd6a6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xe4jf"]
+font = ExtResource("3_63bhw")
+font_size = 100
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xj3bn"]
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_adq35")
 first_area = "res://Scenes/Level/level_0_0.tscn"
 
-[node name="Background" type="ColorRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.431373, 0.580392, 0.635294, 1)
+[node name="bg" type="Sprite2D" parent="."]
+modulate = Color(0.701961, 0.701961, 0.701961, 1)
+position = Vector2(960, 543)
+texture = ExtResource("2_cubrm")
 
-[node name="Label" type="Label" parent="."]
+[node name="Main" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Main"]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -560.0
-offset_top = 144.0
-offset_right = 520.0
-offset_bottom = 488.0
+offset_left = 778.0
+offset_top = 111.0
+offset_right = 1998.0
+offset_bottom = 359.0
 grow_horizontal = 2
 size_flags_horizontal = 4
-text = "Aquaforge"
+text = "Spirimental"
 label_settings = SubResource("LabelSettings_hhcby")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ButtonGroup" type="VBoxContainer" parent="."]
+[node name="ButtonGroup" type="VBoxContainer" parent="Main"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 568.0
-offset_top = 576.0
-offset_right = -576.0
-offset_bottom = -59.0
+offset_left = 1118.0
+offset_top = 461.0
+offset_right = 1807.0
+offset_bottom = 781.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="Continue" type="Button" parent="ButtonGroup"]
-layout_mode = 2
-focus_neighbor_top = NodePath("../Quit")
-focus_neighbor_bottom = NodePath("../Start")
-theme_override_font_sizes/font_size = 35
-theme_override_styles/focus = ExtResource("2_a34wg")
-text = "Continue"
-
-[node name="Start" type="Button" parent="ButtonGroup"]
+[node name="Start" type="Button" parent="Main/ButtonGroup"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../Option")
-theme_override_font_sizes/font_size = 35
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.215686, 0.215686, 0.215686, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_ufej3")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_gt6m1")
+theme_override_styles/hover = ExtResource("2_a34wg")
 theme_override_styles/focus = ExtResource("2_a34wg")
 text = "Start"
 
-[node name="Option" type="Button" parent="ButtonGroup"]
+[node name="Option" type="Button" parent="Main/ButtonGroup"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Start")
-theme_override_font_sizes/font_size = 35
+focus_neighbor_bottom = NodePath("../Credit")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.215686, 0.215686, 0.215686, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_ufej3")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_gt6m1")
+theme_override_styles/hover = ExtResource("2_a34wg")
 theme_override_styles/focus = ExtResource("2_a34wg")
 text = "Option"
 
-[node name="Credit" type="Button" parent="ButtonGroup"]
+[node name="Credit" type="Button" parent="Main/ButtonGroup"]
 layout_mode = 2
-focus_neighbor_top = NodePath("../Start")
-theme_override_font_sizes/font_size = 35
+focus_neighbor_top = NodePath("../Option")
+focus_neighbor_bottom = NodePath("../Quit")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.215686, 0.215686, 0.215686, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_ufej3")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_gt6m1")
+theme_override_styles/hover = ExtResource("2_a34wg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_bd6a6")
 theme_override_styles/focus = ExtResource("2_a34wg")
 text = "Credit"
 script = ExtResource("3_wkkbp")
 next_scene_file = "res://Scenes/Menu/credit.tscn"
 
-[node name="Quit" type="Button" parent="ButtonGroup"]
+[node name="Quit" type="Button" parent="Main/ButtonGroup"]
 layout_mode = 2
-focus_neighbor_top = NodePath("../Option")
+focus_neighbor_top = NodePath("../Credit")
 focus_neighbor_bottom = NodePath("../Start")
-theme_override_font_sizes/font_size = 35
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.215686, 0.215686, 0.215686, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_ufej3")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_gt6m1")
+theme_override_styles/hover = ExtResource("2_a34wg")
 theme_override_styles/focus = ExtResource("2_a34wg")
 text = "Quit"
 
-[connection signal="pressed" from="ButtonGroup/Continue" to="." method="continue_game"]
-[connection signal="pressed" from="ButtonGroup/Start" to="." method="start_game"]
-[connection signal="pressed" from="ButtonGroup/Option" to="." method="option_menu"]
-[connection signal="pressed" from="ButtonGroup/Quit" to="." method="quit_menu"]
+[node name="SaveSelect" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="SaveSelect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0666667, 0.168627, 0.262745, 0.564706)
+
+[node name="SaveVBoxContainer" type="VBoxContainer" parent="SaveSelect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="SaveSelect/SaveVBoxContainer"]
+layout_mode = 2
+text = "SAVE SELECT"
+label_settings = SubResource("LabelSettings_xe4jf")
+horizontal_alignment = 1
+
+[node name="SaveSlot" parent="SaveSelect/SaveVBoxContainer" node_paths=PackedStringArray("bottom_node") instance=ExtResource("8_gt8yp")]
+layout_mode = 2
+index = 1
+bottom_node = NodePath("../SaveSlot2")
+
+[node name="SaveSlot2" parent="SaveSelect/SaveVBoxContainer" node_paths=PackedStringArray("up_node", "bottom_node") instance=ExtResource("8_gt8yp")]
+layout_mode = 2
+index = 2
+up_node = NodePath("../SaveSlot")
+bottom_node = NodePath("../SaveSlot3")
+
+[node name="SaveSlot3" parent="SaveSelect/SaveVBoxContainer" node_paths=PackedStringArray("up_node", "bottom_node") instance=ExtResource("8_gt8yp")]
+layout_mode = 2
+index = 3
+up_node = NodePath("../SaveSlot2")
+bottom_node = NodePath("../SaveSlot4")
+
+[node name="SaveSlot4" parent="SaveSelect/SaveVBoxContainer" node_paths=PackedStringArray("up_node") instance=ExtResource("8_gt8yp")]
+layout_mode = 2
+index = 4
+up_node = NodePath("../SaveSlot3")
+
+[node name="Back" type="Button" parent="SaveSelect"]
+layout_mode = 0
+offset_left = 1737.0
+offset_top = 973.0
+offset_right = 1866.0
+offset_bottom = 1064.0
+theme_override_fonts/font = ExtResource("3_63bhw")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xj3bn")
+text = "Back"
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="Ambiance" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("9_1q1tm")
+autoplay = true
+bus = &"Effect"
+
+[connection signal="pressed" from="Main/ButtonGroup/Start" to="." method="start_game"]
+[connection signal="pressed" from="Main/ButtonGroup/Option" to="." method="option_menu"]
+[connection signal="pressed" from="Main/ButtonGroup/Quit" to="." method="quit_menu"]
+[connection signal="pressed" from="SaveSelect/Back" to="." method="back"]

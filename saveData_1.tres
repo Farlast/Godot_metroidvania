@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="SaveData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://Script/Player/Data/player_data.gd" id="1_ww3tc"]
+[ext_resource type="Script" path="res://Script/System/SaveSystem/save_data.gd" id="2_js7hd"]
+
+[sub_resource type="Resource" id="Resource_5t5sd"]
+script = ExtResource("1_ww3tc")
+max_health = 3.0
+max_health_extend = 0.0
+current_health = 2.0
+max_mana = 5.0
+max_mana_extend = 0.0
+current_mana = 5.0
+is_doublejump_unlock = false
+is_dash_unlock = true
+is_skill_unlock = false
+is_water_unlock = false
+is_fire_unlock = false
+is_plant_unlock = false
+is_electricit_unlock = false
+last_scene_visit_path = "res://Scenes/Level/level_0_9.tscn"
+orb_status = 0
+current_orb_element = 0
+current_used_element = 0
+id = ""
+status = false
+position = Vector2(1152, 512)
+
+[resource]
+script = ExtResource("2_js7hd")
+player_data = SubResource("Resource_5t5sd")
+save_dict = {}

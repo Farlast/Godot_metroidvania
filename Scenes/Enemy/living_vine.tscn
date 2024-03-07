@@ -18,9 +18,9 @@
 script = ExtResource("4_2what")
 damage = 1.0
 impact = 0.0
-knockback = 300.0
-sender_position = Vector2(0, 0)
 take_damage_rule = 0
+take_damage_mask = 0
+element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_afwn2"]
 size = Vector2(203.5, 171)
@@ -356,8 +356,8 @@ _data = {
 [node name="LivingVine" type="StaticBody2D"]
 collision_layer = 0
 script = ExtResource("1_xkl8g")
-max_hp = 3.0
 attack_cooldown_duration = 0.5
+max_hp = 3.0
 
 [node name="Direction" type="Node2D" parent="."]
 
@@ -375,7 +375,7 @@ script = ExtResource("3_nl542")
 damage_data = SubResource("Resource_mm4jx")
 
 [node name="AttackArea" type="CollisionShape2D" parent="Direction/AttackBox"]
-position = Vector2(82.5, -61.5)
+position = Vector2(82.5, -78)
 shape = SubResource("RectangleShape2D_afwn2")
 disabled = true
 debug_color = Color(0.964706, 0, 0.490196, 0.419608)
@@ -401,6 +401,7 @@ position = Vector2(1.5, -23)
 collision_layer = 8
 collision_mask = 10
 script = ExtResource("5_qiaok")
+object_tag = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(0, -62.5)

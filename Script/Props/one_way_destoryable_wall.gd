@@ -20,14 +20,23 @@ var block_effect : CPUParticles2D
 @export_enum("Left","Right") var faceing_side : int
 
 var hp : float = 1
+var data : NodeSaveData
 
 func _ready():
 	hp = max_hp
 	if faceing_side == 0:
-		scale = abs(scale)
+		scale.x = abs(scale.x)
 	else :
-		scale = -abs(scale)
-
+		scale.x = -abs(scale.x)
+	
+	var id = GameManager.get_object_id(self)
+	data = NodeSaveData.new()
+	data.id = id
+	data.status = false
+	
+	if GameManager.is_object_stored(id):
+		queue_free()
+	
 
 func take_damage(damage_data : DamageData):
 	
@@ -63,6 +72,9 @@ func dead():
 	audio_player.play()
 	if destory_effect : destory_effect.restart()
 	$Sprite2D.visible = false
+	
+	data.status = true
+	GameManager.store_object(data.id,data)
 	
 	await get_tree().create_timer(free_dalay).timeout
 	queue_free()

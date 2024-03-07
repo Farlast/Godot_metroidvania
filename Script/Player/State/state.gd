@@ -6,6 +6,10 @@ signal transition(state : State , new_state_name : String)
 @export var animator : AnimationPlayer
 @export var player : Player
 
+func _ready():
+	animator = %AnimationPlayer
+	player = owner
+
 func on_enter():
 	#print(name)
 	pass

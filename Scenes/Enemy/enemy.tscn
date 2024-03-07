@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="6_6d0eh"]
 [ext_resource type="Script" path="res://Script/Enemy/State/enemy_idle.gd" id="7_j0kog"]
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="7_lwaa2"]
-[ext_resource type="Script" path="res://Script/Enemy/State/enemy_stagger.gd" id="8_0qb0n"]
+[ext_resource type="Script" path="res://Script/Enemy/State/stagger_state.gd" id="8_0qb0n"]
 [ext_resource type="Texture2D" uid="uid://bsn8dtb8jl10c" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0004.png" id="8_eb65p"]
 [ext_resource type="Script" path="res://Script/Enemy/State/enemy_state_machine.gd" id="8_rsxv0"]
 [ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="11_6xxkr"]
@@ -32,9 +32,10 @@ size = Vector2(80.9999, 153)
 [sub_resource type="Resource" id="Resource_8rki1"]
 script = ExtResource("7_lwaa2")
 damage = 1.0
-knockback = 0.0
-sender_position = Vector2(0, 0)
+impact = 0.0
 take_damage_rule = 0
+take_damage_mask = 0
+element = 0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gplxh"]
 radius = 26.0
@@ -246,6 +247,7 @@ shape = SubResource("CapsuleShape2D_rohia")
 collision_layer = 8
 collision_mask = 10
 script = ExtResource("5_yknqx")
+object_tag = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(6.49999, 9.50002)
@@ -269,15 +271,11 @@ debug_color = Color(0.823529, 0.345098, 0.537255, 0.419608)
 script = ExtResource("8_rsxv0")
 InitialState = NodePath("idle")
 
-[node name="idle" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("animator", "agent")]
+[node name="idle" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("7_j0kog")
-animator = NodePath("../../AnimationPlayer")
-agent = NodePath("../..")
 
-[node name="stagger" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("animator", "agent")]
+[node name="stagger" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("8_0qb0n")
-animator = NodePath("../../AnimationPlayer")
-agent = NodePath("../..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

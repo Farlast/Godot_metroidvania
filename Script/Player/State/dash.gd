@@ -12,35 +12,48 @@ func on_enter():
 	super.on_enter()
 	if not player.is_on_floor():
 		player.is_airdash_used = true
-		
+	
 	dash_effect.emitting = true
 	dash_timer = 0
 	animator.play("dash")
 	player.velocity = Vector2.ZERO
 	
-	if player.player_sprite.flip_h:
-		direction = -1
-	else:
-		direction = 1
+	direction = ceil(Input.get_axis("move_left", "move_right"))
+	if direction == 0:
+		if player.player_sprite.flip_h:
+			direction = -1
+		else:
+			direction = 1
+	player.flip_sprite(direction)
 	
 func on_exit():
 	super.on_exit()
 	player.dash_cooldown()
+	player.dash_iframe = false
 
 func on_update(_delta : float):
 	super.on_update(_delta)
 	dash_timer += _delta
 	if dash_timer < dash_duration: return
-	if not player.is_on_floor():
-		transition.emit(self,"fall")
-		return
-	var input_direction = Input.get_axis("move_left", "move_right")
-	if input_direction == 0:
-		transition.emit(self,"idle")
-	else:
-		transition.emit(self,"run")
+	next_stage()
 
 func on_physics_update(_delta : float):
 	super.on_physics_update(_delta)
 	player.velocity.x = direction * dash_speed
 	player.move_and_slide()
+
+func next_stage():
+	if not player.is_on_floor():
+		transition.emit(self,"fall")
+	else:
+		var h_direction = Input.get_axis("move_left", "move_right")
+		if h_direction == 0:
+			transition.emit(self,"idle")
+		else:
+			transition.emit(self,"run")
+
+func dash_iframe_start():
+	player.dash_iframe = true
+	
+func dash_iframe_end():
+	player.dash_iframe = false

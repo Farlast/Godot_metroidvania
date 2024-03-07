@@ -1,5 +1,5 @@
 extends EnemyState
-class_name enemy_stagger
+class_name StaggerState
 
 func on_enter():
 	super.on_enter()
@@ -11,6 +11,7 @@ func on_enter():
 
 func on_exit():
 	super.on_exit()
+	agent.health_system.stance.add(agent.health_system.stance.max_value)
 
 func on_update(_delta : float):
 	super.on_update(_delta)

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://0rd41e8f6ghu"]
+
+[ext_resource type="Script" path="res://Script/SaveSystem/save_slot.gd" id="1_pb8g2"]
+[ext_resource type="FontFile" uid="uid://c5fpksk7u1rcn" path="res://Data/Font/Maitree-Bold.ttf" id="2_ifxp2"]
+
+[node name="SaveSlot" type="HBoxContainer"]
+alignment = 1
+script = ExtResource("1_pb8g2")
+
+[node name="SaveInfo" type="Button" parent="."]
+custom_minimum_size = Vector2(1000, 200)
+layout_mode = 2
+focus_neighbor_right = NodePath("../delete")
+theme_override_fonts/font = ExtResource("2_ifxp2")
+theme_override_font_sizes/font_size = 50
+text = "Empty save"
+
+[node name="delete" type="Button" parent="."]
+layout_mode = 2
+focus_neighbor_left = NodePath("../SaveInfo")
+theme_override_font_sizes/font_size = 30
+text = "Delete save"

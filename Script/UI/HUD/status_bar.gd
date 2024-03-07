@@ -11,3 +11,6 @@ func _ready():
 func update_hp(_current,_max):
 	value = _current
 	max_value = _max
+
+func add_bar_length():
+	size = Vector2(size.x + 64,size.y)

@@ -2,8 +2,12 @@ extends Node
 class_name EnemyState
 signal transition(state : EnemyState , new_state_name : String)
 
-@export var animator : AnimationPlayer
-@export var agent : CharacterBody2D
+var animator : AnimationPlayer
+var agent : Enemy
+
+func _ready():
+	animator = %AnimationPlayer
+	agent = owner as Enemy
 
 func on_enter():
 	#print(name)

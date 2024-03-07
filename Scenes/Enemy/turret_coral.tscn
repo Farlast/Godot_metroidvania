@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://5su73c7q4ter"]
 
-[ext_resource type="Script" path="res://Script/Enemy/StaticEnemy/turret.gd" id="1_tmegy"]
+[ext_resource type="Script" path="res://Script/Enemy/StaticEnemy/turret/turret.gd" id="1_tmegy"]
 [ext_resource type="Texture2D" uid="uid://br1k4qwaxu20a" path="res://Art/Enemy/Turret_coral/Turret_coral.png" id="2_i1h70"]
 [ext_resource type="Material" uid="uid://cmv24i1lrmfiw" path="res://Shader/enemy.tres" id="2_kpceb"]
 [ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="3_8twna"]
@@ -19,10 +19,9 @@ size = Vector2(64, 10)
 script = ExtResource("4_int1g")
 damage = 1.0
 impact = 0.0
-knockback = 300.0
-sender_position = Vector2(0, 0)
 take_damage_rule = 0
 take_damage_mask = 0
+element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yqbqp"]
 size = Vector2(64, 48)
@@ -35,7 +34,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/path = NodePath("Direction/Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -47,7 +46,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/path = NodePath("Direction/Sprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -63,7 +62,7 @@ length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/path = NodePath("Direction/Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -75,7 +74,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/path = NodePath("Direction/Sprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -92,7 +91,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/path = NodePath("Direction/Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -104,7 +103,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/path = NodePath("Direction/Sprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -145,10 +144,12 @@ visible = false
 position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_mpf70")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Direction" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Direction"]
 z_index = -1
 material = ExtResource("2_kpceb")
-position = Vector2(0, 32)
+position = Vector2(0, 38)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_i1h70")
 hframes = 4
@@ -164,9 +165,10 @@ position = Vector2(0, 24)
 shape = SubResource("RectangleShape2D_yqbqp")
 
 [node name="HurtBox" type="Area2D" parent="."]
-collision_layer = 0
+collision_layer = 8
 collision_mask = 10
 script = ExtResource("5_cb3l8")
+object_tag = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(0, 32)

@@ -1,13 +1,12 @@
 extends Resource
 class_name Unlockable
 
-@export var unlock_type : TYPE 
+@export var unlock_type : UnlockType 
 
-enum TYPE{
+enum UnlockType{
 	DASH,
 	DOUBLE_JUMP,
+	SPIRIT_CALL,
 	SLIDE,
-	SAMPLE,
-	WATER_BULLET,
-	PRESSURE_BOMB
+	WATER_BULLET
 }

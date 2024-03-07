@@ -45,17 +45,17 @@ collision_mask = 16
 script = ExtResource("1_ryjke")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, -1)
+position = Vector2(0, -96.5)
 shape = SubResource("RectangleShape2D_smktp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.486275, 1, 1, 1)
-position = Vector2(0, -40)
+position = Vector2(0.5, -135.5)
 scale = Vector2(0.435547, 0.435547)
 texture = ExtResource("3_pq3t6")
 
 [node name="Dust" type="GPUParticles2D" parent="."]
-position = Vector2(0, -42)
+position = Vector2(0.5, -137.5)
 emitting = false
 amount = 40
 process_material = SubResource("ParticleProcessMaterial_b4445")
@@ -65,6 +65,6 @@ explosiveness = 0.76
 randomness = 0.26
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
-position = Vector2(-2, 14)
+position = Vector2(-1.5, -81.5)
 scale = Vector2(0.727273, 0.727273)
 texture = ExtResource("5_gtfc2")

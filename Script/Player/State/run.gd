@@ -49,10 +49,12 @@ func _unhandled_input(event):
 	elif event.is_action_pressed("jump") && player.is_on_floor():
 		transition.emit(self,"Jump")
 	elif event.is_action_pressed("attack") && player.Is_can_attack:
-		transition.emit(self,"attack")
+		transition.emit(self,"chargeable_attack")
 	elif player.is_can_use_skill(event):
 		transition.emit(self,"absorb")
-	elif player.player_data.is_dash_unlock && event.is_action_pressed("dash") && player.is_can_dash():
+	elif event.is_action_pressed("dash") && player.is_can_dash():
 		transition.emit(self,"dash")
 	elif player.is_can_cast_skill(event):
 		player.set_cast_state()
+	elif player.is_can_heal(event):
+		player.start_heal()

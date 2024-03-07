@@ -12,6 +12,7 @@ var attacked : bool
 var animation_finished : bool
 
 func _ready():
+	super._ready()
 	boss = agent as EldritchWorm
 
 func on_enter():

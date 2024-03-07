@@ -1,8 +1,7 @@
 class_name ElementalOrb
 extends Area2D
 
-signal send_element(element : ElementData)
-signal contact_position(pos : Vector2)
+signal send_element(element : ElementData, contact_position : Vector2)
 
 @export var move_speed : float = 800
 @export var life_time : float = 0.5
@@ -19,8 +18,7 @@ func _ready():
 func get_element(body : Area2D):
 	if body is ElementBox:
 		var element_obj = body as ElementBox
-		send_element.emit(element_obj.element_data)
-		contact_position.emit(global_position)
+		send_element.emit(element_obj.element_data,global_position)
 		destory()
 
 func ground_contact(_body : Node2D):

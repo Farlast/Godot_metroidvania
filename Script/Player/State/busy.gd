@@ -14,5 +14,5 @@ func on_exit():
 	super.on_exit()
 
 func on_physics_update(_delta : float):
-	player.add_fall_gravity(_delta)
+	#player.add_fall_gravity(_delta)
 	player.move_and_slide()

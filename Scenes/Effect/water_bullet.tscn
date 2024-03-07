@@ -1,0 +1,174 @@
+[gd_scene load_steps=14 format=3 uid="uid://bq074ptod3bfe"]
+
+[ext_resource type="Script" path="res://Script/CombatComponent/bullet.gd" id="1_g77aw"]
+[ext_resource type="Texture2D" uid="uid://doxbn3m5i8dh6" path="res://Art/Player/Skill/water_orb.png" id="2_g4hc0"]
+[ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="3_e1otj"]
+[ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="4_h1xlc"]
+[ext_resource type="Texture2D" uid="uid://mmefwaxlmda2" path="res://Art/Player/Skill/bubble_pop.png" id="5_aq4sq"]
+
+[sub_resource type="Resource" id="Resource_4t4o8"]
+script = ExtResource("4_h1xlc")
+damage = 1.0
+impact = 0.0
+take_damage_rule = 0
+take_damage_mask = 0
+element = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8e1am"]
+radius = 16.0
+
+[sub_resource type="Resource" id="Resource_j0owi"]
+script = ExtResource("4_h1xlc")
+damage = 1.0
+impact = 0.0
+take_damage_rule = 0
+take_damage_mask = 0
+element = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6sflg"]
+radius = 25.2982
+
+[sub_resource type="Animation" id="Animation_g1qet"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_g4hc0")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_8n3mv"]
+resource_name = "destory"
+length = 0.35
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_aq4sq")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_brm1v"]
+resource_name = "idle"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_g4hc0")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x1ql4"]
+_data = {
+"RESET": SubResource("Animation_g1qet"),
+"destory": SubResource("Animation_8n3mv"),
+"idle": SubResource("Animation_brm1v")
+}
+
+[node name="water_bullet" type="Area2D"]
+script = ExtResource("1_g77aw")
+damage_data = SubResource("Resource_4t4o8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 3)
+scale = Vector2(0.462094, 0.460432)
+texture = ExtResource("2_g4hc0")
+vframes = 4
+
+[node name="ground" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8e1am")
+
+[node name="AttackBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("3_e1otj")
+damage_data = SubResource("Resource_j0owi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
+shape = SubResource("CircleShape2D_6sflg")
+debug_color = Color(0.968627, 0, 0.470588, 0.419608)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_x1ql4")
+}
+autoplay = "idle"

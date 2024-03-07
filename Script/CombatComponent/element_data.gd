@@ -8,6 +8,5 @@ enum ElementType {
 	POISON,
 	ICE
 }
-
 @export var element : ElementType
 

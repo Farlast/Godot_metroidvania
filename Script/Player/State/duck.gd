@@ -33,3 +33,5 @@ func _unhandled_input(event):
 		player.position.y += 1
 	elif event.is_action_pressed("attack"):
 		transition.emit(self,"crouch_attack")
+	elif player.is_can_cast_skill(event):
+		player.set_cast_state()

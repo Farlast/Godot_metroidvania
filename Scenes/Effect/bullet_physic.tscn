@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://d4ap8sf0s0i2v"]
+
+[ext_resource type="Script" path="res://Script/CombatComponent/bullet_physic.gd" id="1_crdmg"]
+[ext_resource type="Texture2D" uid="uid://b58vau1im1n4k" path="res://Art/Effect/Tex_circle.png" id="2_p0t14"]
+[ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="3_7ygai"]
+[ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="4_pgfwh"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7umce"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vspy8"]
+size = Vector2(32, 0)
+
+[sub_resource type="Resource" id="Resource_yxeq2"]
+script = ExtResource("4_pgfwh")
+damage = 1.0
+impact = 0.0
+take_damage_rule = 0
+take_damage_mask = 0
+element = 0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rmuof"]
+radius = 24.0
+
+[node name="Bullet" type="RigidBody2D"]
+position = Vector2(960, 512)
+collision_layer = 0
+physics_material_override = SubResource("PhysicsMaterial_7umce")
+script = ExtResource("1_crdmg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.866667, 0.580392, 0.333333, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_p0t14")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vspy8")
+
+[node name="AttackBox" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("3_7ygai")
+damage_data = SubResource("Resource_yxeq2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
+shape = SubResource("CircleShape2D_rmuof")
+debug_color = Color(0.901961, 0.258824, 0.443137, 0.419608)
+
+[node name="ground" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground"]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_vspy8")

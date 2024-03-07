@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqb1gaytvgyhy"]
+
+[ext_resource type="Script" path="res://Script/Player/Skill/water_splash.gd" id="1_g4l01"]
+[ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="2_yoihw"]
+
+[sub_resource type="Resource" id="Resource_dxc77"]
+script = ExtResource("2_yoihw")
+damage = 1.0
+impact = 0.0
+knockback = 400.0
+sender_position = Vector2(0, 0)
+take_damage_rule = 0
+take_damage_mask = 1
+element = 1
+
+[node name="WaterSplash" type="Node2D"]
+script = ExtResource("1_g4l01")
+bullet_amount = 4.0
+damage_data = SubResource("Resource_dxc77")
+speed = 1000.0

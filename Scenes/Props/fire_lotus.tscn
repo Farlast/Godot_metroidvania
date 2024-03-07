@@ -1,0 +1,107 @@
+[gd_scene load_steps=14 format=3 uid="uid://c1q16qtipl4t5"]
+
+[ext_resource type="Texture2D" uid="uid://dwop7uyjacnm4" path="res://Art/Environment/Fire/fire lotus.png" id="1_4i6wv"]
+[ext_resource type="Script" path="res://Script/Props/fire_lotus/fire_lotus.gd" id="1_fchqo"]
+[ext_resource type="Script" path="res://Script/CombatComponent/element_box.gd" id="2_rj68i"]
+[ext_resource type="Script" path="res://Script/CombatComponent/element_data.gd" id="3_3qna0"]
+[ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="4_4gwba"]
+[ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="5_6mfvv"]
+[ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="7_8bh6u"]
+[ext_resource type="Texture2D" uid="uid://c1qhwi8ewswm4" path="res://Art/Effect/Tex_circle_small.png" id="8_l30jo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vwckw"]
+size = Vector2(256, 384)
+
+[sub_resource type="Resource" id="Resource_tugoo"]
+script = ExtResource("3_3qna0")
+element = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_88ehj"]
+size = Vector2(256, 384)
+
+[sub_resource type="Resource" id="Resource_0vwtx"]
+script = ExtResource("5_6mfvv")
+damage = 1.0
+impact = 0.0
+knockback = 400.0
+sender_position = Vector2(0, 0)
+take_damage_rule = 0
+take_damage_mask = 2
+element = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vw4w1"]
+size = Vector2(256, 176)
+
+[node name="FireLotus" type="StaticBody2D"]
+scale = Vector2(0.5, 0.5)
+collision_mask = 49
+script = ExtResource("1_fchqo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -192)
+shape = SubResource("RectangleShape2D_vwckw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -80)
+texture = ExtResource("1_4i6wv")
+
+[node name="ElementBox" type="Area2D" parent="."]
+visible = false
+collision_layer = 256
+collision_mask = 256
+script = ExtResource("2_rj68i")
+element_data = SubResource("Resource_tugoo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElementBox"]
+position = Vector2(0, -96)
+shape = SubResource("RectangleShape2D_88ehj")
+debug_color = Color(0.929412, 0.196078, 0.458824, 0.0823529)
+
+[node name="AttackBox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("4_4gwba")
+damage_data = SubResource("Resource_0vwtx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
+position = Vector2(0, -192)
+shape = SubResource("RectangleShape2D_88ehj")
+debug_color = Color(0.929412, 0.196078, 0.458824, 0.0823529)
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("7_8bh6u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, -88)
+shape = SubResource("RectangleShape2D_vw4w1")
+
+[node name="Ember" type="CPUParticles2D" parent="."]
+position = Vector2(0, -128)
+texture = ExtResource("8_l30jo")
+emission_shape = 1
+emission_sphere_radius = 111.31
+direction = Vector2(0, -1)
+spread = 23.68
+gravity = Vector2(0, 0)
+initial_velocity_min = 223.68
+initial_velocity_max = 223.68
+tangential_accel_min = -100.0
+tangential_accel_max = 100.0
+scale_amount_min = 0.1
+color = Color(0.870588, 0.439216, 0.270588, 1)
+
+[node name="Wet" type="CPUParticles2D" parent="."]
+position = Vector2(0, -128)
+emitting = false
+lifetime = 0.5
+texture = ExtResource("8_l30jo")
+emission_shape = 1
+emission_sphere_radius = 111.31
+direction = Vector2(0, -1)
+spread = 23.68
+initial_velocity_min = 151.31
+initial_velocity_max = 151.31
+scale_amount_min = 0.1
+color = Color(0.286275, 0.603922, 0.870588, 1)

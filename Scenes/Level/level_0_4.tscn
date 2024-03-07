@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://8kqadlcmpbey"]
+[gd_scene load_steps=24 format=3 uid="uid://8kqadlcmpbey"]
 
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_1yiu7"]
 [ext_resource type="PackedScene" uid="uid://b0byka5d5aixx" path="res://Scenes/Player/player.tscn" id="2_n2w6y"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://ccwgdqlbypx40" path="res://Scenes/Enemy/patrol_enemy.tscn" id="12_lereg"]
 [ext_resource type="AudioStream" uid="uid://csk6rh1tb4t2i" path="res://Audio/Ambient/Ambiance_Cave_Dark_Loop_Stereo.wav" id="13_escbw"]
 [ext_resource type="PackedScene" uid="uid://5su73c7q4ter" path="res://Scenes/Enemy/turret_coral.tscn" id="14_s5m4k"]
+[ext_resource type="Texture2D" uid="uid://djhgo1gnoqtqg" path="res://Art/BG/Cove/coast_rock_1.png" id="16_xqg6v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dpya7"]
 size = Vector2(128, 192)
@@ -29,6 +30,8 @@ impact = 0.0
 knockback = 300.0
 sender_position = Vector2(0, 0)
 take_damage_rule = 0
+take_damage_mask = 0
+element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7inmo"]
 size = Vector2(256, 56)
@@ -36,6 +39,13 @@ size = Vector2(256, 56)
 [sub_resource type="AtlasTexture" id="AtlasTexture_o8nin"]
 atlas = ExtResource("11_embhs")
 region = Rect2(5.77194, 319.888, 503.118, 195.657)
+
+[sub_resource type="Gradient" id="Gradient_addex"]
+offsets = PackedFloat32Array(0, 0.555556, 1)
+colors = PackedColorArray(0.181056, 0.484276, 0.828882, 1, 0.391404, 0.700252, 0.894733, 1, 0.745142, 0.894217, 0.986693, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_g65k4"]
+gradient = SubResource("Gradient_addex")
 
 [node name="level_0_4" type="Node2D"]
 
@@ -171,3 +181,67 @@ position = Vector2(3008, 576)
 stream = ExtResource("13_escbw")
 autoplay = true
 bus = &"Effect"
+
+[node name="Parallax" type="Node2D" parent="."]
+
+[node name="-4" type="CanvasLayer" parent="Parallax"]
+layer = -4
+
+[node name="Control" type="Control" parent="Parallax/-4"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Parallax/-4/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1920.0
+offset_right = 1080.0
+offset_bottom = 840.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+texture = SubResource("GradientTexture1D_g65k4")
+expand_mode = 1
+
+[node name="-3" type="CanvasLayer" parent="Parallax"]
+layer = -3
+follow_viewport_enabled = true
+follow_viewport_scale = 0.7
+
+[node name="-2" type="CanvasLayer" parent="Parallax"]
+layer = -2
+follow_viewport_enabled = true
+follow_viewport_scale = 0.8
+
+[node name="-1" type="CanvasLayer" parent="Parallax"]
+layer = -1
+follow_viewport_enabled = true
+follow_viewport_scale = 0.9
+
+[node name="0" type="CanvasLayer" parent="Parallax"]
+follow_viewport_enabled = true
+
+[node name="1" type="CanvasLayer" parent="Parallax"]
+follow_viewport_enabled = true
+follow_viewport_scale = 1.1
+
+[node name="CoastRock" type="Sprite2D" parent="Parallax/1"]
+position = Vector2(3105.45, 1025.45)
+texture = ExtResource("16_xqg6v")
+
+[node name="CoastRock2" type="Sprite2D" parent="Parallax/1"]
+position = Vector2(2123.64, 1018.18)
+texture = ExtResource("16_xqg6v")
+flip_h = true
+
+[node name="CoastRock3" type="Sprite2D" parent="Parallax/1"]
+position = Vector2(858.182, 1061.82)
+scale = Vector2(0.596647, 0.61232)
+texture = ExtResource("16_xqg6v")
+flip_h = true

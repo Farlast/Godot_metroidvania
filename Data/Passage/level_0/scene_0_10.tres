@@ -5,13 +5,13 @@
 
 [sub_resource type="Resource" id="Resource_7fjqo"]
 script = ExtResource("1_bjcv5")
-passage_name = "Buttom passage"
+passage_name = "Left passage"
 target_scene_path = "res://Scenes/Level/level_0_10.tscn"
 target_passage_id = 0
 
 [sub_resource type="Resource" id="Resource_58fk7"]
 script = ExtResource("1_bjcv5")
-passage_name = "Top passage"
+passage_name = "Right passage"
 target_scene_path = "res://Scenes/Level/level_0_10.tscn"
 target_passage_id = 1
 

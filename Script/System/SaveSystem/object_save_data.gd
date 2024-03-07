@@ -2,6 +2,6 @@
 class_name NodeSaveData
 extends Resource
 
-@export var uid : int
+@export var id : String
 @export var status : bool
 @export var position : Vector2

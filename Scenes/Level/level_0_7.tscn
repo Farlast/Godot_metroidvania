@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ccudqwjxd2gjv"]
+[gd_scene load_steps=19 format=3 uid="uid://ccudqwjxd2gjv"]
 
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_lvjku"]
 [ext_resource type="PackedScene" uid="uid://b0byka5d5aixx" path="res://Scenes/Player/player.tscn" id="2_jh5m1"]
@@ -10,6 +10,9 @@
 [ext_resource type="Resource" uid="uid://dnrcbkmjemqh5" path="res://Data/Passage/level_0/scene_0_7.tres" id="8_a0foy"]
 [ext_resource type="Resource" uid="uid://bhm25bcjsv6e2" path="res://Data/Passage/level_0/scene_0_5.tres" id="9_chu18"]
 [ext_resource type="Resource" uid="uid://c6o2gs7rlt3sv" path="res://Data/Passage/level_0/scene_0_8.tres" id="10_663b3"]
+[ext_resource type="Texture2D" uid="uid://djhgo1gnoqtqg" path="res://Art/BG/Cove/coast_rock_1.png" id="11_i82qa"]
+[ext_resource type="Texture2D" uid="uid://dm1k3wuihhcxr" path="res://Art/BG/Cove/clound.png" id="11_ruscb"]
+[ext_resource type="AudioStream" uid="uid://csk6rh1tb4t2i" path="res://Audio/Ambient/Ambiance_Cave_Dark_Loop_Stereo.wav" id="13_lm4p4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nlv1o"]
 size = Vector2(192, 80)
@@ -19,6 +22,13 @@ load_path = "res://.godot/imported/Gradient light.png-9aaf2fd178fa7e8c49f99711a8
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tgxuw"]
 size = Vector2(256, 80)
+
+[sub_resource type="Gradient" id="Gradient_ofn2s"]
+offsets = PackedFloat32Array(0, 0.555556, 1)
+colors = PackedColorArray(0.181056, 0.484276, 0.828882, 1, 0.391404, 0.700252, 0.894733, 1, 0.745142, 0.894217, 0.986693, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jqaax"]
+gradient = SubResource("Gradient_ofn2s")
 
 [node name="level_0_7" type="Node2D"]
 
@@ -123,3 +133,82 @@ rotation = 1.5708
 scale = Vector2(1.15654, 0.500062)
 texture = SubResource("CompressedTexture2D_6qr0k")
 flip_h = true
+
+[node name="Parallax" type="Node2D" parent="."]
+
+[node name="-4" type="CanvasLayer" parent="Parallax"]
+layer = -4
+
+[node name="Control" type="Control" parent="Parallax/-4"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Parallax/-4/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1920.0
+offset_right = 1080.0
+offset_bottom = 840.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+texture = SubResource("GradientTexture1D_jqaax")
+expand_mode = 1
+
+[node name="-3" type="CanvasLayer" parent="Parallax"]
+layer = -3
+follow_viewport_enabled = true
+follow_viewport_scale = 0.7
+
+[node name="Clound" type="Sprite2D" parent="Parallax/-3"]
+position = Vector2(0.000244141, 937.143)
+texture = ExtResource("11_ruscb")
+
+[node name="Clound" type="Sprite2D" parent="Parallax/-3/Clound"]
+position = Vector2(971.429, 1131.43)
+texture = ExtResource("11_ruscb")
+
+[node name="-2" type="CanvasLayer" parent="Parallax"]
+layer = -2
+follow_viewport_enabled = true
+follow_viewport_scale = 0.8
+
+[node name="-1" type="CanvasLayer" parent="Parallax"]
+layer = -1
+follow_viewport_enabled = true
+follow_viewport_scale = 0.9
+
+[node name="0" type="CanvasLayer" parent="Parallax"]
+follow_viewport_enabled = true
+
+[node name="1" type="CanvasLayer" parent="Parallax"]
+follow_viewport_enabled = true
+follow_viewport_scale = 1.1
+
+[node name="CoastRock" type="Sprite2D" parent="Parallax/1"]
+position = Vector2(1781.82, 2225.45)
+texture = ExtResource("11_i82qa")
+
+[node name="CoastRock2" type="Sprite2D" parent="Parallax/1"]
+position = Vector2(618.182, 2916.36)
+texture = ExtResource("11_i82qa")
+flip_h = true
+
+[node name="CoastRock3" type="Sprite2D" parent="Parallax/1"]
+position = Vector2(305.455, 1178.18)
+scale = Vector2(0.596647, 0.61232)
+texture = ExtResource("11_i82qa")
+flip_h = true
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="Ambiance" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("13_lm4p4")
+autoplay = true
+bus = &"Effect"
