@@ -3,8 +3,8 @@ class_name State
 
 signal transition(state : State , new_state_name : String)
 
-@export var animator : AnimationPlayer
-@export var player : Player
+var animator : AnimationPlayer
+var player : Player
 
 func _ready():
 	animator = %AnimationPlayer

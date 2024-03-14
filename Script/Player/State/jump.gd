@@ -3,6 +3,7 @@ class_name Jump
 
 var off_ground : bool
 var active_input : bool
+var v_direction : float
 
 func on_enter():
 	super.on_enter()
@@ -21,6 +22,7 @@ func on_exit():
 
 func on_update(_delta : float):
 	super.on_update(_delta)
+	v_direction = Input.get_axis("move_down", "move_up")
 
 func on_physics_update(_delta : float):
 	super.on_physics_update(_delta)
@@ -43,8 +45,10 @@ func _unhandled_input(event):
 	if event.is_action_released("jump") && not player.is_on_floor():
 		if player.velocity.y < 0:
 			player.velocity.y += abs(player.velocity.y)
-	elif event.is_action_pressed("attack") && player.Is_can_attack:
-		transition.emit(self,"attack")
+	elif event.is_action_pressed("attack") && v_direction > 0:
+		transition.emit(self,"attack_up")
+	elif event.is_action_pressed("attack"):
+		transition.emit(self,"air_attack")
 	elif player.is_can_use_skill(event):
 		transition.emit(self,"absorb")
 	elif event.is_action_pressed("dash") && player.is_can_dash():

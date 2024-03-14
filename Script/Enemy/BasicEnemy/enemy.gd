@@ -3,8 +3,6 @@ class_name Enemy
 
 signal on_dead
 
-var health : float
-@export var max_health : float = 1
 @export var health_system : HealthSystem 
 @export var gravity_multiply :float = 2.5
 @export var stagger_duration : float = 0.3
@@ -20,7 +18,7 @@ var health : float
 @onready var pulse_particle : GPUParticles2D = $Particle/Pulse
 
 @export_group("Area2D")
-@onready var hitbox : CollisionShape2D = $AttackBox/CollisionShape2D
+#@onready var contact_damage : CollisionShape2D = $AttackBox/CollisionShape2D
 @onready var hurtbox : CollisionShape2D = $HurtBox/CollisionShape2D
 @onready var collion : CollisionShape2D = $GroundCollision
 
@@ -72,7 +70,6 @@ func dead():
 	set_physics_process(false)
 	state_machine.set_process(false)
 	state_machine.set_physics_process(false)
-	hitbox.set_deferred("disabled",true)
 	hurtbox.set_deferred("disabled",true)
 	collion.set_deferred("disabled",true)
 	on_dead.emit()

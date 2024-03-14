@@ -35,18 +35,19 @@ func on_idle(state : EnemyState):
 		target = front_ray.get_collider() as Node2D
 		state.transition.emit(state,"chase")
 	elif target != null:
+		face_to_target(false)
 		state.transition.emit(state,"chase")
 
 func on_in_attack_range(state : EnemyState,_delta : float):
 	state.transition.emit(state,"rampattack")
 	
-func face_to_target():
+func face_to_target(delay :bool = true):
 	if target == null: return
 	if target.global_position.x > global_position.x:
-		await get_tree().create_timer(0.3).timeout
+		if delay: await get_tree().create_timer(0.3).timeout
 		turn_left = false
 		direction_holder.scale.x = -abs(direction_holder.scale.x)
 	else:
-		await get_tree().create_timer(0.3).timeout
+		if delay: await get_tree().create_timer(0.3).timeout
 		turn_left = true
 		direction_holder.scale.x = abs(direction_holder.scale.x)

@@ -8,6 +8,8 @@ class_name PatrolEnemy
 @onready var down_ray : RayCast2D = $Direction/DownRay
 @onready var fornt_ray : RayCast2D = $Direction/FrontRay
 
+@onready var contact_box : CollisionShape2D = $AttackBox/CollisionShape2D
+
 func flip_direction():
 	turn_left = ! turn_left
 	super.flip_direction()
@@ -16,3 +18,7 @@ func take_damage(damage_data : DamageData)->bool:
 	## add knockback
 	velocity.x = (move_speed * 1.5) * -get_hit_direction.x
 	return super.take_damage(damage_data)
+
+func dead():
+	contact_box.set_deferred("disabled",true)
+	super.dead()

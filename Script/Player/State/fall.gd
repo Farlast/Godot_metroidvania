@@ -2,6 +2,7 @@ extends State
 class_name Fall
 
 var active_input : bool
+var v_direction : float
 
 func on_enter():
 	super.on_enter()
@@ -16,6 +17,7 @@ func on_exit():
 
 func on_update(_delta : float):
 	super.on_update(_delta)
+	v_direction = Input.get_axis("move_down", "move_up")
 
 func on_physics_update(_delta : float):
 	super.on_physics_update(_delta)
@@ -34,12 +36,14 @@ func _unhandled_input(event):
 	if not active_input : return
 	if event.is_action_pressed("jump"):
 		player.check_jumpbuffer_time()
-	if event.is_action_pressed("attack") && player.Is_can_attack:
-		transition.emit(self,"attack")
+	elif event.is_action_pressed("attack") && v_direction > 0:
+		transition.emit(self,"attack_up")
+	if event.is_action_pressed("attack"):
+		transition.emit(self,"air_attack")
 	elif event.is_action_pressed("jump") && player.Is_can_coyote_time:
 		player.Is_can_coyote_time = false
 		transition.emit(self,"jump")
-	elif event.is_action_pressed("jump") && not player.Is_doublejump_used && not player.is_on_floor():
+	elif event.is_action_pressed("jump") && player.check_double_jump():
 		player.Is_doublejump_used = true
 		transition.emit(self,"jump")
 	elif player.is_can_use_skill(event):

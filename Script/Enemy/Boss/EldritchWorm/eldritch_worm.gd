@@ -4,7 +4,7 @@ class_name EldritchWorm
 @export_group("RayCast2D")
 @export var front_ray : RayCast2D
 @export var room_trigger : TriggerSwitch
-
+@export var health : float = 30
 var target : Node2D
 
 var stage_2: bool = false
@@ -47,7 +47,7 @@ func dead():
 	set_physics_process(false)
 	state_machine.set_process(false)
 	state_machine.set_physics_process(false)
-	hitbox.set_deferred("disabled",true)
+	#hitbox.set_deferred("disabled",true)
 	hurtbox.set_deferred("disabled",true)
 	collion.set_deferred("disabled",true)
 	on_dead.emit()

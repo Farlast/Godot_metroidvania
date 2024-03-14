@@ -48,7 +48,7 @@ func _unhandled_input(event):
 		transition.emit(self,"idle")
 	elif event.is_action_pressed("jump") && player.is_on_floor():
 		transition.emit(self,"Jump")
-	elif event.is_action_pressed("attack") && player.Is_can_attack:
+	elif event.is_action_pressed("attack"):
 		transition.emit(self,"chargeable_attack")
 	elif player.is_can_use_skill(event):
 		transition.emit(self,"absorb")

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://j477bteh17pm"]
+[gd_scene load_steps=10 format=3 uid="uid://j477bteh17pm"]
 
 [ext_resource type="Script" path="res://Script/Player/Skill/boomerang.gd" id="1_dn327"]
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="2_2wdcc"]
 [ext_resource type="Texture2D" uid="uid://c3ebu0gxgwpy1" path="res://Art/Effect/Tex_circle_gradient.png" id="3_xiqh8"]
 [ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="4_gwkih"]
+[ext_resource type="AudioStream" uid="uid://rhehcge1sm1p" path="res://Audio/Effect/Attack/swosh_spin_loop.wav" id="5_rr3pk"]
 
 [sub_resource type="Resource" id="Resource_kpfyk"]
 script = ExtResource("2_2wdcc")
@@ -30,7 +31,7 @@ radius = 40.0
 [node name="Boomerang" type="Area2D"]
 collision_mask = 17
 script = ExtResource("1_dn327")
-move_time = 1.0
+move_time = 0.5
 damage_data = SubResource("Resource_kpfyk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -50,5 +51,9 @@ debug_color = Color(0.972549, 0, 0.427451, 0.419608)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_hs8rl")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_rr3pk")
+autoplay = true
 
 [connection signal="body_entered" from="." to="." method="on_ground"]

@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bkijr6cnrf2dy" path="res://Scenes/Effect/dead_particle.tscn" id="8_x6ri7"]
 [ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/HitSound/body_hit_finisher_23.wav" id="10_5wceh"]
 [ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/HitSound/face_hit_small_78.wav" id="10_rv2xl"]
-[ext_resource type="AudioStream" uid="uid://cxl6a1s8kp2ar" path="res://Audio/Effect/SFX_whoosh-1.wav" id="11_jmli6"]
+[ext_resource type="AudioStream" uid="uid://cxl6a1s8kp2ar" path="res://Audio/Effect/Attack/SFX_whoosh-1.wav" id="11_jmli6"]
 [ext_resource type="Texture2D" uid="uid://ckeioj5qdml8r" path="res://Art/Enemy/vineRed/attack.png" id="12_7h8u1"]
 
 [sub_resource type="Resource" id="Resource_mm4jx"]
@@ -357,7 +357,7 @@ _data = {
 collision_layer = 0
 script = ExtResource("1_xkl8g")
 attack_cooldown_duration = 0.5
-max_hp = 3.0
+max_hp = 5.0
 
 [node name="Direction" type="Node2D" parent="."]
 

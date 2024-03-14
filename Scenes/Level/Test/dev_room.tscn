@@ -13,8 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://b08nxbr1cmil6" path="res://Scenes/Props/save_point.tscn" id="11_ym787"]
 [ext_resource type="Script" path="res://Script/Levels/passage_Handle.gd" id="12_lis5v"]
 [ext_resource type="PackedScene" uid="uid://ccwgdqlbypx40" path="res://Scenes/Enemy/patrol_enemy.tscn" id="13_cdyx0"]
-[ext_resource type="Script" path="res://Script/CombatComponent/status_value.gd" id="14_oq82q"]
-[ext_resource type="Script" path="res://Script/CombatComponent/health_system.gd" id="15_v6ywy"]
+[ext_resource type="Script" path="res://Script/CombatComponent/status_value.gd" id="14_d4nm8"]
+[ext_resource type="Script" path="res://Script/CombatComponent/health_system.gd" id="15_lns4o"]
 [ext_resource type="PackedScene" uid="uid://cwtxhoydrofhh" path="res://Scenes/Enemy/chase_enemy.tscn" id="16_54xi8"]
 [ext_resource type="Texture2D" uid="uid://c3ebu0gxgwpy1" path="res://Art/Effect/Tex_circle_gradient.png" id="17_ym0cu"]
 
@@ -35,85 +35,85 @@ passage_name = ""
 target_scene_path = "res://Scenes/Level/Test/dev_room.tscn"
 target_passage_id = -1
 
-[sub_resource type="Resource" id="Resource_pf6tb"]
+[sub_resource type="Resource" id="Resource_53y0x"]
 resource_local_to_scene = true
-script = ExtResource("14_oq82q")
+script = ExtResource("14_d4nm8")
 max_value = 1.0
 
-[sub_resource type="Resource" id="Resource_p33pi"]
+[sub_resource type="Resource" id="Resource_7v87f"]
 resource_local_to_scene = true
-script = ExtResource("14_oq82q")
+script = ExtResource("14_d4nm8")
 max_value = 3.0
 
-[sub_resource type="Resource" id="Resource_j0rr1"]
+[sub_resource type="Resource" id="Resource_w6xe5"]
 resource_local_to_scene = true
-script = ExtResource("15_v6ywy")
-health = SubResource("Resource_pf6tb")
-stance = SubResource("Resource_p33pi")
+script = ExtResource("15_lns4o")
+health = SubResource("Resource_53y0x")
+stance = SubResource("Resource_7v87f")
 
-[sub_resource type="Resource" id="Resource_cwrho"]
+[sub_resource type="Resource" id="Resource_e80jp"]
 resource_local_to_scene = true
-script = ExtResource("14_oq82q")
+script = ExtResource("14_d4nm8")
 max_value = 1.0
 
-[sub_resource type="Resource" id="Resource_p88wu"]
+[sub_resource type="Resource" id="Resource_5qjll"]
 resource_local_to_scene = true
-script = ExtResource("14_oq82q")
+script = ExtResource("14_d4nm8")
 max_value = 3.0
 
-[sub_resource type="Resource" id="Resource_26yvd"]
+[sub_resource type="Resource" id="Resource_yt7l7"]
 resource_local_to_scene = true
-script = ExtResource("15_v6ywy")
-health = SubResource("Resource_cwrho")
-stance = SubResource("Resource_p88wu")
+script = ExtResource("15_lns4o")
+health = SubResource("Resource_e80jp")
+stance = SubResource("Resource_5qjll")
 
-[sub_resource type="Resource" id="Resource_3i8gu"]
+[sub_resource type="Resource" id="Resource_pssvo"]
 resource_local_to_scene = true
-script = ExtResource("14_oq82q")
+script = ExtResource("14_d4nm8")
+max_value = 6.0
+
+[sub_resource type="Resource" id="Resource_7tw0v"]
+resource_local_to_scene = true
+script = ExtResource("14_d4nm8")
 max_value = 3.0
 
-[sub_resource type="Resource" id="Resource_0juu5"]
+[sub_resource type="Resource" id="Resource_7scpi"]
 resource_local_to_scene = true
-script = ExtResource("14_oq82q")
+script = ExtResource("15_lns4o")
+health = SubResource("Resource_pssvo")
+stance = SubResource("Resource_7tw0v")
+
+[sub_resource type="Resource" id="Resource_72cys"]
+resource_local_to_scene = true
+script = ExtResource("14_d4nm8")
+max_value = 6.0
+
+[sub_resource type="Resource" id="Resource_nhbb8"]
+resource_local_to_scene = true
+script = ExtResource("14_d4nm8")
 max_value = 3.0
 
-[sub_resource type="Resource" id="Resource_j2040"]
+[sub_resource type="Resource" id="Resource_npr2q"]
 resource_local_to_scene = true
-script = ExtResource("15_v6ywy")
-health = SubResource("Resource_3i8gu")
-stance = SubResource("Resource_0juu5")
+script = ExtResource("15_lns4o")
+health = SubResource("Resource_72cys")
+stance = SubResource("Resource_nhbb8")
 
-[sub_resource type="Resource" id="Resource_qbj81"]
+[sub_resource type="Resource" id="Resource_pkh4v"]
 resource_local_to_scene = true
-script = ExtResource("14_oq82q")
+script = ExtResource("14_d4nm8")
+max_value = 6.0
+
+[sub_resource type="Resource" id="Resource_mxbju"]
+resource_local_to_scene = true
+script = ExtResource("14_d4nm8")
 max_value = 3.0
 
-[sub_resource type="Resource" id="Resource_1iewa"]
+[sub_resource type="Resource" id="Resource_uroap"]
 resource_local_to_scene = true
-script = ExtResource("14_oq82q")
-max_value = 3.0
-
-[sub_resource type="Resource" id="Resource_wx1q0"]
-resource_local_to_scene = true
-script = ExtResource("15_v6ywy")
-health = SubResource("Resource_qbj81")
-stance = SubResource("Resource_1iewa")
-
-[sub_resource type="Resource" id="Resource_oq1y0"]
-resource_local_to_scene = true
-script = ExtResource("14_oq82q")
-max_value = 3.0
-
-[sub_resource type="Resource" id="Resource_wdrm3"]
-resource_local_to_scene = true
-script = ExtResource("14_oq82q")
-max_value = 3.0
-
-[sub_resource type="Resource" id="Resource_dlkji"]
-resource_local_to_scene = true
-script = ExtResource("15_v6ywy")
-health = SubResource("Resource_oq1y0")
-stance = SubResource("Resource_wdrm3")
+script = ExtResource("15_lns4o")
+health = SubResource("Resource_pkh4v")
+stance = SubResource("Resource_mxbju")
 
 [sub_resource type="Environment" id="Environment_iqja3"]
 glow_enabled = true
@@ -213,23 +213,23 @@ player = NodePath("../Player")
 
 [node name="PatrolEnemy" parent="." instance=ExtResource("13_cdyx0")]
 position = Vector2(4032, 832)
-health_system = SubResource("Resource_j0rr1")
+health_system = SubResource("Resource_w6xe5")
 
 [node name="PatrolEnemy2" parent="." instance=ExtResource("13_cdyx0")]
 position = Vector2(4672, 832)
-health_system = SubResource("Resource_26yvd")
+health_system = SubResource("Resource_yt7l7")
 
 [node name="ChaseEnemy" parent="." instance=ExtResource("16_54xi8")]
 position = Vector2(5888, 784)
-health_system = SubResource("Resource_j2040")
+health_system = SubResource("Resource_7scpi")
 
 [node name="ChaseEnemy2" parent="." instance=ExtResource("16_54xi8")]
 position = Vector2(6448, 784)
-health_system = SubResource("Resource_wx1q0")
+health_system = SubResource("Resource_npr2q")
 
 [node name="ChaseEnemy3" parent="." instance=ExtResource("16_54xi8")]
 position = Vector2(7352, 784)
-health_system = SubResource("Resource_dlkji")
+health_system = SubResource("Resource_uroap")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_iqja3")

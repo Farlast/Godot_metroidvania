@@ -35,6 +35,7 @@ window/size/mode=3
 window/size/window_width_override=1152
 window/size/window_height_override=648
 window/stretch/mode="canvas_items"
+window/vsync/vsync_mode=0
 
 [dotnet]
 
@@ -151,3 +152,7 @@ skill={
 2d_physics/layer_5="Player_Body"
 2d_physics/layer_6="enemy_body"
 2d_physics/layer_9="Elements"
+
+[physics]
+
+common/physics_jitter_fix=1.0

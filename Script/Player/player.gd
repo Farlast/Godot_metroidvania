@@ -47,7 +47,6 @@ var Is_dead : bool = false
 var Is_doublejump_used : bool = true
 var Is_can_coyote_time : bool = false
 var Is_can_bufferjump : bool = false
-var Is_can_attack : bool = true
 var get_hit_direction : Vector2
 var current_element : ElementData
 var last_ground_position : Vector2
@@ -65,7 +64,7 @@ func _ready():
 	skill_system.setup(self)
 	var shader = player_sprite.material as ShaderMaterial
 	
-	Engine.max_fps = 60
+	#Engine.max_fps = 60
 	
 	shader.set_shader_parameter("active",false)
 	last_ground_position = global_position
@@ -120,7 +119,7 @@ func jitter_fix(delta):
 	var FPS = Engine.get_frames_per_second()
 	var lerp_interval = velocity / FPS
 	var lerp_position = global_position + lerp_interval
-	globals_sprites_position = globals_sprites_position.lerp(lerp_position, 30 * delta)
+	globals_sprites_position = globals_sprites_position.lerp(lerp_position, 60 * delta)
 	if FPS > 60:
 		player_sprite.position = globals_sprites_position - global_position
 		player_sprite.position.y += -68.88
@@ -135,6 +134,13 @@ func add_fall_gravity(delta):
 		Is_doublejump_used = false
 	if velocity.y > 1500:
 		velocity.y = 1500
+
+func add_drag(delta : float, drag : float = 5):
+	if is_on_floor():
+		if velocity.x > 0:
+			velocity.x -= abs(velocity.x * delta * drag)
+		else:
+			velocity.x += abs(velocity.x * delta * drag)
 
 func move_horizontal(flip : bool = true):
 	var direction = Input.get_axis("move_left", "move_right")
@@ -163,7 +169,10 @@ func check_coyote_time():
 	Is_can_coyote_time = true
 	await get_tree().create_timer(coyote_time).timeout
 	Is_can_coyote_time = false
-	
+
+func check_double_jump() -> bool:
+	return not Is_doublejump_used && not is_on_floor() and player_data.is_doublejump_unlock
+
 func check_jumpbuffer_time():
 	Is_can_bufferjump = true
 	await get_tree().create_timer(jump_buffer_time).timeout
@@ -277,11 +286,6 @@ func attack_feedback(report:AttackReport):
 	
 	get_hit_direction = (report.receiver_position - global_position).normalized()
 	attack_success.emit()
-
-func attack_cooldown():
-	Is_can_attack = false
-	await get_tree().create_timer(attack_speed).timeout
-	Is_can_attack = true
 
 #endregion
 #region Unlockable

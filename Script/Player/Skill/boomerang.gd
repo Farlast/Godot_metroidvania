@@ -15,8 +15,7 @@ func active_skill():
 	direction.y = 0
 	returning = false
 	await get_tree().create_timer(move_time).timeout
-	returning = true
-	
+	returning = true	
 
 func _physics_process(delta):
 	global_position += direction * (speed * delta)
