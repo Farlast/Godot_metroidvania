@@ -11,7 +11,7 @@ default_base_scale = 1.0
 default_font_size = 30
 
 [node name="SettingsMenu" type="CanvasLayer"]
-layer = 5
+layer = 10
 script = ExtResource("1_g4j2k")
 
 [node name="ColorRect" type="ColorRect" parent="."]

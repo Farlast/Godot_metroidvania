@@ -81,9 +81,9 @@ func _ready():
 		if SceneManager.is_exit_path(this_passage):
 			await get_tree().create_timer(0.2).timeout
 			cinematic_camera.virtual_camera = virtual_camera
-			cinematic_camera.transition_speed = 0
-			cinematic_camera.position_smoothing_enabled = false
+			cinematic_camera.position_smoothing_enabled = true
 			cinematic_camera.zoom = virtual_camera.zoom
+			cinematic_camera.global_position = exit_position.global_position
 			SceneManager.set_player_position.emit(exit_position.global_position)
 			SceneManager.animation_player.play("dissolve")
 

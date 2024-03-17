@@ -1,12 +1,13 @@
+class_name Crouch
 extends State
-class_name Duck
 
 var active_input : bool
+
 
 func on_enter():
 	super.on_enter()
 	active_input = true
-	animator.play("duck")
+	animator.play("crouch")
 	player.velocity = Vector2.ZERO
 	
 func on_update(_delta : float):
@@ -33,5 +34,7 @@ func _unhandled_input(event):
 		player.position.y += 1
 	elif event.is_action_pressed("attack"):
 		transition.emit(self,"crouch_attack")
+	elif event.is_action_pressed("dash") and player.is_can_slide:
+		transition.emit(self,"slide")
 	elif player.is_can_cast_skill(event):
 		player.set_cast_state()

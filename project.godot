@@ -153,6 +153,6 @@ skill={
 2d_physics/layer_6="enemy_body"
 2d_physics/layer_9="Elements"
 
-[physics]
+[rendering]
 
-common/physics_jitter_fix=1.0
+viewport/hdr_2d=true

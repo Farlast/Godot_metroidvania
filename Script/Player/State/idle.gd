@@ -24,7 +24,7 @@ func on_update(_delta : float):
 	if player.Is_can_bufferjump:
 		transition.emit(self,"Jump")
 	elif v_direction < 0:
-		transition.emit(self,"duck")
+		transition.emit(self,"crouch")
 	elif h_direction != 0:
 		transition.emit(self,"Run")
 	

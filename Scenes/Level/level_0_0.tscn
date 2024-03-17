@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://cxjlx3xpq35k8"]
+[gd_scene load_steps=52 format=3 uid="uid://cxjlx3xpq35k8"]
 
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_6uc0w"]
 [ext_resource type="TileSet" uid="uid://dfn081kuhi648" path="res://Data/base_tileset.tres" id="2_a3mte"]
@@ -30,6 +30,8 @@
 [ext_resource type="PackedScene" uid="uid://cuwwx7vh0cyq7" path="res://Scenes/Props/plant_1.tscn" id="21_4i5cv"]
 [ext_resource type="Resource" uid="uid://cwhx2ybwa51p4" path="res://Data/Passage/level_0/scene_0_1.tres" id="21_m3ct1"]
 [ext_resource type="Texture2D" uid="uid://c0sdo1bw8ohf" path="res://Art/Effect/Gradient light.png" id="22_xvo7b"]
+[ext_resource type="Script" path="res://Script/CombatComponent/status_value.gd" id="23_tgkbm"]
+[ext_resource type="Script" path="res://Script/CombatComponent/health_system.gd" id="24_dcu4g"]
 [ext_resource type="AudioStream" uid="uid://jbvp240wbo24" path="res://Audio/Ambient/Ambiance_Sea_Loop_Stereo.wav" id="30_byoe2"]
 
 [sub_resource type="Gradient" id="Gradient_47js4"]
@@ -52,8 +54,6 @@ size = Vector2(25, 422.25)
 script = ExtResource("11_f1jbr")
 damage = 1.0
 impact = 0.0
-knockback = 300.0
-sender_position = Vector2(0, 0)
 take_damage_rule = 1
 take_damage_mask = 0
 element = 0
@@ -64,6 +64,38 @@ size = Vector2(230, 57)
 [sub_resource type="AtlasTexture" id="AtlasTexture_portr"]
 atlas = ExtResource("12_cba2d")
 region = Rect2(5.77194, 319.888, 503.118, 195.657)
+
+[sub_resource type="Resource" id="Resource_b25pk"]
+resource_local_to_scene = true
+script = ExtResource("23_tgkbm")
+max_value = 1.0
+
+[sub_resource type="Resource" id="Resource_hwakx"]
+resource_local_to_scene = true
+script = ExtResource("23_tgkbm")
+max_value = 3.0
+
+[sub_resource type="Resource" id="Resource_s321g"]
+resource_local_to_scene = true
+script = ExtResource("24_dcu4g")
+health = SubResource("Resource_b25pk")
+stance = SubResource("Resource_hwakx")
+
+[sub_resource type="Resource" id="Resource_6qhh2"]
+resource_local_to_scene = true
+script = ExtResource("23_tgkbm")
+max_value = 1.0
+
+[sub_resource type="Resource" id="Resource_j4qcv"]
+resource_local_to_scene = true
+script = ExtResource("23_tgkbm")
+max_value = 3.0
+
+[sub_resource type="Resource" id="Resource_5v82p"]
+resource_local_to_scene = true
+script = ExtResource("24_dcu4g")
+health = SubResource("Resource_6qhh2")
+stance = SubResource("Resource_j4qcv")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gmjdw"]
 size = Vector2(335, 484)
@@ -447,6 +479,7 @@ texture = SubResource("AtlasTexture_portr")
 
 [node name="PatrolEnemy" parent="Enemys" instance=ExtResource("14_7cwkq")]
 position = Vector2(10512, 1152)
+health_system = SubResource("Resource_s321g")
 
 [node name="LivingVine" parent="Enemys" instance=ExtResource("13_5sp8v")]
 position = Vector2(7648, 960)
@@ -459,6 +492,7 @@ position = Vector2(10912, 1088)
 
 [node name="PatrolEnemy2" parent="Enemys" instance=ExtResource("14_7cwkq")]
 position = Vector2(9448, 1152)
+health_system = SubResource("Resource_5v82p")
 
 [node name="Tutorials" type="Node2D" parent="."]
 position = Vector2(3455, 970)

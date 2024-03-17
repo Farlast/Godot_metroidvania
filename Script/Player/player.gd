@@ -47,6 +47,7 @@ var Is_dead : bool = false
 var Is_doublejump_used : bool = true
 var Is_can_coyote_time : bool = false
 var Is_can_bufferjump : bool = false
+var is_can_slide : bool = true
 var get_hit_direction : Vector2
 var current_element : ElementData
 var last_ground_position : Vector2
@@ -193,6 +194,11 @@ func is_can_dash():
 	else:
 		return Is_can_dash && not is_airdash_used
 
+func slide_cooldown(slide_cooldown_time : float):
+	is_can_slide = false
+	await get_tree().create_timer(slide_cooldown_time).timeout
+	is_can_slide = true
+
 ### Ghost call
 func  is_can_use_skill(event : InputEvent):
 	if not event.is_action_pressed("absorp"): return false
@@ -215,18 +221,17 @@ func set_cast_state():
 #region heal
 func is_can_heal(event : InputEvent)-> bool:
 	if not event.is_action_pressed("heal"): return false
-	if not skill_system.is_have_mana_for_skill(1): return false
+	if not skill_system.is_have_mana_for_skill(2): return false
 	return true
 
 func start_heal():
 	$AnimationPlayer.play("heal")
 	busy_duration = 1.0
 	state_machine.current_state.transition.emit(state_machine.current_state,"busy")
-	
 
 func heal():
 	if player_data.current_health < player_data.max_health:
-		player_data.current_mana -= 1
+		player_data.current_mana -= 2
 		player_data.current_health += 1
 	update_hud_display()
 #endregion

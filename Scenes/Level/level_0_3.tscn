@@ -58,12 +58,12 @@ script = ExtResource("19_tgqc5")
 health = SubResource("Resource_s841r")
 stance = SubResource("Resource_awxyb")
 
-[sub_resource type="Gradient" id="Gradient_8t7ac"]
+[sub_resource type="Gradient" id="Gradient_xfo23"]
 offsets = PackedFloat32Array(0, 0.555556, 1)
 colors = PackedColorArray(0.181056, 0.484276, 0.828882, 1, 0.391404, 0.700252, 0.894733, 1, 0.745142, 0.894217, 0.986693, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_pdwxx"]
-gradient = SubResource("Gradient_8t7ac")
+gradient = SubResource("Gradient_xfo23")
 
 [node name="level_0_3" type="Node2D"]
 
