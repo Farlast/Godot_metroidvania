@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c62j7aiwvcjda"]
+[gd_scene load_steps=28 format=3 uid="uid://c62j7aiwvcjda"]
 
 [ext_resource type="Script" path="res://Script/UI/ESCMenu/pause_menu.gd" id="1_aisc1"]
 [ext_resource type="Texture2D" uid="uid://icea78fevp0o" path="res://Art/UI/tex_hp_bar.png" id="2_citt6"]
@@ -27,6 +27,13 @@ texture_margin_right = 81.896
 texture = ExtResource("3_do2tk")
 texture_margin_left = 3.91732
 texture_margin_right = 3.94997
+modulate_color = Color(1, 0.0196078, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3nlr4"]
+texture = ExtResource("3_do2tk")
+texture_margin_left = 3.91732
+texture_margin_right = 3.94997
+modulate_color = Color(0, 0.807843, 1, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y30f5"]
 texture = ExtResource("5_7wb03")
@@ -124,7 +131,7 @@ offset_top = 104.0
 offset_right = 384.0
 offset_bottom = 124.0
 theme_override_styles/background = SubResource("StyleBoxTexture_hcr42")
-theme_override_styles/fill = SubResource("StyleBoxTexture_fndpf")
+theme_override_styles/fill = SubResource("StyleBoxTexture_3nlr4")
 value = 50.0
 show_percentage = false
 script = ExtResource("3_1dtdw")

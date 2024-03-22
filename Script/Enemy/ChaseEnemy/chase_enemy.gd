@@ -5,6 +5,11 @@ class_name ChaseEnemy
 @export var move_speed : float = 200
 @export var turn_left : bool = true
 
+@export var stunt_time : float
+
+@export var hp_bar : StatusBar
+@export var stagger_bar : StatusBar
+
 @onready var front_ray : RayCast2D = $Direction/FrontRay
 
 var target : Node2D
@@ -19,13 +24,17 @@ func _ready():
 
 func take_damage(damage_data : DamageData)->bool:
 	super.take_damage(damage_data)
+	if not super_armor and health_system.stance.current_value > 0:
+		state_machine.current_state.transition.emit(state_machine.current_state,"stagger")
 	if target == null:
 		if turn_left:
-			turn_left = false		
+			turn_left = false
 			direction_holder.scale.x = -abs(direction_holder.scale.x)
 		else:
-			turn_left = true		
+			turn_left = true
 			direction_holder.scale.x = abs(direction_holder.scale.x)
+	hp_bar.update_hp(health_system.health.current_value,health_system.health.max_value)
+	stagger_bar.update_hp(health_system.stance.current_value,health_system.stance.max_value)
 	return true
 
 func on_idle(state : EnemyState):
@@ -51,3 +60,12 @@ func face_to_target(delay :bool = true):
 		if delay: await get_tree().create_timer(0.3).timeout
 		turn_left = true
 		direction_holder.scale.x = abs(direction_holder.scale.x)
+
+func on_stance_break():
+	velocity = Vector2.ZERO
+	animator.play("stagger")
+	state_machine.current_state.transition.emit(state_machine.current_state,"empty")
+	await get_tree().create_timer(stunt_time).timeout
+	state_machine.current_state.transition.emit(state_machine.current_state,"idle")
+	health_system.stance.add(health_system.stance.max_value)
+	stagger_bar.update_hp(health_system.stance.current_value,health_system.stance.max_value)

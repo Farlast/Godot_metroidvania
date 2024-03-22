@@ -1,8 +1,7 @@
-[gd_scene load_steps=53 format=3 uid="uid://cqj73g3i00rev"]
+[gd_scene load_steps=59 format=3 uid="uid://cqj73g3i00rev"]
 
 [ext_resource type="PackedScene" uid="uid://b0byka5d5aixx" path="res://Scenes/Player/player.tscn" id="1_n28g0"]
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="2_sjssc"]
-[ext_resource type="Texture2D" uid="uid://la11qi2eimh3" path="res://Art/Effect/lightmap_alpha.png" id="2_yii5o"]
 [ext_resource type="TileSet" uid="uid://dfn081kuhi648" path="res://Data/base_tileset.tres" id="3_5lajy"]
 [ext_resource type="Script" path="res://addons/cinematic_camera_2d/scripts/virtual_camera_2d.gd" id="4_5lisn"]
 [ext_resource type="Script" path="res://Script/System/Trigger/on_screen_display_controller.gd" id="4_fg42b"]
@@ -24,10 +23,13 @@
 [ext_resource type="Texture2D" uid="uid://dm1k3wuihhcxr" path="res://Art/BG/Cove/clound.png" id="19_drd45"]
 [ext_resource type="Texture2D" uid="uid://du48stxnnlxb3" path="res://Art/BG/Cove/coast_rock.png" id="20_lwb73"]
 [ext_resource type="Texture2D" uid="uid://c0p10hjw8tiwc" path="res://Art/BG/Cove/clound_2.png" id="22_c6kwg"]
+[ext_resource type="Texture2D" uid="uid://1a4bv5wc5v4q" path="res://Art/BG/Cove/far_Island.png" id="22_s0wt0"]
 [ext_resource type="Texture2D" uid="uid://1g5extk25jrm" path="res://Art/BG/Cove/rock_1.png" id="22_y8hh6"]
 [ext_resource type="Texture2D" uid="uid://bd2c2xc2omeln" path="res://Art/BG/Cove/rock_2.png" id="23_c8dpb"]
+[ext_resource type="Shader" path="res://Shader/blur.gdshader" id="23_e4sub"]
 [ext_resource type="Texture2D" uid="uid://djhgo1gnoqtqg" path="res://Art/BG/Cove/coast_rock_1.png" id="23_pn5yj"]
 [ext_resource type="Texture2D" uid="uid://baqpas207qvxj" path="res://Art/BG/Cove/rock_3.png" id="24_wxdjy"]
+[ext_resource type="PackedScene" uid="uid://cuwwx7vh0cyq7" path="res://Scenes/Props/plant_1.tscn" id="28_rnnio"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o3vwg"]
 size = Vector2(112, 448)
@@ -126,6 +128,22 @@ script = ExtResource("15_lns4o")
 health = SubResource("Resource_pkh4v")
 stance = SubResource("Resource_mxbju")
 
+[sub_resource type="Resource" id="Resource_oopvo"]
+resource_local_to_scene = true
+script = ExtResource("14_d4nm8")
+max_value = 6.0
+
+[sub_resource type="Resource" id="Resource_vnkp6"]
+resource_local_to_scene = true
+script = ExtResource("14_d4nm8")
+max_value = 3.0
+
+[sub_resource type="Resource" id="Resource_jklws"]
+resource_local_to_scene = true
+script = ExtResource("15_lns4o")
+health = SubResource("Resource_oopvo")
+stance = SubResource("Resource_vnkp6")
+
 [sub_resource type="Environment" id="Environment_iqja3"]
 background_mode = 3
 ambient_light_source = 1
@@ -145,6 +163,10 @@ colors = PackedColorArray(0.232992, 0.458859, 0.885503, 1, 0.391404, 0.700252, 0
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_7hw8i"]
 gradient = SubResource("Gradient_8t7ac")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xo8jc"]
+shader = ExtResource("23_e4sub")
+shader_parameter/lod = 0.457
+
 [sub_resource type="Gradient" id="Gradient_xaq01"]
 offsets = PackedFloat32Array(0, 0.141762, 1)
 colors = PackedColorArray(0.0795201, 0.246693, 0.49139, 1, 0.167941, 0.546362, 0.830612, 1, 0.873098, 0.824391, 0.7964, 1)
@@ -156,15 +178,6 @@ gradient = SubResource("Gradient_xaq01")
 
 [node name="Player" parent="." instance=ExtResource("1_n28g0")]
 position = Vector2(519, 832)
-
-[node name="PointLight2D2" type="PointLight2D" parent="Player"]
-position = Vector2(-1.90735e-05, -64)
-scale = Vector2(2, 1)
-enabled = false
-range_layer_min = -3
-range_layer_max = 1
-texture = ExtResource("2_yii5o")
-texture_scale = 1.63
 
 [node name="HUD" parent="." instance=ExtResource("2_sjssc")]
 
@@ -263,25 +276,31 @@ cinematic_camera = NodePath("../Camera/CinematicCamera2D")
 virtual_camera = NodePath("../Camera/Zone1")
 player = NodePath("../Player")
 
-[node name="PatrolEnemy" parent="." instance=ExtResource("13_cdyx0")]
+[node name="Enemies" type="Node" parent="."]
+
+[node name="PatrolEnemy" parent="Enemies" instance=ExtResource("13_cdyx0")]
 position = Vector2(4032, 832)
 health_system = SubResource("Resource_w6xe5")
 
-[node name="PatrolEnemy2" parent="." instance=ExtResource("13_cdyx0")]
+[node name="PatrolEnemy2" parent="Enemies" instance=ExtResource("13_cdyx0")]
 position = Vector2(4672, 832)
 health_system = SubResource("Resource_yt7l7")
 
-[node name="ChaseEnemy" parent="." instance=ExtResource("16_54xi8")]
+[node name="ChaseEnemy" parent="Enemies" instance=ExtResource("16_54xi8")]
 position = Vector2(5888, 784)
 health_system = SubResource("Resource_7scpi")
 
-[node name="ChaseEnemy2" parent="." instance=ExtResource("16_54xi8")]
+[node name="ChaseEnemy2" parent="Enemies" instance=ExtResource("16_54xi8")]
 position = Vector2(6448, 784)
 health_system = SubResource("Resource_npr2q")
 
-[node name="ChaseEnemy3" parent="." instance=ExtResource("16_54xi8")]
+[node name="ChaseEnemy3" parent="Enemies" instance=ExtResource("16_54xi8")]
 position = Vector2(7352, 784)
 health_system = SubResource("Resource_uroap")
+
+[node name="ChaseEnemy4" parent="Enemies" instance=ExtResource("16_54xi8")]
+position = Vector2(9475, 781)
+health_system = SubResource("Resource_jklws")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_iqja3")
@@ -389,6 +408,17 @@ position = Vector2(-115.714, 271.429)
 script = ExtResource("4_fg42b")
 screen_notifily = NodePath("../../../left_area_notifly")
 
+[node name="FarIsland" type="Sprite2D" parent="Parallax/-3/ScreenDisplayController2"]
+position = Vector2(1167.14, 338.571)
+scale = Vector2(2.25188, 2.31185)
+texture = ExtResource("22_s0wt0")
+
+[node name="FarIsland2" type="Sprite2D" parent="Parallax/-3/ScreenDisplayController2"]
+position = Vector2(468.571, 338.571)
+scale = Vector2(2.25188, 2.31185)
+texture = ExtResource("22_s0wt0")
+flip_h = true
+
 [node name="BackgroundIsland1" type="Sprite2D" parent="Parallax/-3/ScreenDisplayController2"]
 position = Vector2(702.5, 294.857)
 texture = ExtResource("18_p6krf")
@@ -454,6 +484,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="blur" type="ColorRect" parent="Parallax/-2/Control"]
+material = SubResource("ShaderMaterial_xo8jc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(30.2108, 17.433)
+
 [node name="TextureRect3" type="TextureRect" parent="Parallax/-2/Control"]
 layout_mode = 1
 anchors_preset = 15
@@ -482,6 +522,18 @@ screen_notifily = NodePath("../../../left_area_notifly")
 position = Vector2(1978.89, 806.667)
 texture = ExtResource("20_lwb73")
 
+[node name="Plant_1" parent="Parallax/-1" instance=ExtResource("28_rnnio")]
+position = Vector2(838.222, 806.667)
+
+[node name="Plant_2" parent="Parallax/-1" instance=ExtResource("28_rnnio")]
+position = Vector2(1346.22, 806.667)
+
+[node name="Plant_3" parent="Parallax/-1" instance=ExtResource("28_rnnio")]
+position = Vector2(782.222, 851.667)
+
+[node name="Plant_4" parent="Parallax/-1" instance=ExtResource("28_rnnio")]
+position = Vector2(1704.22, 816.667)
+
 [node name="0" type="CanvasLayer" parent="Parallax"]
 follow_viewport_enabled = true
 
@@ -496,7 +548,6 @@ texture = ExtResource("22_y8hh6")
 [node name="Rock2" type="Sprite2D" parent="Parallax/0/ScreenDisplayController"]
 position = Vector2(1806, 49.9999)
 rotation = 0.000953022
-scale = Vector2(1, 1)
 texture = ExtResource("23_c8dpb")
 
 [node name="Rock3" type="Sprite2D" parent="Parallax/0/ScreenDisplayController"]
@@ -552,3 +603,6 @@ self_modulate = Color(0.227451, 0.227451, 0.227451, 1)
 position = Vector2(2839.09, 908.182)
 rotation = -0.00192642
 texture = ExtResource("23_pn5yj")
+
+[node name="Plant_5" parent="Parallax/1" instance=ExtResource("28_rnnio")]
+position = Vector2(850, 796.364)

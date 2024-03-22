@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://cwtxhoydrofhh"]
+[gd_scene load_steps=69 format=3 uid="uid://cwtxhoydrofhh"]
 
 [ext_resource type="Script" path="res://Script/Enemy/ChaseEnemy/chase_enemy.gd" id="1_aur87"]
 [ext_resource type="Material" uid="uid://cmv24i1lrmfiw" path="res://Shader/enemy.tres" id="2_pg0cq"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bsn8dtb8jl10c" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0004.png" id="10_pplfq"]
 [ext_resource type="Script" path="res://Script/Enemy/State/melee_attack.gd" id="11_6kniw"]
 [ext_resource type="Texture2D" uid="uid://dbffa3d86qrba" path="res://Art/Effect/Tex_random.png" id="11_mqkoj"]
+[ext_resource type="Script" path="res://Script/Enemy/State/enemy_state.gd" id="11_xu62c"]
 [ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="12_gtaqg"]
 [ext_resource type="Texture2D" uid="uid://dtytbqyts58yo" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0003.png" id="12_q0lwj"]
 [ext_resource type="Script" path="res://Script/Enemy/State/ramp_attack.gd" id="12_qx0l6"]
@@ -24,6 +25,11 @@
 [ext_resource type="Texture2D" uid="uid://doth3t75naxmf" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0006.png" id="14_fd7l2"]
 [ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/HitSound/face_hit_small_78.wav" id="15_dwilf"]
 [ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/HitSound/body_hit_finisher_23.wav" id="16_n1t41"]
+[ext_resource type="Texture2D" uid="uid://dn04fmj7at105" path="res://Art/Effect/Tex_Gilnt.png" id="18_3p1lc"]
+[ext_resource type="Texture2D" uid="uid://icea78fevp0o" path="res://Art/UI/tex_hp_bar.png" id="25_2bteo"]
+[ext_resource type="Texture2D" uid="uid://bdk6t6ouad607" path="res://Art/UI/ui_hp_bar_fill.png" id="26_f07bo"]
+[ext_resource type="Script" path="res://Script/UI/HUD/status_bar.gd" id="27_clcth"]
+[ext_resource type="Script" path="res://Script/Player/Event/Health_Event.gd" id="28_lqfom"]
 
 [sub_resource type="Resource" id="Resource_hv358"]
 resource_local_to_scene = true
@@ -97,6 +103,30 @@ tracks/3/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Direction/GlintEffect:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Control:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_3bqu4"]
 resource_name = "chase"
@@ -125,10 +155,10 @@ tracks/0/path = NodePath("Direction/Sprite2D:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true, false]
+"values": [false]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -141,6 +171,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Control:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_30aem"]
@@ -159,6 +201,9 @@ tracks/0/keys = {
 "values": [ExtResource("3_onr4q")]
 }
 
+[sub_resource type="Animation" id="Animation_6nmj6"]
+resource_name = "melee_attack"
+
 [sub_resource type="Animation" id="Animation_l2l8v"]
 resource_name = "melee_attack"
 length = 1.5
@@ -169,7 +214,7 @@ tracks/0/path = NodePath("Direction/Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
+"times": PackedFloat32Array(0, 0.5, 0.7),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [ExtResource("10_pplfq"), ExtResource("13_2boxu"), ExtResource("3_onr4q")]
@@ -181,7 +226,7 @@ tracks/1/path = NodePath("Direction/Sprite2D:material:shader_parameter/active")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
+"times": PackedFloat32Array(0, 0.5, 0.7),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
@@ -193,7 +238,7 @@ tracks/2/path = NodePath("EnemyStateMachine/RampAttack")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.2, 1.5),
+"times": PackedFloat32Array(0.5, 1.5),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -203,6 +248,34 @@ tracks/2/keys = {
 "method": &"stop_attack"
 }]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Direction/GlintEffect:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_8q1m1"]
+resource_name = "stagger"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Direction/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("12_q0lwj"), ExtResource("10_pplfq"), ExtResource("13_2boxu"), ExtResource("3_onr4q")]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r264x"]
 _data = {
@@ -210,7 +283,9 @@ _data = {
 "chase": SubResource("Animation_3bqu4"),
 "dead": SubResource("Animation_j288b"),
 "idle": SubResource("Animation_30aem"),
-"ramp_attack": SubResource("Animation_l2l8v")
+"melee_attack": SubResource("Animation_6nmj6"),
+"ramp_attack": SubResource("Animation_l2l8v"),
+"stagger": SubResource("Animation_8q1m1")
 }
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mhcwc"]
@@ -302,17 +377,56 @@ element = 0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c5jhj"]
 size = Vector2(73, 153)
 
-[node name="ChaseEnemy" type="CharacterBody2D"]
+[sub_resource type="Curve" id="Curve_x5jo6"]
+_data = [Vector2(0, 0.508559), 0.0, 1.68169, 0, 0, Vector2(0.136842, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.758916), -0.571384, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_qevss"]
+offsets = PackedFloat32Array(0, 0.533074, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmb6d"]
+bg_color = Color(0.827451, 0.168627, 0.168627, 1)
+
+[sub_resource type="Resource" id="Resource_1rth7"]
+script = ExtResource("28_lqfom")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kkrla"]
+texture = ExtResource("25_2bteo")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+modulate_color = Color(0.227451, 0.227451, 0.227451, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sn2yh"]
+texture = ExtResource("26_f07bo")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+modulate_color = Color(0.980392, 0.701961, 0.286275, 1)
+
+[sub_resource type="Resource" id="Resource_gk8w1"]
+script = ExtResource("28_lqfom")
+
+[node name="ChaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("hp_bar", "stagger_bar")]
 collision_layer = 0
 script = ExtResource("1_aur87")
 move_speed = 400.0
+stunt_time = 2.0
+hp_bar = NodePath("Control/VBoxContainer/HP bar")
+stagger_bar = NodePath("Control/VBoxContainer/Stagger bar")
 health_system = SubResource("Resource_kcrr3")
+stagger_duration = 0.5
 
 [node name="GroundCollision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-12, 38)
 shape = SubResource("RectangleShape2D_remti")
 
 [node name="HurtBox" type="Area2D" parent="."]
+visible = false
 collision_layer = 8
 collision_mask = 10
 script = ExtResource("4_6vqly")
@@ -345,6 +459,9 @@ attack_box_col = NodePath("../../Direction/MeleeAttackBox/ramp_area")
 [node name="RampAttack" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("attack_box_col")]
 script = ExtResource("12_qx0l6")
 attack_box_col = NodePath("../../Direction/MeleeAttackBox/ramp_area")
+
+[node name="Empty" type="Node" parent="EnemyStateMachine"]
+script = ExtResource("11_xu62c")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -444,6 +561,7 @@ scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_onr4q")
 
 [node name="MeleeAttackBox" type="Area2D" parent="Direction"]
+visible = false
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("5_52qco")
@@ -454,3 +572,58 @@ position = Vector2(6.49999, 5.50001)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_c5jhj")
 debug_color = Color(0.823529, 0.345098, 0.537255, 0.419608)
+
+[node name="GlintEffect" type="CPUParticles2D" parent="Direction"]
+self_modulate = Color(3, 1, 1, 1)
+z_index = 1
+position = Vector2(-35, 0)
+emitting = false
+amount = 1
+lifetime = 0.5
+one_shot = true
+local_coords = true
+draw_order = 1
+texture = ExtResource("18_3p1lc")
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+scale_amount_min = 0.5
+scale_amount_max = 0.7
+scale_amount_curve = SubResource("Curve_x5jo6")
+color = Color(1, 0, 0, 1)
+color_initial_ramp = SubResource("Gradient_qevss")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -61.0
+offset_top = -67.0
+offset_right = 39.0
+offset_bottom = -24.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HP bar" type="ProgressBar" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_mmb6d")
+value = 50.0
+show_percentage = false
+script = ExtResource("27_clcth")
+hp_event = SubResource("Resource_1rth7")
+
+[node name="Stagger bar" type="ProgressBar" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxTexture_kkrla")
+theme_override_styles/fill = SubResource("StyleBoxTexture_sn2yh")
+value = 50.0
+show_percentage = false
+script = ExtResource("27_clcth")
+hp_event = SubResource("Resource_gk8w1")

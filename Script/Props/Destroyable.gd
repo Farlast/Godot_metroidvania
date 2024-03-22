@@ -6,6 +6,7 @@ class_name Destroyable
 @onready var hit_effect : CPUParticles2D = $hit_effect
 @onready var slash_effect : CPUParticles2D = $slash_effect
 @onready var art : Sprite2D = $Art
+@onready var hurt_box_col : CollisionShape2D = $HurtBox/CollisionShape2D
 
 var hp : float
 
@@ -24,5 +25,6 @@ func take_damage(damage_data : DamageData):
 func play_effect_on_hit():
 	hit_effect.restart()
 	slash_effect.restart()
+
 func clear_on_dead():
-	pass
+	hurt_box_col.set_deferred("disabled",true)

@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Enemy
 
 signal on_dead
+signal stance_breaked
 
 @export var health_system : HealthSystem 
 @export var gravity_multiply :float = 2.5
@@ -11,14 +12,13 @@ signal on_dead
 @onready var dead_sound : AudioStreamPlayer2D = $Audio/DeadSound
 @onready var animator : AnimationPlayer = $AnimationPlayer
 
-@export_group("Particle")
+##@export_group("Particle")
 @onready var hit_effect : CPUParticles2D = $Particle/HitEffect
 @onready var slash_effect : CPUParticles2D = $Particle/SlashEffect
 @onready var dead_particle : GPUParticles2D = $Particle/DeadParticle
 @onready var pulse_particle : GPUParticles2D = $Particle/Pulse
 
-@export_group("Area2D")
-#@onready var contact_damage : CollisionShape2D = $AttackBox/CollisionShape2D
+##@export_group("Area2D")
 @onready var hurtbox : CollisionShape2D = $HurtBox/CollisionShape2D
 @onready var collion : CollisionShape2D = $GroundCollision
 
@@ -32,10 +32,12 @@ var get_hit_direction : Vector2
 
 var shader : ShaderMaterial
 var flashing_duration : float = 0.1
+var super_armor : bool
 
 func _ready():
 	health_system.setup()
 	health_system.dead.connect(dead)
+	health_system.stance_break.connect(on_stance_break)
 	shader = sprite.material as ShaderMaterial
 
 func take_damage(damage_data : DamageData)->bool:
@@ -76,8 +78,18 @@ func dead():
 	await get_tree().create_timer(1.5).timeout
 	queue_free()
 
+func on_stance_break():
+	pass
+
 func on_idle(_state : EnemyState):
 	pass
 
 func flip_direction():
 	direction_holder.scale.x = -direction_holder.scale.x
+
+func add_drag(delta : float, drag : float = 5):
+	if is_on_floor():
+		if velocity.x > 0:
+			velocity.x -= abs(velocity.x * delta * drag)
+		else:
+			velocity.x += abs(velocity.x * delta * drag)

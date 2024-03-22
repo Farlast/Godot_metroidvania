@@ -10,6 +10,7 @@ func _ready():
 	animator.animation_finished.connect(on_animation_finish)
 
 func on_enter():
+	agent.super_armor = true
 	active_state = true
 	agent.velocity.x = 0
 	animator.play("ramp_attack")
@@ -17,6 +18,7 @@ func on_enter():
 func on_exit():
 	super.on_exit()
 	## allow interrup by break stance
+	agent.super_armor = false
 	active_state = false
 	attack_box_col.set_deferred("disabled",true)
 
