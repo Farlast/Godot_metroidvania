@@ -1,5 +1,5 @@
 class_name Fireball
-extends Skill
+extends SkillEmiter
 
 @export_file("*.tscn") var bullet_path : String
 @onready var bullet_scene : PackedScene = load(bullet_path)

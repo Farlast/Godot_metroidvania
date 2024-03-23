@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://b0byka5d5aixx"]
+[gd_scene load_steps=92 format=3 uid="uid://b0byka5d5aixx"]
 
 [ext_resource type="Script" path="res://Script/Player/player.gd" id="1_clpn5"]
 [ext_resource type="Resource" uid="uid://dot44gd0wwyic" path="res://Script/Player/Event/HP_Event.tres" id="2_xwgl7"]
@@ -46,6 +46,7 @@
 [ext_resource type="Script" path="res://Script/Player/audio_player.gd" id="39_c00jx"]
 [ext_resource type="Script" path="res://Script/Player/State/slide.gd" id="40_awlj2"]
 [ext_resource type="AudioStream" uid="uid://3wfbsdxewftq" path="res://Audio/Effect/Attack/SFX_swosh-01.wav" id="42_ckt1o"]
+[ext_resource type="Script" path="res://Script/Player/attack_system.gd" id="47_nus0m"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_og76b"]
 radius = 13.0
@@ -367,6 +368,23 @@ tracks/5/keys = {
 "method": &"disable_hitbox"
 }]
 }
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AttackSystem")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.06, 0.24),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"set_enable_hitbox"
+}, {
+"args": [],
+"method": &"set_disable_hitbox"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_3if7f"]
 resource_name = "air_attack_2"
@@ -500,7 +518,7 @@ tracks/4/keys = {
 tracks/5/type = "method"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("StateMachine/AttackCombo")
+tracks/5/path = NodePath("AttackSystem")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -508,13 +526,13 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [],
-"method": &"enable_hitbox"
+"method": &"set_enable_hitbox"
 }, {
 "args": [],
-"method": &"disable_hitbox"
+"method": &"set_disable_hitbox"
 }, {
 "args": [],
-"method": &"allow_next_animation"
+"method": &"skip_animation_window"
 }]
 }
 
@@ -585,7 +603,7 @@ tracks/4/keys = {
 tracks/5/type = "method"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("StateMachine/AttackCombo2")
+tracks/5/path = NodePath("AttackSystem")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -593,13 +611,13 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [],
-"method": &"enable_hitbox"
+"method": &"set_enable_hitbox"
 }, {
 "args": [],
-"method": &"disable_hitbox"
+"method": &"set_disable_hitbox"
 }, {
 "args": [],
-"method": &"allow_next_animation"
+"method": &"skip_animation_window"
 }]
 }
 
@@ -669,15 +687,18 @@ tracks/4/keys = {
 tracks/5/type = "method"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("StateMachine/Attack_up")
+tracks/5/path = NodePath("AttackSystem")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.1),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
-"method": &"enable_hitbox"
+"method": &"set_enable_hitbox"
+}, {
+"args": [],
+"method": &"set_disable_hitbox"
 }]
 }
 
@@ -735,7 +756,7 @@ tracks/3/keys = {
 tracks/4/type = "method"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("StateMachine/Attack_up")
+tracks/4/path = NodePath("AttackSystem")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -743,7 +764,7 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
-"method": &"enable_hitbox"
+"method": &"set_enable_hitbox"
 }]
 }
 
@@ -1591,7 +1612,7 @@ point_count = 2
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_br3f6"]
 size = Vector2(35, 115)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurt_audio")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("attack_system", "hurt_audio")]
 z_index = 5
 collision_layer = 16
 floor_constant_speed = true
@@ -1601,7 +1622,7 @@ platform_wall_layers = 1
 script = ExtResource("1_clpn5")
 knockback_force = 300.0
 coyote_time = 0.15
-attack_speed = 0.1
+attack_system = NodePath("AttackSystem")
 hp_event = ExtResource("2_xwgl7")
 mp_event = ExtResource("3_812ml")
 player_data = ExtResource("3_rcy5y")
@@ -1822,16 +1843,17 @@ velocity_move = Vector2(0, 0)
 
 [node name="Heavy_Attack_combo" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
-animation_name = "air_attack"
 next_attack_sate = NodePath("../Heavy_Attack_combo2")
+input_active = "skill"
 attack_box = NodePath("../../Directions/AttackBox")
 attack_audio = NodePath("../../Audio/BasicAttack")
-velocity_move = Vector2(0, -300)
+velocity_move = Vector2(0, -500)
 
 [node name="Heavy_Attack_combo2" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
-animation_name = "air_attack_2"
+animation_name = "attack_1"
 next_attack_sate = NodePath("../Heavy_Attack_combo3")
+input_active = "skill"
 attack_box = NodePath("../../Directions/AttackBox")
 damage_multiply = 0.4
 attack_audio = NodePath("../../Audio/BasicAttack")
@@ -1839,7 +1861,7 @@ velocity_move = Vector2(0, -300)
 
 [node name="Heavy_Attack_combo3" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
-animation_name = "air_attack"
+input_active = "skill"
 attack_box = NodePath("../../Directions/AttackBox")
 damage_multiply = 0.8
 attack_audio = NodePath("../../Audio/BasicAttack")
@@ -1920,3 +1942,8 @@ bus = &"Effect"
 [node name="SkillSystem" type="Node2D" parent="."]
 visible = false
 script = ExtResource("37_2ex0y")
+
+[node name="Heal" type="Node2D" parent="SkillSystem"]
+
+[node name="AttackSystem" type="Node2D" parent="."]
+script = ExtResource("47_nus0m")

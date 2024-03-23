@@ -25,7 +25,7 @@ signal attack_success
 @export var jump_buffer_time : float = 0.2
 
 @export_group("Attack")
-@export var attack_speed : float = 0.15
+@export var attack_system : AttackSystem
 
 @export_group("Health")
 @export var hp_event : HealthEvent
@@ -209,13 +209,14 @@ func  is_can_use_skill(event : InputEvent):
 ### Skill
 func is_can_cast_skill(event : InputEvent):
 	if not event.is_action_pressed("skill"): return false
-	if not player_data.is_skill_unlock: return
+	if not player_data.is_skill_unlock: return false
+	if not is_on_floor(): return false
 	return skill_system.is_can_used_skill()
 	
 func set_cast_state():
-	$AnimationPlayer.play("sample")
-	busy_duration = 0.3
-	state_machine.current_state.transition.emit(state_machine.current_state,"busy")
+	#$AnimationPlayer.play("sample")
+	#busy_duration = 0.3
+	state_machine.current_state.transition.emit(state_machine.current_state,"heavy_attack_combo")
 	skill_system.activate_skill()
 
 #region heal

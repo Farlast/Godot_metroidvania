@@ -74,7 +74,7 @@ func  _unhandled_input(event):
 			transition.emit(self,next_attack_sate.name.to_lower())
 		else:
 			# charge version
-			var skill_ins := skill.instantiate() as Skill
+			var skill_ins := skill.instantiate() as SkillEmiter
 			skill_ins.constructor(player.front_point,player.front_point.global_position,player.direction_holder.scale)
 			player.add_sibling(skill_ins)
 			skill_ins.active_skill()

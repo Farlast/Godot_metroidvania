@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://cqj73g3i00rev"]
+[gd_scene load_steps=63 format=3 uid="uid://cqj73g3i00rev"]
 
 [ext_resource type="PackedScene" uid="uid://b0byka5d5aixx" path="res://Scenes/Player/player.tscn" id="1_n28g0"]
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="2_sjssc"]
@@ -30,6 +30,10 @@
 [ext_resource type="Texture2D" uid="uid://djhgo1gnoqtqg" path="res://Art/BG/Cove/coast_rock_1.png" id="23_pn5yj"]
 [ext_resource type="Texture2D" uid="uid://baqpas207qvxj" path="res://Art/BG/Cove/rock_3.png" id="24_wxdjy"]
 [ext_resource type="PackedScene" uid="uid://cuwwx7vh0cyq7" path="res://Scenes/Props/plant_1.tscn" id="28_rnnio"]
+[ext_resource type="Shader" path="res://Shader/light_rays.gdshader" id="30_o3y88"]
+[ext_resource type="Texture2D" uid="uid://caumcj7f3tsmx" path="res://Art/UI/Square - Black.png" id="31_th27o"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_awq3h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o3vwg"]
 size = Vector2(112, 448)
@@ -174,6 +178,22 @@ colors = PackedColorArray(0.0795201, 0.246693, 0.49139, 1, 0.167941, 0.546362, 0
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_oax6w"]
 gradient = SubResource("Gradient_xaq01")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w73ik"]
+shader = ExtResource("30_o3y88")
+shader_parameter/angle = -0.3
+shader_parameter/position = -0.2
+shader_parameter/spread = 0.5
+shader_parameter/cutoff = 0.156
+shader_parameter/falloff = 0.2
+shader_parameter/edge_fade = 0.15
+shader_parameter/speed = 1.0
+shader_parameter/ray1_density = 8.0
+shader_parameter/ray2_density = 30.0
+shader_parameter/ray2_intensity = 0.3
+shader_parameter/color = Color(1, 0.9, 0.65, 0.8)
+shader_parameter/hdr = true
+shader_parameter/seed = 5.0
+
 [node name="Dev_Room" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_n28g0")]
@@ -202,6 +222,17 @@ layer_0/tile_data = PackedInt32Array(1114191, 0, 2, 1114192, 65536, 2, 1114193, 
 
 [node name="Camera" type="Node2D" parent="."]
 
+[node name="CinematicCamera2D" type="Camera2D" parent="Camera" node_paths=PackedStringArray("follow_node", "virtual_camera")]
+position = Vector2(848, 472)
+zoom = Vector2(1.2, 1.2)
+position_smoothing_enabled = true
+position_smoothing_speed = 15.0
+script = ExtResource("5_k4wnc")
+follow_node = NodePath("../../Player")
+virtual_camera = NodePath("../Zone1")
+transition_speed = 0.5
+noise = SubResource("FastNoiseLite_awq3h")
+
 [node name="Zone1" type="Node2D" parent="Camera"]
 script = ExtResource("4_5lisn")
 zoom = Vector2(1.2, 1.2)
@@ -216,15 +247,6 @@ limit_left = 0
 limit_top = 0
 limit_right = 1700
 limit_bottom = 1100
-
-[node name="CinematicCamera2D" type="Camera2D" parent="Camera" node_paths=PackedStringArray("follow_node", "virtual_camera")]
-position = Vector2(848, 472)
-zoom = Vector2(1.2, 1.2)
-position_smoothing_speed = 15.0
-script = ExtResource("5_k4wnc")
-follow_node = NodePath("../../Player")
-virtual_camera = NodePath("../Zone1")
-transition_speed = 0.5
 
 [node name="CameraSwitcher" type="Area2D" parent="Camera" node_paths=PackedStringArray("cinematic_camera", "virtual_camera_1", "virtual_camera_2")]
 position = Vector2(328, 608)
@@ -586,6 +608,12 @@ position = Vector2(4419, 130)
 rotation = -0.00192642
 scale = Vector2(0.756541, 1.00129)
 texture = ExtResource("24_wxdjy")
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/0"]
+material = SubResource("ShaderMaterial_w73ik")
+position = Vector2(954, 409)
+scale = Vector2(18.3115, 14.168)
+texture = ExtResource("31_th27o")
 
 [node name="1" type="CanvasLayer" parent="Parallax"]
 follow_viewport_enabled = true

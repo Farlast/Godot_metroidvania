@@ -32,4 +32,3 @@ func on_child_transition(state : State , new_state_name : String):
 	if current_state: current_state.on_exit()
 	new_state.on_enter()
 	current_state = new_state
-	

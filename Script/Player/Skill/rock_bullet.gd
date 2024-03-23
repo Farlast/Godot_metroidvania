@@ -1,5 +1,5 @@
 class_name RockBullet
-extends Skill
+extends SkillEmiter
 
 @onready var bullet_scene : PackedScene = preload("res://Scenes/Effect/bullet_acid.tscn")
 

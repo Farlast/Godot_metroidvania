@@ -1,5 +1,5 @@
 class_name Boomerang
-extends Skill
+extends SkillEmiter
 
 @onready var ground_collition : CollisionShape2D = $CollisionShape2D
 @export var move_time : float
@@ -15,7 +15,7 @@ func active_skill():
 	direction.y = 0
 	returning = false
 	await get_tree().create_timer(move_time).timeout
-	returning = true	
+	returning = true
 
 func _physics_process(delta):
 	global_position += direction * (speed * delta)
@@ -26,4 +26,4 @@ func on_ground(body: Node2D):
 	if returning and body is Player:
 		queue_free()
 	elif body is TileMap:
-		queue_free()
+		returning = true

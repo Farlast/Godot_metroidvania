@@ -1,16 +1,17 @@
 extends Enemy
 class_name ChaseEnemy
 
+@onready var front_ray : RayCast2D = $Direction/FrontRay
+
 @export_category("Movement")
 @export var move_speed : float = 200
 @export var turn_left : bool = true
 
-@export var stunt_time : float
-
 @export var hp_bar : StatusBar
 @export var stagger_bar : StatusBar
 
-@onready var front_ray : RayCast2D = $Direction/FrontRay
+@export var stunt_time : float
+@export var onscreen_noti : VisibleOnScreenNotifier2D
 
 var target : Node2D
 
@@ -25,7 +26,8 @@ func _ready():
 func take_damage(damage_data : DamageData)->bool:
 	super.take_damage(damage_data)
 	if not super_armor and health_system.stance.current_value > 0:
-		state_machine.current_state.transition.emit(state_machine.current_state,"stagger")
+		if health_system.health.current_value > 0:
+			state_machine.current_state.transition.emit(state_machine.current_state,"stagger")
 	if target == null:
 		if turn_left:
 			turn_left = false
@@ -69,3 +71,17 @@ func on_stance_break():
 	state_machine.current_state.transition.emit(state_machine.current_state,"idle")
 	health_system.stance.add(health_system.stance.max_value)
 	stagger_bar.update_hp(health_system.stance.current_value,health_system.stance.max_value)
+
+var is_on_screen : bool
+
+func dead():
+	if is_on_screen:
+		var camera = GameManager.main_camera
+		camera.add_trauma(0.5)
+	super.dead()
+
+func on_screen_enter():
+	is_on_screen = true
+
+func on_screen_exit():
+	is_on_screen = false

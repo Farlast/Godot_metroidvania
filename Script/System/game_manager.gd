@@ -1,18 +1,19 @@
 @tool
 extends Node
-##############
-# GameManager
-# Autoload
-# Service relay pattern
-##############
+############## GameManager ###############
+## Autoload
+## Service relay pattern
+##########################################
 signal setup_settings
 enum GameState {GAMEPLAY,LOCK_CONTROLL,FREEZE}
 var game_state : GameState = GameState.GAMEPLAY
 
+### player data relay
 var player_data : PlayerData = preload("res://Script/Player/Data/player_data_resource.tres")
 var setting_data : SettingData
 ### system relay
 var save_system : SaveSystem
+var main_camera : CinematicCamera2D
 
 func _ready():
 	save_system = SaveSystem.new()

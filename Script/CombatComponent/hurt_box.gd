@@ -24,6 +24,6 @@ func hurt(body : Area2D):
 		## send report back to attacker
 		var report := AttackReport.new()	
 		report.set_data(is_attack_success,object_tag,damage_data,global_position)
-		if attack_box != null:
+		if is_instance_valid(attack_box):
 			attack_box.attack_feedback(report)
 

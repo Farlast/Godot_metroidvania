@@ -16,18 +16,22 @@ extends State
 var active_input : bool
 var listen_input_window : bool 
 var attack_box_col : CollisionShape2D
+var attack_system : AttackSystem
 
 func _ready():
 	super._ready()
 	animator.animation_finished.connect(on_animation_finish)
 	player.attack_success.connect(on_attack_success)
 	attack_box_col = attack_box.get_child(0)
+	attack_system = player.attack_system
 
 func on_enter():
 	super.on_enter()
 	active_input = true
 	listen_input_window = false
 	animator.play(animation_name)
+	attack_system.enable_hitbox.connect(enable_hitbox)
+	attack_system.disable_hitbox.connect(disable_hitbox)
 	if not freely_move:
 		player.velocity = Vector2(player.direction_holder.scale.x * velocity_move.x,velocity_move.y)
 	if attack_audio:
@@ -64,6 +68,8 @@ func on_exit():
 	disable_hitbox()
 	active_input = false
 	player.get_hit_direction = Vector2.ZERO
+	attack_system.enable_hitbox.disconnect(enable_hitbox)
+	attack_system.disable_hitbox.disconnect(disable_hitbox)
 	
 func on_update(_delta : float):
 	super.on_update(_delta)

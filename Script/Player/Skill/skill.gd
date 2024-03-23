@@ -1,17 +1,14 @@
 class_name Skill
-extends Node2D
+extends Resource
 
-@export var cost : float = 1
+@export var cost : float
+@export var cast_time : float
 @export var damage_data : DamageData
-@export var speed : float = 800
 
-@export var direction : Vector2
-@export var sender : Node2D
+var player : Player
 
-func constructor(_sender : Node2D ,start_position : Vector2, _direction : Vector2):
-	global_position = start_position
-	direction = _direction
-	sender = _sender
+func _init(_player : Player):
+	player = _player
 
 func active_skill():
 	pass

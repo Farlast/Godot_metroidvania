@@ -33,6 +33,7 @@ collision_mask = 17
 script = ExtResource("1_dn327")
 move_time = 0.5
 damage_data = SubResource("Resource_kpfyk")
+speed = 1600.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -2.14577e-06)

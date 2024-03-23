@@ -28,7 +28,6 @@ extends Node2D
 ## If true, draws the camera's limits rectangle in the editor.
 @export var editor_draw_limits := true
 
-
 # Called when CanvasItem has been requested to redraw.
 func _draw() -> void:
 	if Engine.is_editor_hint():
@@ -36,7 +35,6 @@ func _draw() -> void:
 		if editor_draw_limits:
 			var rect := Rect2(limit_left, limit_top, limit_right - limit_left, limit_bottom - limit_top)
 			draw_rect(rect, Color.YELLOW, false)
-
 
 # Called every frame.
 func _process(_delta: float) -> void:

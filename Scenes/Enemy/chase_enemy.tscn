@@ -410,13 +410,14 @@ modulate_color = Color(0.980392, 0.701961, 0.286275, 1)
 [sub_resource type="Resource" id="Resource_gk8w1"]
 script = ExtResource("28_lqfom")
 
-[node name="ChaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("hp_bar", "stagger_bar")]
+[node name="ChaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("hp_bar", "stagger_bar", "onscreen_noti")]
 collision_layer = 0
 script = ExtResource("1_aur87")
 move_speed = 400.0
-stunt_time = 2.0
 hp_bar = NodePath("Control/VBoxContainer/HP bar")
 stagger_bar = NodePath("Control/VBoxContainer/Stagger bar")
+stunt_time = 2.0
+onscreen_noti = NodePath("VisibleOnScreenNotifier2D")
 health_system = SubResource("Resource_kcrr3")
 stagger_duration = 0.5
 
@@ -471,7 +472,6 @@ libraries = {
 autoplay = "RESET"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-visible = false
 position = Vector2(6.5, 9.5)
 scale = Vector2(7.65, 4.05)
 
@@ -627,3 +627,6 @@ value = 50.0
 show_percentage = false
 script = ExtResource("27_clcth")
 hp_event = SubResource("Resource_gk8w1")
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="on_screen_enter"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="on_screen_exit"]

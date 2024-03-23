@@ -1,5 +1,5 @@
 class_name WaterSplash
-extends Skill
+extends SkillEmiter
 
 @onready var bullet_scene : PackedScene = preload("res://Scenes/Effect/water_bullet.tscn")
 @export var bullet_amount : float = 1

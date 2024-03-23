@@ -96,7 +96,7 @@ func activate_skill():
 				return
 		
 		## fire prjectile skill
-		var skill_ins := skill_scene.instantiate() as Skill
+		var skill_ins :SkillEmiter = skill_scene.instantiate() as SkillEmiter
 		skill_ins.constructor(player.front_point,player.front_point.global_position,player.direction_holder.scale)
 		player.add_sibling(skill_ins)
 		skill_ins.active_skill()
