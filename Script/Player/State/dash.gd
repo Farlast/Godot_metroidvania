@@ -4,6 +4,7 @@ class_name Dash
 @export var dash_duration : float = 0.5
 @export var dash_speed : float = 500
 @export var dash_effect : GPUParticles2D
+@export var curve : Curve
 
 var dash_timer : float
 var direction : int
@@ -16,7 +17,6 @@ func on_enter():
 	dash_effect.emitting = true
 	dash_timer = 0
 	animator.play("dash")
-	player.velocity = Vector2.ZERO
 	
 	direction = ceil(Input.get_axis("move_left", "move_right"))
 	if direction == 0:
@@ -25,6 +25,7 @@ func on_enter():
 		else:
 			direction = 1
 	player.flip_sprite(direction)
+	#player.velocity.x = direction * dash_speed
 	
 func on_exit():
 	super.on_exit()
@@ -39,7 +40,7 @@ func on_update(_delta : float):
 
 func on_physics_update(_delta : float):
 	super.on_physics_update(_delta)
-	player.velocity.x = direction * dash_speed
+	player.velocity = Vector2((curve.sample(dash_timer/dash_duration)*dash_speed)*direction ,0)
 	player.move_and_slide()
 
 func next_stage():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://b0byka5d5aixx"]
+[gd_scene load_steps=97 format=3 uid="uid://b0byka5d5aixx"]
 
 [ext_resource type="Script" path="res://Script/Player/player.gd" id="1_clpn5"]
 [ext_resource type="Resource" uid="uid://dot44gd0wwyic" path="res://Script/Player/Event/HP_Event.tres" id="2_xwgl7"]
@@ -40,7 +40,6 @@
 [ext_resource type="AudioStream" uid="uid://cxl6a1s8kp2ar" path="res://Audio/Effect/Attack/SFX_whoosh-1.wav" id="32_tyyfq"]
 [ext_resource type="Script" path="res://Script/Player/State/busy.gd" id="33_0j15e"]
 [ext_resource type="AudioStream" uid="uid://qfhojxuubk3m" path="res://Audio/HitSound/blade_hit_08.wav" id="33_56kgd"]
-[ext_resource type="AudioStream" uid="uid://dhqlxxnsqva5v" path="res://Audio/UI_no.wav" id="33_ypxap"]
 [ext_resource type="Script" path="res://Script/Player/State/crouch.gd" id="36_cta4m"]
 [ext_resource type="Script" path="res://Script/Player/Skill/skill_system.gd" id="37_2ex0y"]
 [ext_resource type="Script" path="res://Script/Player/audio_player.gd" id="39_c00jx"]
@@ -136,9 +135,10 @@ color_ramp = SubResource("GradientTexture1D_euhj2")
 script = ExtResource("19_v6ssd")
 damage = 1.0
 impact = 1.0
+knockback_force = 0
+element = 0
 take_damage_rule = 0
 take_damage_mask = 0
-element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2xt3"]
 size = Vector2(192, 120)
@@ -1071,7 +1071,7 @@ tracks/3/path = NodePath("StateMachine/Dash")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -1605,6 +1605,55 @@ _data = {
 "slide": SubResource("Animation_tdkw3")
 }
 
+[sub_resource type="Resource" id="Resource_beir8"]
+script = ExtResource("19_v6ssd")
+damage = 0.2
+impact = 1.0
+knockback_force = 0
+element = 0
+take_damage_rule = 0
+take_damage_mask = 0
+
+[sub_resource type="Resource" id="Resource_yhtq5"]
+script = ExtResource("19_v6ssd")
+damage = 0.8
+impact = 1.0
+knockback_force = 0
+element = 0
+take_damage_rule = 0
+take_damage_mask = 0
+
+[sub_resource type="Resource" id="Resource_mqm6q"]
+script = ExtResource("19_v6ssd")
+damage = 1.0
+impact = 5.0
+knockback_force = 2
+element = 0
+take_damage_rule = 0
+take_damage_mask = 0
+
+[sub_resource type="Resource" id="Resource_7kr4u"]
+script = ExtResource("19_v6ssd")
+damage = 0.0
+impact = 0.0
+knockback_force = 0
+element = 0
+take_damage_rule = 0
+take_damage_mask = 0
+
+[sub_resource type="Resource" id="Resource_7k5ai"]
+script = ExtResource("19_v6ssd")
+damage = 0.0
+impact = 0.0
+knockback_force = 0
+element = 0
+take_damage_rule = 0
+take_damage_mask = 0
+
+[sub_resource type="Curve" id="Curve_tfimr"]
+_data = [Vector2(0, 1), 0.0, 1.15111e-06, 0, 0, Vector2(1, 0), -1.82609, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="Curve" id="Curve_a7cwo"]
 _data = [Vector2(0, 1), 0.0, -0.98736, 0, 0, Vector2(0.993528, 0.0329884), -1.11357, 0.0, 0, 0]
 point_count = 2
@@ -1640,7 +1689,9 @@ position = Vector2(0, -56)
 shape = SubResource("CapsuleShape2D_og76b")
 
 [node name="celling_ray" type="RayCast2D" parent="."]
+visible = false
 position = Vector2(0, -56)
+enabled = false
 target_position = Vector2(0, -64)
 
 [node name="Directions" type="Node2D" parent="."]
@@ -1785,6 +1836,7 @@ script = ExtResource("18_30rd3")
 script = ExtResource("30_rceje")
 skill_file_path = "res://Scenes/Player/skill_boomerang.tscn"
 charge_time = 0.4
+animation_name = null
 next_attack_sate = NodePath("../AttackCombo")
 attack_box = NodePath("../../Directions/AttackBox")
 damage_multiply = 1.5
@@ -1798,6 +1850,7 @@ velocity_move = Vector2(1000, 0)
 script = ExtResource("29_u7p7h")
 next_attack_sate = NodePath("../AttackCombo2")
 attack_box = NodePath("../../Directions/AttackBox")
+damage_data = SubResource("Resource_beir8")
 attack_audio = NodePath("../../Audio/BasicAttack")
 
 [node name="AttackCombo2" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
@@ -1805,13 +1858,13 @@ script = ExtResource("29_u7p7h")
 animation_name = "attack_1"
 next_attack_sate = NodePath("../AttackCombo3")
 attack_box = NodePath("../../Directions/AttackBox")
-damage_multiply = 0.4
+damage_data = SubResource("Resource_yhtq5")
 attack_audio = NodePath("../../Audio/BasicAttack")
 
 [node name="AttackCombo3" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
 attack_box = NodePath("../../Directions/AttackBox")
-damage_multiply = 0.8
+damage_data = SubResource("Resource_mqm6q")
 attack_audio = NodePath("../../Audio/BasicAttack")
 
 [node name="Attack_up" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
@@ -1819,6 +1872,7 @@ script = ExtResource("19_ly7k1")
 attack_box = NodePath("../../Directions/AttackBox_Up")
 attack_audio = NodePath("../../Audio/BasicAttack")
 animation_name = "attack_up"
+freely_move = true
 velocity_move = Vector2(0, 0)
 
 [node name="Air_Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
@@ -1829,43 +1883,22 @@ animation_name = "air_attack"
 freely_move = true
 velocity_move = Vector2(0, -300)
 
-[node name="Heavy_Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "audio_player", "charge_finish_audio", "attack_audio_player")]
-script = ExtResource("30_rceje")
-skill_file_path = "res://Scenes/Player/skill_boomerang.tscn"
-next_attack_sate = NodePath("../Heavy_Attack_combo")
-attack_box = NodePath("../../Directions/AttackBox")
-damage_multiply = 2.0
-audio_player = NodePath("../../Audio")
-charge_audio = ExtResource("33_ypxap")
-charge_finish_audio = NodePath("../../Audio/ChargeComplete")
-attack_audio_player = NodePath("../../Audio/BasicAttack")
-velocity_move = Vector2(0, 0)
-
-[node name="Heavy_Attack_combo" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
+[node name="Air_Attack_combo" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
-next_attack_sate = NodePath("../Heavy_Attack_combo2")
-input_active = "skill"
+next_attack_sate = NodePath("../Air_Attack_combo2")
 attack_box = NodePath("../../Directions/AttackBox")
+damage_data = SubResource("Resource_7kr4u")
 attack_audio = NodePath("../../Audio/BasicAttack")
 velocity_move = Vector2(0, -500)
 
-[node name="Heavy_Attack_combo2" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
+[node name="Air_Attack_combo2" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
 animation_name = "attack_1"
-next_attack_sate = NodePath("../Heavy_Attack_combo3")
-input_active = "skill"
 attack_box = NodePath("../../Directions/AttackBox")
-damage_multiply = 0.4
+damage_data = SubResource("Resource_7k5ai")
 attack_audio = NodePath("../../Audio/BasicAttack")
 velocity_move = Vector2(0, -300)
-
-[node name="Heavy_Attack_combo3" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
-script = ExtResource("29_u7p7h")
-input_active = "skill"
-attack_box = NodePath("../../Directions/AttackBox")
-damage_multiply = 0.8
-attack_audio = NodePath("../../Audio/BasicAttack")
-velocity_move = Vector2(0, -300)
+air_movement = true
 
 [node name="Absorb" type="Node" parent="StateMachine"]
 script = ExtResource("20_n6gdi")
@@ -1879,8 +1912,9 @@ script = ExtResource("36_cta4m")
 [node name="Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("dash_effect")]
 script = ExtResource("28_oacl1")
 dash_duration = 0.25
-dash_speed = 950.0
+dash_speed = 1200.0
 dash_effect = NodePath("../../Directions/Effect/DashEffect")
+curve = SubResource("Curve_tfimr")
 
 [node name="Crouch_attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
 script = ExtResource("19_ly7k1")
@@ -1943,7 +1977,6 @@ bus = &"Effect"
 visible = false
 script = ExtResource("37_2ex0y")
 
-[node name="Heal" type="Node2D" parent="SkillSystem"]
-
 [node name="AttackSystem" type="Node2D" parent="."]
+visible = false
 script = ExtResource("47_nus0m")

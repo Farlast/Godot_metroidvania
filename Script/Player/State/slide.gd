@@ -24,6 +24,7 @@ func _ready():
 
 func on_enter():
 	super.on_enter()
+	overhead_ray.enabled = true
 	active_input = true
 	slide_finish = false
 	slide_timer = 0
@@ -36,6 +37,7 @@ func on_enter():
 
 func on_exit():
 	super.on_exit()
+	overhead_ray.enabled = false
 	slide_finish = false
 	slide_timer = 0
 	collision_shape.height = defualt_height

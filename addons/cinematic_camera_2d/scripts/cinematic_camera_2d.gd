@@ -26,6 +26,7 @@ var trauma := 0.0 #Current shake strength
 var trauma_pwr := 3 #Trauma exponent. Use [2,3]
 
 func _ready():
+	noise = FastNoiseLite.new()
 	if is_main : GameManager.main_camera = self
 
 func _process(delta: float) -> void:

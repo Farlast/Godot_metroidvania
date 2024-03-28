@@ -136,12 +136,14 @@ func add_fall_gravity(delta):
 	if velocity.y > 1500:
 		velocity.y = 1500
 
-func add_drag(delta : float, drag : float = 5):
-	if is_on_floor():
-		if velocity.x > 0:
-			velocity.x -= abs(velocity.x * delta * drag)
-		else:
-			velocity.x += abs(velocity.x * delta * drag)
+func add_drag(delta : float, check_on_floor : bool = true, drag : float = 5):
+	if check_on_floor:
+		if not is_on_floor(): return
+	
+	if velocity.x > 0:
+		velocity.x -= abs(velocity.x * (delta * drag))
+	else:
+		velocity.x += abs(velocity.x * (delta * drag))
 
 func move_horizontal(flip : bool = true):
 	var direction = Input.get_axis("move_left", "move_right")
@@ -206,18 +208,12 @@ func  is_can_use_skill(event : InputEvent):
 	if skill_system.orb_status == skill_system.OrbStatus.Active:
 		return true
 	return skill_system.is_can_used_skill()
+
 ### Skill
 func is_can_cast_skill(event : InputEvent):
 	if not event.is_action_pressed("skill"): return false
 	if not player_data.is_skill_unlock: return false
-	if not is_on_floor(): return false
 	return skill_system.is_can_used_skill()
-	
-func set_cast_state():
-	#$AnimationPlayer.play("sample")
-	#busy_duration = 0.3
-	state_machine.current_state.transition.emit(state_machine.current_state,"heavy_attack_combo")
-	skill_system.activate_skill()
 
 #region heal
 func is_can_heal(event : InputEvent)-> bool:

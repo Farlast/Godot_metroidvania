@@ -1,7 +1,7 @@
-extends Panel
 class_name PauseMenu
+extends Control
 
-@onready var defualt_button : Button = $VBoxContainer2/MarginContainer2/VBoxContainer/Continue
+@export var defualt_button : Button
 var fullscreen_btt : CheckButton
 var is_focus : bool
 

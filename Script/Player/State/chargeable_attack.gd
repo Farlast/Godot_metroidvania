@@ -61,7 +61,7 @@ func on_update(_delta : float):
 
 func on_physics_update(_delta : float):
 	super.on_physics_update(_delta)
-	player.add_drag(_delta)
+	player.add_drag(_delta,false,5)
 	player.move_and_slide()
 
 func  _unhandled_input(event):

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bm4ghgs4sd1nf"
-path="res://.godot/imported/ender-lilies-2-1.jpg-6eb98e23523472f9ae57d38e9557e3cd.ctex"
+uid="uid://c1t7ky105jfk"
+path="res://.godot/imported/tex_spin_blade.png-f43b28b72c950c0a340d8e78b6c9a4b3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Ref/ender-lilies-2-1.jpg"
-dest_files=["res://.godot/imported/ender-lilies-2-1.jpg-6eb98e23523472f9ae57d38e9557e3cd.ctex"]
+source_file="res://Art/Player/Skill/tex_spin_blade.png"
+dest_files=["res://.godot/imported/tex_spin_blade.png-f43b28b72c950c0a340d8e78b6c9a4b3.ctex"]
 
 [params]
 

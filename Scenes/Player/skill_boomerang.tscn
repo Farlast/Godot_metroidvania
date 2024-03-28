@@ -1,8 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://j477bteh17pm"]
+[gd_scene load_steps=13 format=3 uid="uid://j477bteh17pm"]
 
 [ext_resource type="Script" path="res://Script/Player/Skill/boomerang.gd" id="1_dn327"]
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="2_2wdcc"]
-[ext_resource type="Texture2D" uid="uid://c3ebu0gxgwpy1" path="res://Art/Effect/Tex_circle_gradient.png" id="3_xiqh8"]
+[ext_resource type="Texture2D" uid="uid://c1t7ky105jfk" path="res://Art/Player/Skill/tex_spin_blade.png" id="3_yxr3t"]
 [ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="4_gwkih"]
 [ext_resource type="AudioStream" uid="uid://rhehcge1sm1p" path="res://Audio/Effect/Attack/swosh_spin_loop.wav" id="5_rr3pk"]
 
@@ -10,23 +10,63 @@
 script = ExtResource("2_2wdcc")
 damage = 1.0
 impact = 1.0
+knockback_force = 0
+element = 0
 take_damage_rule = 0
 take_damage_mask = 1
-element = 0
 
 [sub_resource type="Resource" id="Resource_try0s"]
 script = ExtResource("2_2wdcc")
 damage = 2.0
 impact = 0.0
+knockback_force = 0
+element = 0
 take_damage_rule = 0
 take_damage_mask = 0
-element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3qmr1"]
-size = Vector2(128, 88)
+size = Vector2(256, 128)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hs8rl"]
 radius = 40.0
+
+[sub_resource type="Animation" id="Animation_waw4k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_uryyh"]
+resource_name = "spin"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1geki"]
+_data = {
+"RESET": SubResource("Animation_waw4k"),
+"spin": SubResource("Animation_uryyh")
+}
 
 [node name="Boomerang" type="Area2D"]
 collision_mask = 17
@@ -36,11 +76,13 @@ damage_data = SubResource("Resource_kpfyk")
 speed = 1600.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -2.14577e-06)
-scale = Vector2(1, 0.625)
-texture = ExtResource("3_xiqh8")
+position = Vector2(-3.8147e-06, -5.72205e-06)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_yxr3t")
+hframes = 3
 
 [node name="AttackBox" type="Area2D" parent="."]
+visible = false
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("4_gwkih")
@@ -51,10 +93,17 @@ shape = SubResource("RectangleShape2D_3qmr1")
 debug_color = Color(0.972549, 0, 0.427451, 0.419608)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_hs8rl")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_rr3pk")
 autoplay = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1geki")
+}
+autoplay = "spin"
 
 [connection signal="body_entered" from="." to="." method="on_ground"]

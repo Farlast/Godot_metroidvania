@@ -55,6 +55,6 @@ func _unhandled_input(event):
 	elif event.is_action_pressed("dash") && player.is_can_dash():
 		transition.emit(self,"dash")
 	elif player.is_can_cast_skill(event):
-		player.set_cast_state()
+		transition.emit(self,"air_attack")
 	elif player.is_can_heal(event):
 		player.start_heal()

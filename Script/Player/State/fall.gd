@@ -39,7 +39,7 @@ func _unhandled_input(event):
 	elif event.is_action_pressed("attack") && v_direction > 0:
 		transition.emit(self,"attack_up")
 	if event.is_action_pressed("attack"):
-		transition.emit(self,"air_attack")
+		transition.emit(self,"air_attack_combo")
 	elif event.is_action_pressed("jump") && player.Is_can_coyote_time:
 		player.Is_can_coyote_time = false
 		transition.emit(self,"jump")
@@ -51,4 +51,4 @@ func _unhandled_input(event):
 	elif event.is_action_pressed("dash") && player.is_can_dash():
 		transition.emit(self,"dash")
 	elif player.is_can_cast_skill(event):
-		player.set_cast_state()
+		transition.emit(self,"air_attack")

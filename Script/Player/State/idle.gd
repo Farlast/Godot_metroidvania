@@ -10,6 +10,7 @@ func on_enter():
 	animator.play("idle")
 	active_input = true
 	player.update_area()
+	player.velocity = Vector2.ZERO
 	
 func on_exit():
 	super.on_exit()
@@ -30,7 +31,6 @@ func on_update(_delta : float):
 	
 func on_physics_update(_delta : float):
 	super.on_physics_update(_delta)
-	player.add_drag(_delta,10)
 	player.add_fall_gravity(_delta)
 	player.move_and_slide()
 	
@@ -51,6 +51,6 @@ func _unhandled_input(event):
 	elif player.is_can_use_skill(event):
 		transition.emit(self,"absorb")
 	elif player.is_can_cast_skill(event):
-		player.set_cast_state()
+		transition.emit(self,"air_attack")
 	elif player.is_can_heal(event):
 		player.start_heal()

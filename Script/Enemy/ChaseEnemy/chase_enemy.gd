@@ -13,6 +13,7 @@ class_name ChaseEnemy
 @export var stunt_time : float
 @export var onscreen_noti : VisibleOnScreenNotifier2D
 
+var is_on_screen : bool
 var target : Node2D
 
 func _ready():
@@ -64,17 +65,11 @@ func face_to_target(delay :bool = true):
 		direction_holder.scale.x = abs(direction_holder.scale.x)
 
 func on_stance_break():
-	velocity = Vector2.ZERO
-	animator.play("stagger")
-	state_machine.current_state.transition.emit(state_machine.current_state,"empty")
-	await get_tree().create_timer(stunt_time).timeout
-	state_machine.current_state.transition.emit(state_machine.current_state,"idle")
-	health_system.stance.add(health_system.stance.max_value)
-	stagger_bar.update_hp(health_system.stance.current_value,health_system.stance.max_value)
-
-var is_on_screen : bool
+	if not health_system.is_dead():
+		state_machine.current_state.transition.emit(state_machine.current_state,"stancebreak")
 
 func dead():
+	state_machine.current_state.transition.emit(state_machine.current_state,"empty")
 	if is_on_screen:
 		var camera = GameManager.main_camera
 		camera.add_trauma(0.5)

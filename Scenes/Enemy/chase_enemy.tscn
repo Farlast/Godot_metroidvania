@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://cwtxhoydrofhh"]
+[gd_scene load_steps=68 format=3 uid="uid://cwtxhoydrofhh"]
 
 [ext_resource type="Script" path="res://Script/Enemy/ChaseEnemy/chase_enemy.gd" id="1_aur87"]
 [ext_resource type="Material" uid="uid://cmv24i1lrmfiw" path="res://Shader/enemy.tres" id="2_pg0cq"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="12_gtaqg"]
 [ext_resource type="Texture2D" uid="uid://dtytbqyts58yo" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0003.png" id="12_q0lwj"]
 [ext_resource type="Script" path="res://Script/Enemy/State/ramp_attack.gd" id="12_qx0l6"]
+[ext_resource type="Script" path="res://Script/Enemy/BasicEnemy/stance_break.gd" id="12_wb7s4"]
 [ext_resource type="Texture2D" uid="uid://nwb4oqf22xe4" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0005.png" id="13_2boxu"]
 [ext_resource type="PackedScene" uid="uid://bkijr6cnrf2dy" path="res://Scenes/Effect/dead_particle.tscn" id="13_c4nw1"]
 [ext_resource type="Texture2D" uid="uid://byku3155bejsl" path="res://Art/Effect/hollow fade circle.png" id="14_1lm6k"]
@@ -26,7 +27,6 @@
 [ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/HitSound/face_hit_small_78.wav" id="15_dwilf"]
 [ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/HitSound/body_hit_finisher_23.wav" id="16_n1t41"]
 [ext_resource type="Texture2D" uid="uid://dn04fmj7at105" path="res://Art/Effect/Tex_Gilnt.png" id="18_3p1lc"]
-[ext_resource type="Texture2D" uid="uid://icea78fevp0o" path="res://Art/UI/tex_hp_bar.png" id="25_2bteo"]
 [ext_resource type="Texture2D" uid="uid://bdk6t6ouad607" path="res://Art/UI/ui_hp_bar_fill.png" id="26_f07bo"]
 [ext_resource type="Script" path="res://Script/UI/HUD/status_bar.gd" id="27_clcth"]
 [ext_resource type="Script" path="res://Script/Player/Event/Health_Event.gd" id="28_lqfom"]
@@ -370,9 +370,10 @@ region = Rect2(41.5117, 196.086, 115.429, 114.746)
 script = ExtResource("6_wg7p8")
 damage = 1.0
 impact = 0.0
+knockback_force = 0
+element = 0
 take_damage_rule = 0
 take_damage_mask = 0
-element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c5jhj"]
 size = Vector2(73, 153)
@@ -391,20 +392,8 @@ bg_color = Color(0.827451, 0.168627, 0.168627, 1)
 [sub_resource type="Resource" id="Resource_1rth7"]
 script = ExtResource("28_lqfom")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kkrla"]
-texture = ExtResource("25_2bteo")
-texture_margin_left = 5.0
-texture_margin_top = 5.0
-texture_margin_right = 5.0
-texture_margin_bottom = 5.0
-modulate_color = Color(0.227451, 0.227451, 0.227451, 1)
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sn2yh"]
 texture = ExtResource("26_f07bo")
-texture_margin_left = 5.0
-texture_margin_top = 5.0
-texture_margin_right = 5.0
-texture_margin_bottom = 5.0
 modulate_color = Color(0.980392, 0.701961, 0.286275, 1)
 
 [sub_resource type="Resource" id="Resource_gk8w1"]
@@ -463,6 +452,9 @@ attack_box_col = NodePath("../../Direction/MeleeAttackBox/ramp_area")
 
 [node name="Empty" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("11_xu62c")
+
+[node name="StanceBreak" type="Node" parent="EnemyStateMachine"]
+script = ExtResource("12_wb7s4")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -601,16 +593,25 @@ offset_right = 39.0
 offset_bottom = -24.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control"]
-custom_minimum_size = Vector2(0, 15)
+custom_minimum_size = Vector2(0, 5)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -6.5
+offset_right = 33.0
+offset_bottom = 7.5
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 1
+alignment = 1
 
 [node name="HP bar" type="ProgressBar" parent="Control/VBoxContainer"]
-custom_minimum_size = Vector2(0, 15)
+custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_mmb6d")
 value = 50.0
@@ -619,9 +620,8 @@ script = ExtResource("27_clcth")
 hp_event = SubResource("Resource_1rth7")
 
 [node name="Stagger bar" type="ProgressBar" parent="Control/VBoxContainer"]
-custom_minimum_size = Vector2(0, 12)
+custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxTexture_kkrla")
 theme_override_styles/fill = SubResource("StyleBoxTexture_sn2yh")
 value = 50.0
 show_percentage = false

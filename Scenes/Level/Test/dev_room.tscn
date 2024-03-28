@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://cqj73g3i00rev"]
+[gd_scene load_steps=61 format=3 uid="uid://cqj73g3i00rev"]
 
 [ext_resource type="PackedScene" uid="uid://b0byka5d5aixx" path="res://Scenes/Player/player.tscn" id="1_n28g0"]
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="2_sjssc"]
@@ -26,7 +26,6 @@
 [ext_resource type="Texture2D" uid="uid://1a4bv5wc5v4q" path="res://Art/BG/Cove/far_Island.png" id="22_s0wt0"]
 [ext_resource type="Texture2D" uid="uid://1g5extk25jrm" path="res://Art/BG/Cove/rock_1.png" id="22_y8hh6"]
 [ext_resource type="Texture2D" uid="uid://bd2c2xc2omeln" path="res://Art/BG/Cove/rock_2.png" id="23_c8dpb"]
-[ext_resource type="Shader" path="res://Shader/blur.gdshader" id="23_e4sub"]
 [ext_resource type="Texture2D" uid="uid://djhgo1gnoqtqg" path="res://Art/BG/Cove/coast_rock_1.png" id="23_pn5yj"]
 [ext_resource type="Texture2D" uid="uid://baqpas207qvxj" path="res://Art/BG/Cove/rock_3.png" id="24_wxdjy"]
 [ext_resource type="PackedScene" uid="uid://cuwwx7vh0cyq7" path="res://Scenes/Props/plant_1.tscn" id="28_rnnio"]
@@ -166,10 +165,6 @@ colors = PackedColorArray(0.232992, 0.458859, 0.885503, 1, 0.391404, 0.700252, 0
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_7hw8i"]
 gradient = SubResource("Gradient_8t7ac")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xo8jc"]
-shader = ExtResource("23_e4sub")
-shader_parameter/lod = 0.457
 
 [sub_resource type="Gradient" id="Gradient_xaq01"]
 offsets = PackedFloat32Array(0, 0.141762, 1)
@@ -505,16 +500,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="blur" type="ColorRect" parent="Parallax/-2/Control"]
-material = SubResource("ShaderMaterial_xo8jc")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(30.2108, 17.433)
 
 [node name="TextureRect3" type="TextureRect" parent="Parallax/-2/Control"]
 layout_mode = 1

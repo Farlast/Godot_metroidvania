@@ -7,11 +7,12 @@ extends State
 @export var input_active : String = "attack"
 @export_group("Damage")
 @export var attack_box : AttackBox
-@export var damage_multiply : float
+@export var damage_data : DamageData
 @export_group("Audio")
 @export var attack_audio : AudioStreamPlayer2D
 @export_group("Move distance")
 @export var velocity_move : Vector2 = Vector2(200,0)
+@export var air_movement : bool
 
 var attack_box_col : CollisionShape2D
 var active_input : bool
@@ -31,8 +32,12 @@ func _ready():
 ## Custom
 ############
 func on_enter():
-	attack_box.get_damage_data().damage_multiply = damage_multiply
-	player.velocity = Vector2(player.direction_holder.scale.x * velocity_move.x,velocity_move.y)
+	attack_box.get_damage_data().add(damage_data)
+	if air_movement:
+		player.velocity = Vector2(player.velocity.x,velocity_move.y)
+	else:
+		player.velocity = Vector2(player.direction_holder.scale.x * velocity_move.x,velocity_move.y)
+	
 	super.on_enter()
 	active_input = true
 	listen_input_window = false
@@ -76,6 +81,8 @@ func on_physics_update(_delta : float):
 
 func  _unhandled_input(event):
 	if not active_input: return
+	if air_movement and event.is_action_released("move_left") || event.is_action_released("move_right"):
+		player.velocity.x = 0
 	if event.is_action_pressed("dash") && player.is_can_dash():
 		transition.emit(self,"dash")
 	elif event.is_action_pressed("jump") && player.is_on_floor():

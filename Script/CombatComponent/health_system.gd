@@ -16,3 +16,6 @@ func setup():
 func calculate_damage(damage_data:DamageData):
 	health.substrect(damage_data.damage)
 	stance.substrect(damage_data.impact)
+
+func is_dead()-> bool:
+	return health.current_value <= 0

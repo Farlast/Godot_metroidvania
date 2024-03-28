@@ -37,4 +37,4 @@ func _unhandled_input(event):
 	elif event.is_action_pressed("dash") and player.is_can_slide:
 		transition.emit(self,"slide")
 	elif player.is_can_cast_skill(event):
-		player.set_cast_state()
+		transition.emit(self,"heavy_attack_combo")

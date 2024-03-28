@@ -4,7 +4,7 @@ extends Node2D
 @onready var elemental_orb_scene : PackedScene = preload("res://Scenes/Player/elemental_orb.tscn")
 @onready var elemental_display_scene : PackedScene = preload("res://Scenes/Player/Elemental_Display.tscn")
 @onready var water_jet_scene : PackedScene = preload("res://Scenes/Player/water_splash.tscn")
-#@onready var water_jet_scene : PackedScene = preload("res://Scenes/Player/skill_boomerang.tscn")
+#@onready var skill_boomerang_scene : PackedScene = preload("res://Scenes/Player/skill_boomerang.tscn")
 @onready var plant_bullet_scene : PackedScene = preload("res://Scenes/Player/rock_bullet.tscn")
 @onready var fire_bullet_scene : PackedScene = preload("res://Scenes/Player/fireball.tscn")
 
@@ -53,6 +53,13 @@ func is_can_used_skill() -> bool:
 func is_have_mana_for_skill(_cost : float) -> bool:
 	return player.player_data.current_mana - _cost >= 0
 
+func is_have_element():
+	return orb_status == OrbStatus.Active
+
+func remove_element():
+	orb_status = OrbStatus.InActive
+	follow_orb.queue_free()
+
 func skill_sample():
 	var h_direction = Input.get_axis("move_left", "move_right")
 	var v_direction = Input.get_axis("move_up", "move_down")
@@ -69,7 +76,7 @@ func skill_sample():
 func got_element(element_data : ElementData,_position : Vector2):
 	orb_status = OrbStatus.Active
 	current_orb_element = element_data.element
-	if follow_orb: # if old one still exist
+	if is_instance_valid(follow_orb): # if old one still exist
 		follow_orb.set_display_off()
 		follow_orb.setup(_position,player.orb_anchor,current_orb_element)
 	else:
@@ -104,3 +111,6 @@ func activate_skill():
 		is_cooldown = true
 		await player.get_tree().create_timer(skill_cooldown).timeout
 		is_cooldown = false
+
+func chrage_skill_active():
+	pass
