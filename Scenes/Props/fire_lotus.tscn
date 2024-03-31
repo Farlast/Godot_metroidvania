@@ -10,25 +10,26 @@
 [ext_resource type="Texture2D" uid="uid://c1qhwi8ewswm4" path="res://Art/Effect/Tex_circle_small.png" id="8_l30jo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vwckw"]
-size = Vector2(256, 384)
+size = Vector2(224, 368)
 
 [sub_resource type="Resource" id="Resource_tugoo"]
 script = ExtResource("3_3qna0")
 element = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_88ehj"]
-size = Vector2(260, 388)
+size = Vector2(256, 384)
 
 [sub_resource type="Resource" id="Resource_0vwtx"]
 script = ExtResource("5_6mfvv")
 damage = 1.0
 impact = 0.0
+knockback_force = 0
+element = 2
 take_damage_rule = 0
 take_damage_mask = 2
-element = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vw4w1"]
-size = Vector2(256, 176)
+size = Vector2(224, 176)
 
 [node name="FireLotus" type="StaticBody2D"]
 scale = Vector2(0.5, 0.5)
@@ -36,7 +37,8 @@ collision_mask = 49
 script = ExtResource("1_fchqo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -192)
+visible = false
+position = Vector2(0, -184)
 shape = SubResource("RectangleShape2D_vwckw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -51,22 +53,24 @@ script = ExtResource("2_rj68i")
 element_data = SubResource("Resource_tugoo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ElementBox"]
-position = Vector2(0, -96)
+position = Vector2(0, -192)
 shape = SubResource("RectangleShape2D_88ehj")
 debug_color = Color(0.929412, 0.196078, 0.458824, 0.0823529)
 
 [node name="AttackBox" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("4_4gwba")
 damage_data = SubResource("Resource_0vwtx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
-position = Vector2(0, -194)
+position = Vector2(0, -192)
 shape = SubResource("RectangleShape2D_88ehj")
 debug_color = Color(0.929412, 0.196078, 0.458824, 0.0823529)
 
 [node name="HurtBox" type="Area2D" parent="."]
+visible = false
 collision_layer = 8
 collision_mask = 8
 script = ExtResource("7_8bh6u")

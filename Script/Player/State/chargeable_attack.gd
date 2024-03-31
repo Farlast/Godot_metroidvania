@@ -1,7 +1,6 @@
 class_name ChargeableAttack
 extends State
 
-@export_file("*.tscn") var skill_file_path : String
 @export var charge_time : float = 0.3
 @export_group("State transition")
 @export var animation_name : String = "charge_attack"
@@ -29,7 +28,6 @@ func _ready():
 	super._ready()
 	attack_box_col = attack_box.get_child(0)
 	animator.animation_finished.connect(on_animation_finish)
-	skill = load(skill_file_path)
 
 func on_enter():
 	super.on_enter()
@@ -74,10 +72,7 @@ func  _unhandled_input(event):
 			transition.emit(self,next_attack_sate.name.to_lower())
 		else:
 			# charge version
-			var skill_ins := skill.instantiate() as SkillEmiter
-			skill_ins.constructor(player.front_point,player.front_point.global_position,player.direction_holder.scale)
-			player.add_sibling(skill_ins)
-			skill_ins.active_skill()
+			player.skill_system.chrage_skill_active()
 			animator.play("charge_attack")
 			if attack_audio_player : attack_audio_player.play()
 			player.dash_iframe = true

@@ -3,6 +3,8 @@ extends EnemyState
 
 @export var attack_box_col : CollisionShape2D
 @export var deceleration_rate : float = 500
+@export var ramp_speed : float = 500
+
 var active_state : bool
 
 func _ready():
@@ -23,10 +25,12 @@ func on_exit():
 	attack_box_col.set_deferred("disabled",true)
 
 func start_attack():
-	agent.velocity.x = 500 * -agent.direction_holder.scale.x
+	agent.velocity.x = ramp_speed * -agent.direction_holder.scale.x
 	attack_box_col.set_deferred("disabled",false)
 
 func stop_attack():
+	agent.super_armor = false
+	agent.velocity.x = 0
 	attack_box_col.set_deferred("disabled",true)
 
 func on_animation_finish(_animation_name : String):

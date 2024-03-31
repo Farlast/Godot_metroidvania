@@ -51,6 +51,6 @@ func _unhandled_input(event):
 	elif player.is_can_use_skill(event):
 		transition.emit(self,"absorb")
 	elif player.is_can_cast_skill(event):
-		transition.emit(self,"air_attack")
+		transition.emit(self,"performskill")
 	elif player.is_can_heal(event):
 		player.start_heal()

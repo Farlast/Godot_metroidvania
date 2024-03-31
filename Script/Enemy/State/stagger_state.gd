@@ -1,19 +1,24 @@
 extends EnemyState
 class_name StaggerState
 
+@export var stagger_duration : float = 0.3
+var timer : float
+
 func on_enter():
 	super.on_enter()
+	timer = 0
 	agent.velocity = Vector2.ZERO
 	animator.play("stagger")
-	await get_tree().create_timer(agent.stagger_duration).timeout
-	transition.emit(self,"idle")
 
 func on_exit():
 	super.on_exit()
-	#agent.health_system.stance.add(agent.health_system.stance.max_value)
+	timer = 0
 
 func on_update(_delta : float):
 	super.on_update(_delta)
+	timer += _delta
+	if timer > stagger_duration:
+		transition.emit(self,"idle")
 
 func on_physics_update(_delta : float):
 	agent.add_drag(_delta,10)

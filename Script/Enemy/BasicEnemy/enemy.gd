@@ -6,7 +6,6 @@ signal stance_breaked
 
 @export var health_system : HealthSystem 
 @export var gravity_multiply :float = 2.5
-@export var stagger_duration : float = 0.3
 
 @onready var hit_sound : AudioStreamPlayer2D = $Audio/HitSound
 @onready var dead_sound : AudioStreamPlayer2D = $Audio/DeadSound

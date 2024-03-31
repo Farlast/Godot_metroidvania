@@ -34,7 +34,7 @@ func _ready():
 func on_enter():
 	attack_box.get_damage_data().add(damage_data)
 	if air_movement:
-		player.velocity = Vector2(player.velocity.x,velocity_move.y)
+		player.velocity = Vector2(player.velocity.x/2,velocity_move.y)
 	else:
 		player.velocity = Vector2(player.direction_holder.scale.x * velocity_move.x,velocity_move.y)
 	

@@ -38,7 +38,7 @@ modulate_color = Color(0, 0.992157, 1, 1)
 texture = ExtResource("3_do2tk")
 texture_margin_left = 3.91732
 texture_margin_right = 3.94997
-modulate_color = Color(0.32549, 0.572549, 0.686275, 1)
+modulate_color = Color(0, 0.580392, 0.984314, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6vdrb"]
 texture = ExtResource("11_hr0p6")

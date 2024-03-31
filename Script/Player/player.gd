@@ -278,7 +278,7 @@ func countdown_iframe(delta : float):
 		var value = sin(iframe_timer * 20) * 10
 		if value > 9:
 			shader.set_shader_parameter("active",true)
-		else: 
+		else:
 			shader.set_shader_parameter("active",false)
 
 func attack_feedback(report:AttackReport):

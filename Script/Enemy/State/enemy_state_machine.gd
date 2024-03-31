@@ -2,6 +2,8 @@ extends Node
 class_name EnemyStateMachine
 
 @export var InitialState : EnemyState
+@export_group("Debug")
+@export var current_state_display : Label
 
 var current_state : EnemyState
 var states : Dictionary = {}
@@ -30,4 +32,8 @@ func on_child_transition(state : EnemyState , new_state_name : String):
 	if current_state: current_state.on_exit()
 	new_state.on_enter()
 	current_state = new_state
+	debug_state_display()
 	
+func debug_state_display():
+	if is_instance_valid(current_state_display):
+		current_state_display.text = current_state.name

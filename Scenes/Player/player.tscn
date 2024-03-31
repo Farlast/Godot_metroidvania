@@ -1,4 +1,4 @@
-[gd_scene load_steps=97 format=3 uid="uid://b0byka5d5aixx"]
+[gd_scene load_steps=101 format=3 uid="uid://b0byka5d5aixx"]
 
 [ext_resource type="Script" path="res://Script/Player/player.gd" id="1_clpn5"]
 [ext_resource type="Resource" uid="uid://dot44gd0wwyic" path="res://Script/Player/Event/HP_Event.tres" id="2_xwgl7"]
@@ -43,9 +43,13 @@
 [ext_resource type="Script" path="res://Script/Player/State/crouch.gd" id="36_cta4m"]
 [ext_resource type="Script" path="res://Script/Player/Skill/skill_system.gd" id="37_2ex0y"]
 [ext_resource type="Script" path="res://Script/Player/audio_player.gd" id="39_c00jx"]
+[ext_resource type="Script" path="res://Script/Player/State/perform_skill.gd" id="39_dwgav"]
 [ext_resource type="Script" path="res://Script/Player/State/slide.gd" id="40_awlj2"]
 [ext_resource type="AudioStream" uid="uid://3wfbsdxewftq" path="res://Audio/Effect/Attack/SFX_swosh-01.wav" id="42_ckt1o"]
 [ext_resource type="Script" path="res://Script/Player/attack_system.gd" id="47_nus0m"]
+[ext_resource type="Resource" uid="uid://cfmmp7r24x8il" path="res://Script/Player/Skill/container/fireball.tres" id="47_tkrid"]
+[ext_resource type="Resource" uid="uid://bufx1cabwc6kd" path="res://Script/Player/Skill/container/water_splash.tres" id="48_0uwvg"]
+[ext_resource type="Resource" uid="uid://d045o8rm1n2l1" path="res://Script/Player/Skill/container/acid_bullet.tres" id="49_suqrq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_og76b"]
 radius = 13.0
@@ -286,6 +290,18 @@ tracks/6/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("PlayerArt:material:shader_parameter/active")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_5tic0"]
 resource_name = "air_attack"
@@ -354,27 +370,10 @@ tracks/4/keys = {
 tracks/5/type = "method"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("StateMachine/Air_Attack")
+tracks/5/path = NodePath("AttackSystem")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.06, 0.24),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"enable_hitbox"
-}, {
-"args": [],
-"method": &"disable_hitbox"
-}]
-}
-tracks/6/type = "method"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("AttackSystem")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
 "times": PackedFloat32Array(0.06, 0.24),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
@@ -771,6 +770,7 @@ tracks/4/keys = {
 [sub_resource type="Animation" id="Animation_svq7f"]
 resource_name = "charge_attack"
 length = 0.6
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -814,7 +814,7 @@ tracks/3/path = NodePath("PlayerArt:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.15, 0.3),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
 "transitions": PackedFloat32Array(1, 0.31864, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
@@ -1027,7 +1027,8 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_8qqry"]
 resource_name = "dash"
-length = 0.6
+length = 0.3
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -1071,7 +1072,7 @@ tracks/3/path = NodePath("StateMachine/Dash")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.4),
+"times": PackedFloat32Array(0, 0.15),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -1080,6 +1081,18 @@ tracks/3/keys = {
 "args": [],
 "method": &"dash_iframe_end"
 }]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PlayerArt:material:shader_parameter/active")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_bpryr"]
@@ -1607,7 +1620,7 @@ _data = {
 
 [sub_resource type="Resource" id="Resource_beir8"]
 script = ExtResource("19_v6ssd")
-damage = 0.2
+damage = 0.0
 impact = 1.0
 knockback_force = 0
 element = 0
@@ -1616,7 +1629,7 @@ take_damage_mask = 0
 
 [sub_resource type="Resource" id="Resource_yhtq5"]
 script = ExtResource("19_v6ssd")
-damage = 0.8
+damage = 0.0
 impact = 1.0
 knockback_force = 0
 element = 0
@@ -1651,7 +1664,7 @@ take_damage_rule = 0
 take_damage_mask = 0
 
 [sub_resource type="Curve" id="Curve_tfimr"]
-_data = [Vector2(0, 1), 0.0, 1.15111e-06, 0, 0, Vector2(1, 0), -1.82609, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 1.15111e-06, 0, 0, Vector2(0.854369, 0.00776207), -1.82609, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_a7cwo"]
@@ -1834,9 +1847,7 @@ script = ExtResource("18_30rd3")
 
 [node name="Chargeable_Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "audio_player", "charge_finish_audio", "attack_audio_player")]
 script = ExtResource("30_rceje")
-skill_file_path = "res://Scenes/Player/skill_boomerang.tscn"
 charge_time = 0.4
-animation_name = null
 next_attack_sate = NodePath("../AttackCombo")
 attack_box = NodePath("../../Directions/AttackBox")
 damage_multiply = 1.5
@@ -1844,7 +1855,7 @@ audio_player = NodePath("../../Audio")
 charge_audio = ExtResource("32_tyyfq")
 charge_finish_audio = NodePath("../../Audio/ChargeComplete")
 attack_audio_player = NodePath("../../Audio/BasicAttack")
-velocity_move = Vector2(1000, 0)
+velocity_move = Vector2(1500, 0)
 
 [node name="AttackCombo" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
@@ -1875,14 +1886,6 @@ animation_name = "attack_up"
 freely_move = true
 velocity_move = Vector2(0, 0)
 
-[node name="Air_Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
-script = ExtResource("19_ly7k1")
-attack_box = NodePath("../../Directions/AttackBox")
-attack_audio = NodePath("../../Audio/BasicAttack")
-animation_name = "air_attack"
-freely_move = true
-velocity_move = Vector2(0, -300)
-
 [node name="Air_Attack_combo" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
 next_attack_sate = NodePath("../Air_Attack_combo2")
@@ -1890,6 +1893,7 @@ attack_box = NodePath("../../Directions/AttackBox")
 damage_data = SubResource("Resource_7kr4u")
 attack_audio = NodePath("../../Audio/BasicAttack")
 velocity_move = Vector2(0, -500)
+air_movement = true
 
 [node name="Air_Attack_combo2" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
@@ -1911,7 +1915,7 @@ script = ExtResource("36_cta4m")
 
 [node name="Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("dash_effect")]
 script = ExtResource("28_oacl1")
-dash_duration = 0.25
+dash_duration = 0.4
 dash_speed = 1200.0
 dash_effect = NodePath("../../Directions/Effect/DashEffect")
 curve = SubResource("Curve_tfimr")
@@ -1930,6 +1934,9 @@ body_collision = NodePath("../../CollisionShape2D")
 slide_velocity_x = 800.0
 slide_cooldown_time = 0.3
 curve = SubResource("Curve_a7cwo")
+
+[node name="PerformSkill" type="Node" parent="StateMachine"]
+script = ExtResource("39_dwgav")
 
 [node name="Empty" type="Node" parent="StateMachine"]
 script = ExtResource("27_0wr0v")
@@ -1976,6 +1983,9 @@ bus = &"Effect"
 [node name="SkillSystem" type="Node2D" parent="."]
 visible = false
 script = ExtResource("37_2ex0y")
+fire_skill_container = ExtResource("47_tkrid")
+water_skill_container = ExtResource("48_0uwvg")
+grass_skill_container = ExtResource("49_suqrq")
 
 [node name="AttackSystem" type="Node2D" parent="."]
 visible = false
