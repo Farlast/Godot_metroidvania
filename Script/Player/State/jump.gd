@@ -26,7 +26,7 @@ func on_update(_delta : float):
 
 func on_physics_update(_delta : float):
 	super.on_physics_update(_delta)
-	if not player.is_on_floor() :
+	if not player.is_on_floor():
 		off_ground = true
 		player.add_fall_gravity(_delta)
 	elif player.is_on_floor() && off_ground:
@@ -40,6 +40,7 @@ func on_physics_update(_delta : float):
 	player.move_and_slide()
 		
 func _unhandled_input(event):
+	if not is_controllable(): return
 	if not active_input : return
 	player.update_area()
 	if event.is_action_released("jump") && not player.is_on_floor():

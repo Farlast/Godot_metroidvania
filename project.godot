@@ -25,7 +25,6 @@ buses/default_bus_layout="res://Data/AudioBus/default_bus_layout.tres"
 SettingsMenu="*res://Scenes/Menu/settings_menu.tscn"
 SceneManager="*res://Scenes/Menu/scene_manager.tscn"
 GameManager="*res://Script/System/game_manager.gd"
-TimeManager="*res://Script/System/time_manager.gd"
 
 [display]
 

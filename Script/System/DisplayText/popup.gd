@@ -21,10 +21,10 @@ func display_text(text : String):
 	var tween = get_tree().create_tween()
 	tween.set_ease(tween.EASE_IN_OUT)
 	tween.tween_property(self,"scale",Vector2.ONE,0.05)
-	TimeManager.freeze()
+	GameManager.time_manager.freeze()
 
 func hide_layout():
-	TimeManager.unfreeze()
+	GameManager.time_manager.unfreeze()
 	if exit: return
 	var tween = get_tree().create_tween()
 	tween.set_ease(tween.EASE_OUT)

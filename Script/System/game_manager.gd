@@ -5,8 +5,15 @@ extends Node
 ## Service relay pattern
 ##########################################
 signal setup_settings
+signal game_state_changed(game_state)
+
 enum GameState {GAMEPLAY,LOCK_CONTROLL,FREEZE}
-var game_state : GameState = GameState.GAMEPLAY
+var game_state : GameState :
+	get:
+		return game_state
+	set(value):
+		game_state = value
+		game_state_changed.emit(game_state)
 
 ### player data relay
 var player_data : PlayerData = preload("res://Script/Player/Data/player_data_resource.tres")
@@ -14,11 +21,14 @@ var setting_data : SettingData
 ### system relay
 var save_system : SaveSystem
 var main_camera : CinematicCamera2D
+var time_manager : TimeManager
 
 func _ready():
 	save_system = SaveSystem.new()
+	time_manager = TimeManager.new(self)
 	setting_data = save_system.load_setting()
 	setup_settings.emit()
+	game_state = GameState.GAMEPLAY
 
 #region Save system
 

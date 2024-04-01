@@ -73,7 +73,9 @@ func get_object_id(object: Object) -> String:
 		object.set_meta(&"object_id", id)
 		return id
 	elif object is Node:
-		var id := str(object.owner.scene_file_path.get_file().get_basename(), "/", object.get_parent().name if object.get_parent() != object.owner else ".", "/", object.name)
+		var id := str(object.owner.scene_file_path.get_file().get_basename(), "/",
+		 object.get_parent().name if object.get_parent() != object.owner else ".",
+		 "/", object.name)
 		object.set_meta(&"object_id", id)
 		return id
 	return ""

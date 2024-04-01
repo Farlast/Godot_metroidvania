@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 signal attack_success
+signal was_dead
 
 @onready var state_machine : StateMachine = $StateMachine
 @onready var player_sprite :Sprite2D = $PlayerArt
@@ -60,6 +61,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 #region OVERRIDE
 func _ready():
+	GameManager.game_state_changed.connect(on_game_state_change)
 	SceneManager.set_player_position.connect(setup_after_enter_room)
 	SceneManager.respawn_at_position.connect(respawn_after_dead)
 	skill_system.setup(self)
@@ -84,6 +86,16 @@ func _process(delta):
 ###############
 ## CUSTOM
 ###############
+func on_game_state_change(game_state : GameManager.GameState):
+	if game_state == GameManager.GameState.GAMEPLAY:
+		set_process(true)
+		set_physics_process(true)
+	elif game_state == GameManager.GameState.FREEZE:
+		set_process(false)
+		set_physics_process(false)
+	elif game_state == GameManager.GameState.LOCK_CONTROLL:
+		set_process(true)
+		set_physics_process(true)
 
 func position_on_start_game():
 	if SceneManager.need_respawn:
@@ -153,6 +165,7 @@ func move_horizontal(flip : bool = true):
 		velocity.x = move_toward(velocity.x, 0, walk_speed)	
 	if flip:
 		flip_sprite(direction)
+	print("enter move_horizontal : player")
 
 func flip_sprite(direction : float):
 	if direction > 0:
@@ -259,9 +272,10 @@ func take_damage(damage_data : DamageData)->bool:
 	return true
 
 func on_dead():
+	was_dead.emit()
 	state_machine.current_state.transition.emit(state_machine.current_state,"empty")
 	$AnimationPlayer.play("hit")
-	TimeManager.freeze_time_duration()
+	GameManager.time_manager.freeze_time_duration()
 	await get_tree().create_timer(0.5).timeout
 	SceneManager.respawn_last_savepoint()
 
@@ -282,12 +296,14 @@ func countdown_iframe(delta : float):
 			shader.set_shader_parameter("active",false)
 
 func attack_feedback(report:AttackReport):
+	if report.success:
+		## for knockback from attack
+		get_hit_direction = (report.receiver_position - global_position).normalized()
+		attack_success.emit()
 	if report.object_tag == AttackReport.ObjectTag.ENEMY:
+		## Get mana from attack enemy
 		player_data.current_mana += 0.5
 		mp_event.change.emit(player_data.current_mana,player_data.max_mana)
-	
-	get_hit_direction = (report.receiver_position - global_position).normalized()
-	attack_success.emit()
 
 #endregion
 #region Unlockable

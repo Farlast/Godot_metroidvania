@@ -28,6 +28,7 @@ func on_exit():
 	player.velocity = Vector2.ZERO
 
 func _unhandled_input(event):
+	if not is_controllable(): return
 	if not active_input: return
 	if not player.is_on_floor(): return
 	if event.is_action_pressed("jump"):

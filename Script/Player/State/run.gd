@@ -39,6 +39,7 @@ func on_physics_update(_delta : float):
 	player.move_and_slide()
 
 func _unhandled_input(event):
+	if not is_controllable(): return
 	if not active_input: return
 	var h_direction = Input.get_axis("move_left", "move_right")
 	if h_direction == 0:

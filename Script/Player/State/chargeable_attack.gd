@@ -63,6 +63,7 @@ func on_physics_update(_delta : float):
 	player.move_and_slide()
 
 func  _unhandled_input(event):
+	if not is_controllable(): return
 	if not active_input: return
 	if event.is_action_released("attack") and not attacked:
 		charging = false
@@ -72,11 +73,11 @@ func  _unhandled_input(event):
 			transition.emit(self,next_attack_sate.name.to_lower())
 		else:
 			# charge version
-			player.skill_system.chrage_skill_active()
 			animator.play("charge_attack")
 			if attack_audio_player : attack_audio_player.play()
 			player.dash_iframe = true
-			player.velocity = Vector2(player.direction_holder.scale.x * velocity_move.x,velocity_move.y)
+			player.velocity = Vector2(player.direction_holder.scale.x * velocity_move.x,
+			velocity_move.y)
 ###---------------------
 func on_animation_finish(_animation_name : String):
 	if _animation_name != "charge_attack_start":

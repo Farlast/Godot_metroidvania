@@ -11,19 +11,19 @@ func _ready():
 
 func _input(event):
 	if event.is_action_released("ui_cancel") && !visible:
-		TimeManager.freeze()
+		GameManager.time_manager.freeze()
 		display_state(true)
 		defualt_button.grab_focus()
 	elif event.is_action_released("ui_cancel") && visible: 
-		TimeManager.unfreeze()
+		GameManager.time_manager.unfreeze()
 		display_state(false)
 	
 func _on_continue_pressed():
-	TimeManager.unfreeze()
+	GameManager.time_manager.unfreeze()
 	display_state(false)
 
 func _on_quit_pressed():
-	TimeManager.unfreeze()
+	GameManager.time_manager.unfreeze()
 	get_tree().quit()
 
 func _on_settings_pressed():
@@ -31,7 +31,7 @@ func _on_settings_pressed():
 	display_state(false)
 	
 func on_to_menu_press():
-	TimeManager.unfreeze()
+	GameManager.time_manager.unfreeze()
 	display_state(false)
 	SceneManager.change_scene_by_name("res://Scenes/Menu/main_menu.tscn")
 

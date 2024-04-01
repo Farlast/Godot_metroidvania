@@ -31,7 +31,7 @@ func set_default():
 
 func  show_Settings():
 	fullscreen_btt.grab_focus()
-	TimeManager.freeze()
+	GameManager.time_manager.freeze()
 	show()
 
 #region Display
@@ -54,5 +54,5 @@ func on_resolution_select(index:int):
 #endregion
 func _on_back_pressed():
 	GameManager.save_system.save_setting(GameManager.setting_data)	
-	TimeManager.unfreeze()
+	GameManager.time_manager.unfreeze()
 	hide()

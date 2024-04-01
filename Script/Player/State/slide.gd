@@ -47,7 +47,9 @@ func on_exit():
 func on_update(_delta : float):
 	super.on_update(_delta)
 	if not overhead_ray.is_colliding():
-		player.velocity = Vector2(player.direction_holder.scale.x * curve.sample(slide_timer) * slide_velocity_x ,player.velocity.y)
+		player.velocity = Vector2(
+			player.direction_holder.scale.x * curve.sample(slide_timer) * slide_velocity_x
+			,player.velocity.y)
 	if slide_timer > minimum_slide_time and not overhead_ray.is_colliding():
 		transition.emit(self,"crouch")
 	

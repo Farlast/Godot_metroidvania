@@ -9,7 +9,7 @@ func on_enter():
 	animator.play("hit")
 	player.velocity = Vector2.ZERO
 	is_unfreeze = true
-	TimeManager.freeze_time_duration()
+	GameManager.time_manager.freeze_time_duration()
 	await get_tree().create_timer(0.5).timeout
 	player.is_iframe_active = true
 	player.iframe_timer = 0

@@ -11,7 +11,6 @@ func _ready():
 	player = owner
 
 func on_enter():
-	#print(name)
 	pass
 
 func on_exit():
@@ -22,3 +21,9 @@ func on_update(_delta : float):
 
 func on_physics_update(_delta : float):
 	pass
+
+func is_controllable()-> bool:
+	if GameManager.game_state == GameManager.GameState.GAMEPLAY:
+		return true
+	else:
+		return false

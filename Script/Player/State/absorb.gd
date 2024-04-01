@@ -1,6 +1,8 @@
 extends State
 class_name Absorb
-
+####
+## get skill when hit skill object
+####
 var active_input : bool
 var skill_system : SkillSystem
 
@@ -33,6 +35,7 @@ func on_physics_update(_delta : float):
 	player.move_and_slide()
 
 func  _unhandled_input(event):
+	if not is_controllable(): return
 	if not active_input: return
 	if event.is_action_released("move_left") || event.is_action_released("move_right"):
 		player.velocity = Vector2.ZERO

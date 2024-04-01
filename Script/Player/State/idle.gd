@@ -35,6 +35,7 @@ func on_physics_update(_delta : float):
 	player.move_and_slide()
 	
 func _unhandled_input(event):
+	if not is_controllable(): return
 	if not active_input: return
 	player.update_area()
 	if event.is_action_pressed("move_down"):

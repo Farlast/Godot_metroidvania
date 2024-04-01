@@ -80,6 +80,7 @@ func on_physics_update(_delta : float):
 	player.move_and_slide()
 
 func  _unhandled_input(event):
+	if not is_controllable(): return
 	if not active_input: return
 	if air_movement and event.is_action_released("move_left") || event.is_action_released("move_right"):
 		player.velocity.x = 0
@@ -91,7 +92,7 @@ func  _unhandled_input(event):
 		attack_buffer = true
 		if listen_input_window:
 			allow_next_animation()
-	elif listen_input_window and not player.is_on_floor() and event.is_action_pressed("move_left") || event.is_action_pressed("move_right"):
+	elif listen_input_window and player.is_on_floor() and event.is_action_pressed("move_left") || event.is_action_pressed("move_right"):
 		transition.emit(self,"run")
 
 func play_animation():
