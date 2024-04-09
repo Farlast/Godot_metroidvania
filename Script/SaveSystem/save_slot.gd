@@ -54,3 +54,9 @@ func display_save():
 	else:
 		is_new_save = true
 		save_info.text = "Empty Save"
+
+func play_select_audio():
+	GameManager.audio_player.play_ui_select()
+	
+func play_pressed_audio():
+	GameManager.audio_player.play_ui_pressed()

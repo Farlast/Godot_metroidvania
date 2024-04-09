@@ -20,6 +20,6 @@ func on_update(_delta : float):
 	if timer > stagger_duration:
 		transition.emit(self,"idle")
 
-func on_physics_update(_delta : float):
-	agent.add_drag(_delta,10)
-	super.on_physics_update(_delta)
+func on_physics_update(delta : float):
+	agent.add_drag(delta,10)
+	super.on_physics_update(delta)

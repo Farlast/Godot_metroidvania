@@ -12,8 +12,8 @@ signal was_dead
 @onready var orb_anchor : Node2D = $Directions/OrbAnchor
 @onready var front_point : Node2D = $Directions/FrontPoint
 @onready var animation : AnimationPlayer = $AnimationPlayer
-
 @onready var skill_system : SkillSystem = $SkillSystem
+@onready var footstep_player : FootstepPlayer = $FootstepPlayer
 
 @export_group("Move")
 @export var walk_speed :float = 400.0
@@ -55,19 +55,21 @@ var last_ground_position : Vector2
 var temp_damage_data : DamageData
 var is_airdash_used : bool = false
 var busy_duration: float = 0.5
-var dash_iframe : bool
+var animation_iframe : bool
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var globals_sprites_position: Vector2
 
 #region OVERRIDE
 func _ready():
 	GameManager.game_state_changed.connect(on_game_state_change)
 	SceneManager.set_player_position.connect(setup_after_enter_room)
 	SceneManager.respawn_at_position.connect(respawn_after_dead)
+	attack_system.iframe_start.connect(on_animation_iframe_start)
+	attack_system.iframe_end.connect(on_animation_iframe_end)
 	skill_system.setup(self)
 	var shader = player_sprite.material as ShaderMaterial
-	
-	#Engine.max_fps = 60
+	globals_sprites_position = player_sprite.global_position
 	
 	shader.set_shader_parameter("active",false)
 	last_ground_position = global_position
@@ -81,6 +83,17 @@ func _process(delta):
 	countdown_iframe(delta)
 	dash_refill()
 	jitter_fix(delta)
+
+func jitter_fix(delta):
+	var FPS = Engine.get_frames_per_second()
+	var lerp_interval = velocity / FPS
+	var lerp_position = global_position + lerp_interval
+	globals_sprites_position = globals_sprites_position.lerp(lerp_position, 60 * delta)
+	if FPS > 60:
+		player_sprite.position = globals_sprites_position - global_position
+		player_sprite.position.y += -88
+	else:
+		player_sprite.position = Vector2(0, -88)
 #endregion
 #region Set Position and Status
 ###############
@@ -126,18 +139,6 @@ func respawn_after_dead(new_position : Vector2):
 func update_hud_display():
 	hp_event.change.emit(player_data.current_health,player_data.max_health)
 	mp_event.change.emit(player_data.current_mana,player_data.max_mana)
-
-var globals_sprites_position: Vector2
-func jitter_fix(delta):
-	var FPS = Engine.get_frames_per_second()
-	var lerp_interval = velocity / FPS
-	var lerp_position = global_position + lerp_interval
-	globals_sprites_position = globals_sprites_position.lerp(lerp_position, 60 * delta)
-	if FPS > 60:
-		player_sprite.position = globals_sprites_position - global_position
-		player_sprite.position.y += -68.88
-	else:
-		player_sprite.position = Vector2(0, -68.88)
 #endregion
 #region Statemacthaine
 func add_fall_gravity(delta):
@@ -165,7 +166,6 @@ func move_horizontal(flip : bool = true):
 		velocity.x = move_toward(velocity.x, 0, walk_speed)	
 	if flip:
 		flip_sprite(direction)
-	print("enter move_horizontal : player")
 
 func flip_sprite(direction : float):
 	if direction > 0:
@@ -251,7 +251,7 @@ func take_damage(damage_data : DamageData)->bool:
 	if damage_data.take_damage_rule != DamageData.TakeDamageRule.RESET:
 		if is_iframe_active:
 			return false
-		if dash_iframe :
+		if animation_iframe :
 			return false
 	
 	is_iframe_active = true
@@ -294,6 +294,11 @@ func countdown_iframe(delta : float):
 			shader.set_shader_parameter("active",true)
 		else:
 			shader.set_shader_parameter("active",false)
+
+func on_animation_iframe_start():
+	animation_iframe = true
+func on_animation_iframe_end():
+	animation_iframe = false
 
 func attack_feedback(report:AttackReport):
 	if report.success:

@@ -24,6 +24,7 @@ func on_physics_update(_delta : float):
 	player.add_fall_gravity(_delta)
 	if player.is_on_floor():
 		var direction = Input.get_axis("move_left", "move_right")
+		player.footstep_player.play_land()
 		if direction != 0 : 
 			transition.emit(self,"run")
 		else :

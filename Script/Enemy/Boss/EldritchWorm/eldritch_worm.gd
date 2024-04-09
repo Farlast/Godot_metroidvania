@@ -5,7 +5,6 @@ class_name EldritchWorm
 @export var front_ray : RayCast2D
 @export var room_trigger : TriggerSwitch
 @export var health : float = 30
-var target : Node2D
 
 var stage_2: bool = false
 var data : NodeSaveData

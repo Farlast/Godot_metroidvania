@@ -7,6 +7,10 @@ signal stance_breaked
 @export var health_system : HealthSystem 
 @export var gravity_multiply :float = 2.5
 
+@export_group("Debug")
+@export var hp_bar : StatusBar
+@export var stagger_bar : StatusBar
+
 @onready var hit_sound : AudioStreamPlayer2D = $Audio/HitSound
 @onready var dead_sound : AudioStreamPlayer2D = $Audio/DeadSound
 @onready var animator : AnimationPlayer = $AnimationPlayer
@@ -33,6 +37,8 @@ var shader : ShaderMaterial
 var flashing_duration : float = 0.1
 var super_armor : bool
 
+var target : Node2D
+
 func _ready():
 	health_system.setup()
 	health_system.dead.connect(dead)
@@ -41,6 +47,10 @@ func _ready():
 
 func take_damage(damage_data : DamageData)->bool:
 	var is_hit:bool = calculate_damage(damage_data)
+	if is_instance_valid(hp_bar):
+		hp_bar.update_hp(health_system.health.current_value,health_system.health.max_value)
+	if is_instance_valid(stagger_bar):
+		stagger_bar.update_hp(health_system.stance.current_value,health_system.stance.max_value)
 	if is_hit:
 		flash_on_hit()
 		hit_effect.rotation = get_angle_to(damage_data.sender_position) + PI

@@ -9,10 +9,10 @@ extends State
 @export var curve : Curve
 
 var collision_shape : CapsuleShape2D
-var defualt_position : Vector2 = Vector2(0,-56)
-var defualt_height : float = 112
-var slide_position : Vector2 = Vector2(0,-32)
-var slide_height : float = 62
+@export var defualt_position : Vector2 = Vector2(0,-72)
+@export var defualt_height : float = 144
+@export var slide_position : Vector2 = Vector2(0,-32)
+@export var slide_height : float = 62
 
 var active_input : bool
 var slide_timer : float

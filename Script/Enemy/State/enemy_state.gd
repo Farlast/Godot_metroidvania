@@ -1,16 +1,10 @@
-extends Node
-class_name EnemyState
+class_name EnemyState extends Node
 signal transition(state : EnemyState , new_state_name : String)
 
 var animator : AnimationPlayer
 var agent : Enemy
 
-func _ready():
-	animator = %AnimationPlayer
-	agent = owner as Enemy
-
 func on_enter():
-	#print(name)
 	pass
 
 func on_exit():

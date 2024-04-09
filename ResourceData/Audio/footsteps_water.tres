@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FootstepsContainer" load_steps=8 format=3 uid="uid://cg43ge7perw4r"]
+
+[ext_resource type="Script" path="res://Script/Audio/footsteps_container.gd" id="1_0g8db"]
+[ext_resource type="AudioStream" uid="uid://csgiiqvvv02v3" path="res://Audio/Effect/Footsteps/Water/Footsteps_Water_Run_01.wav" id="1_8ed5d"]
+[ext_resource type="AudioStream" uid="uid://cexditg71ba8l" path="res://Audio/Effect/Footsteps/Water/Footsteps_Water_Run_02.wav" id="2_bs4qh"]
+[ext_resource type="AudioStream" uid="uid://c4huxstvvsnsa" path="res://Audio/Effect/Footsteps/Water/Footsteps_Water_Run_03.wav" id="3_enkrm"]
+[ext_resource type="AudioStream" uid="uid://b3olwt7kgcb62" path="res://Audio/Effect/Footsteps/Water/Footsteps_Water_Jump_Big_02.wav" id="4_hssuw"]
+[ext_resource type="AudioStream" uid="uid://b75rrx53ub4l2" path="res://Audio/Effect/Footsteps/Water/Footsteps_Water_Walk_01.wav" id="5_6myl6"]
+[ext_resource type="AudioStream" uid="uid://brawp4mwuvr08" path="res://Audio/Effect/Footsteps/Water/Footsteps_Water_Walk_02.wav" id="6_1x5tl"]
+
+[resource]
+script = ExtResource("1_0g8db")
+ground_type = 0
+run_audios = Array[AudioStream]([ExtResource("5_6myl6"), ExtResource("6_1x5tl")])
+jump_audios = Array[AudioStream]([ExtResource("1_8ed5d"), ExtResource("2_bs4qh"), ExtResource("3_enkrm")])
+land_sound = ExtResource("4_hssuw")

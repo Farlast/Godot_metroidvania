@@ -7,6 +7,7 @@ signal saveSetting
 ### Display
 @onready var fullscreen_btt : CheckButton = $Margin/VBoxContainer/TabContainer/Display/Fullscreen
 @onready var resolution_option : OptionButton = $Margin/VBoxContainer/TabContainer/Display/Resolution
+@onready var fps_option : OptionButton = $"Margin/VBoxContainer/TabContainer/Display/Max FPS"
 ### Audio
 @onready var master_volume : HSlider = $Margin/VBoxContainer/TabContainer/Audio/Master/HBox/MarginValue/Master
 @onready var music_volume : HSlider = $Margin/VBoxContainer/TabContainer/Audio/Music/HBoxContainer/Margin/Music
@@ -18,10 +19,17 @@ const RESOLUTION_DICTIONARY : Dictionary = {
 	"1600 x 900" : Vector2(1600,900),
 	"1920 x 1080" : Vector2(1920,1080)
 }
+const FPS_OPTIONS : Dictionary = {
+	"No limit":-1,
+	"30": 30,
+	"60": 60,
+	"120": 120
+}
 func _ready():
 	hide()
 	GameManager.setup_settings.connect(set_default)
 	setup_resolution_selecter()
+	setup_fps_select()
 
 func set_default():
 	fullscreen_btt.set_pressed_no_signal(GameManager.setting_data.fullscreen)
@@ -38,8 +46,10 @@ func  show_Settings():
 func _on_fullscreen_toggled(button_pressed):
 	if button_pressed:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	else: 
+	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		on_resolution_select(GameManager.setting_data.screen_resolution_index)
+		
 	GameManager.setting_data.fullscreen = button_pressed
 
 func setup_resolution_selecter():
@@ -50,6 +60,14 @@ func setup_resolution_selecter():
 func on_resolution_select(index:int):
 	DisplayServer.window_set_size(RESOLUTION_DICTIONARY.values()[index])
 	GameManager.setting_data.screen_resolution_index = index
+
+func setup_fps_select():
+	for item in FPS_OPTIONS:
+		fps_option.add_item(item)
+	fps_option.item_selected.connect(on_fps_select)
+
+func on_fps_select(index:int):
+	Engine.max_fps = FPS_OPTIONS.values()[index]
 
 #endregion
 func _on_back_pressed():

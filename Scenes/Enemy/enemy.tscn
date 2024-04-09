@@ -12,9 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://bsn8dtb8jl10c" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0004.png" id="8_eb65p"]
 [ext_resource type="Script" path="res://Script/Enemy/State/enemy_state_machine.gd" id="8_rsxv0"]
 [ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="11_6xxkr"]
-[ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/HitSound/body_hit_finisher_23.wav" id="13_3l85f"]
+[ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/Effect/HitSound/body_hit_finisher_23.wav" id="13_3l85f"]
 [ext_resource type="Texture2D" uid="uid://dbffa3d86qrba" path="res://Art/Effect/Tex_random.png" id="13_7rifa"]
-[ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/HitSound/face_hit_small_78.wav" id="13_sibmk"]
+[ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/Effect/HitSound/face_hit_small_78.wav" id="13_sibmk"]
 [ext_resource type="PackedScene" uid="uid://bkijr6cnrf2dy" path="res://Scenes/Effect/dead_particle.tscn" id="14_d41ui"]
 [ext_resource type="Texture2D" uid="uid://byku3155bejsl" path="res://Art/Effect/hollow fade circle.png" id="15_5pudp"]
 

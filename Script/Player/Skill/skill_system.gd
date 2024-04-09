@@ -7,9 +7,7 @@ signal got_element(element)
 @onready var elemental_display_scene : PackedScene = preload("res://Scenes/Player/Elemental_Display.tscn")
 @onready var skill_boomerang_scene : PackedScene = preload("res://Scenes/Player/skill_boomerang.tscn")
 
-@export var fire_skill_container : SkillContainer
-@export var water_skill_container : SkillContainer
-@export var grass_skill_container : SkillContainer
+@export var skill_list : Array[SkillContainer]
 var current_skill_container : SkillContainer
 
 enum OrbStatus {InActive,Active}
@@ -42,10 +40,12 @@ var is_cooldown : bool = false
 func setup_after_reload():
 	current_orb_element = player.player_data.current_orb_element
 	current_used_element = player.player_data.current_used_element
-	fire_skill_container.load_scene()
-	water_skill_container.load_scene()
-	grass_skill_container.load_scene()
-	current_skill_container = fire_skill_container
+	
+	for container in skill_list:
+		container.load_scene()
+		if container.element == current_used_element:
+			current_skill_container = container
+	
 	if player.player_data.orb_status == OrbStatus.Active:
 		follow_orb = elemental_display_scene.instantiate() as ElementalDisplay
 		follow_orb.setup(player.orb_anchor.position,player.orb_anchor,current_orb_element)
@@ -56,6 +56,7 @@ func setup(ref_player : Player):
 	player = ref_player
 
 func is_can_used_skill() -> bool:
+	if current_skill_container == null: return true
 	return player.player_data.current_mana - current_skill_container.cost >= 0
 
 func is_have_mana_for_skill(_cost : float) -> bool:
@@ -69,9 +70,6 @@ func remove_element():
 	follow_orb.queue_free()
 
 func skill_sample():
-	if orb_status == OrbStatus.Active:
-		activate_skill()
-		return
 	# instance bullet if bulet hit it will send signal back
 	var h_direction = player.direction_holder.scale.x
 	var elemental_orb := elemental_orb_scene.instantiate() as ElementalOrb
@@ -91,15 +89,10 @@ func on_got_element(element_data : ElementData,_position : Vector2):
 		follow_orb = elemental_display_scene.instantiate() as ElementalDisplay
 		follow_orb.setup(_position,player.orb_anchor,current_orb_element)
 		player.get_parent().add_child(follow_orb)
-	match current_orb_element:
-		ElementData.ElementType.WATER:
-			current_skill_container = water_skill_container
-		ElementData.ElementType.FIRE:
-			current_skill_container = fire_skill_container
-		ElementData.ElementType.POISON:
-			current_skill_container = grass_skill_container
-		_:
-			return
+	
+	for container in skill_list:
+		if container.element == current_orb_element:
+			current_skill_container = container
 
 func activate_skill():
 	if orb_status == OrbStatus.Active:

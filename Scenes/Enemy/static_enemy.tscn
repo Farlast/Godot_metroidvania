@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dbffa3d86qrba" path="res://Art/Effect/Tex_random.png" id="5_qhwq1"]
 [ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="6_wp828"]
 [ext_resource type="PackedScene" uid="uid://bkijr6cnrf2dy" path="res://Scenes/Effect/dead_particle.tscn" id="7_kstvv"]
-[ext_resource type="AudioStream" uid="uid://da6uvbkcwulcl" path="res://Audio/HitSound/metal_punch_06.wav" id="7_uikp5"]
-[ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/HitSound/body_hit_finisher_23.wav" id="9_berc7"]
+[ext_resource type="AudioStream" uid="uid://da6uvbkcwulcl" path="res://Audio/Effect/HitSound/metal_punch_06.wav" id="7_uikp5"]
+[ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/Effect/HitSound/body_hit_finisher_23.wav" id="9_berc7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v6c0t"]
 

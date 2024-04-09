@@ -7,3 +7,4 @@ script = ExtResource("1_exora")
 path_dir = "res://Scenes/Player/fireball.tscn"
 cooldown = 0.0
 cost = 0.0
+element = 2

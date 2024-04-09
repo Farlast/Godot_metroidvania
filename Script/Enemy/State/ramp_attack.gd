@@ -1,20 +1,17 @@
 class_name RampAttack
 extends EnemyState
 
+@onready var cliff_ray : RayCast2D = $"../../Direction/DownRay"
 @export var attack_box_col : CollisionShape2D
-@export var deceleration_rate : float = 500
-@export var ramp_speed : float = 500
+@export var ramp_speed : float = 800
 
 var active_state : bool
-
-func _ready():
-	super._ready()
-	animator.animation_finished.connect(on_animation_finish)
 
 func on_enter():
 	agent.super_armor = true
 	active_state = true
 	agent.velocity.x = 0
+	animator.animation_finished.connect(on_animation_finish)
 	animator.play("ramp_attack")
 
 func on_exit():
@@ -23,6 +20,7 @@ func on_exit():
 	agent.super_armor = false
 	active_state = false
 	attack_box_col.set_deferred("disabled",true)
+	animator.animation_finished.disconnect(on_animation_finish)
 
 func start_attack():
 	agent.velocity.x = ramp_speed * -agent.direction_holder.scale.x
@@ -36,10 +34,9 @@ func stop_attack():
 func on_animation_finish(_animation_name : String):
 	if active_state and _animation_name == "ramp_attack":
 		transition.emit(self,"idle")
-	
-func on_physics_update(_delta : float):
-	if agent.velocity.x > 0:
-		agent.velocity.x -= deceleration_rate * _delta
-	elif agent.velocity.x < 0:
-		agent.velocity.x += deceleration_rate * _delta
-	super.on_physics_update(_delta)
+
+func on_update(delta):
+	super.on_update(delta)
+	if not cliff_ray.is_colliding() and active_state:
+		stop_attack()
+		transition.emit(self,"idle")

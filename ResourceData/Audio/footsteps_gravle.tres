@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="FootstepsContainer" load_steps=7 format=3 uid="uid://jr6rbrdtb8iw"]
+
+[ext_resource type="AudioStream" uid="uid://c4hkwf5c33wfl" path="res://Audio/Effect/Footsteps/Gravle/Footsteps_Jump_Start_01.wav" id="1_avynr"]
+[ext_resource type="Script" path="res://Script/Audio/footsteps_container.gd" id="1_gt5pf"]
+[ext_resource type="AudioStream" uid="uid://8pkngoyyyocw" path="res://Audio/Effect/Footsteps/Gravle/Footsteps_Jump_Start_02.wav" id="2_1gaxg"]
+[ext_resource type="AudioStream" uid="uid://byr5glqkedyyn" path="res://Audio/Effect/Footsteps/Gravle/Footsteps_Jump_Land_01.wav" id="3_nx4rw"]
+[ext_resource type="AudioStream" uid="uid://c6hjpceku0xuh" path="res://Audio/Effect/Footsteps/Gravle/Footsteps_Gravel_Run_01.wav" id="4_qbt40"]
+[ext_resource type="AudioStream" uid="uid://m5glht1rrig2" path="res://Audio/Effect/Footsteps/Gravle/Footsteps_Gravel_Run_02.wav" id="5_yj8ly"]
+
+[resource]
+script = ExtResource("1_gt5pf")
+ground_type = 2
+run_audios = Array[AudioStream]([ExtResource("4_qbt40"), ExtResource("5_yj8ly")])
+jump_audios = Array[AudioStream]([ExtResource("1_avynr"), ExtResource("2_1gaxg")])
+land_sound = ExtResource("3_nx4rw")

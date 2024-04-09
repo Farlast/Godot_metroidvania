@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://bg1vglg4ltkft"]
 
-[ext_resource type="TileSet" uid="uid://dfn081kuhi648" path="res://Data/base_tileset.tres" id="1_fw2cr"]
+[ext_resource type="TileSet" uid="uid://dfn081kuhi648" path="res://ResourceData/base_tileset.tres" id="1_fw2cr"]
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_kbu0o"]
 [ext_resource type="Script" path="res://addons/cinematic_camera_2d/scripts/cinematic_camera_2d.gd" id="2_kdxeb"]
 [ext_resource type="Script" path="res://addons/cinematic_camera_2d/scripts/virtual_camera_2d.gd" id="3_o227f"]
@@ -10,10 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://d1saga0euoj4u" path="res://Art/BG/Cave/bg_mid.png" id="10_kqu50"]
 [ext_resource type="Texture2D" uid="uid://csouy237idcsv" path="res://Art/BG/Cave/rock_02.png" id="11_33j1n"]
 [ext_resource type="Texture2D" uid="uid://c0p10hjw8tiwc" path="res://Art/BG/Cove/clound_2.png" id="11_a3c51"]
-[ext_resource type="Resource" uid="uid://bsckjck4envwv" path="res://Data/Passage/level_0/scene_0_2.tres" id="14_0p083"]
+[ext_resource type="Resource" uid="uid://bsckjck4envwv" path="res://ResourceData/Passage/level_0/scene_0_2.tres" id="14_0p083"]
 [ext_resource type="Script" path="res://Script/Levels/next_area_path.gd" id="15_rc4nm"]
-[ext_resource type="Resource" uid="uid://dq8d4thddara4" path="res://Data/Passage/level_0/scene_0_11.tres" id="16_53doj"]
-[ext_resource type="Resource" uid="uid://c53dkk1xrm567" path="res://Data/Passage/level_0/scene_0_12.tres" id="18_yrab3"]
+[ext_resource type="Resource" uid="uid://dq8d4thddara4" path="res://ResourceData/Passage/level_0/scene_0_11.tres" id="16_53doj"]
+[ext_resource type="Resource" uid="uid://c53dkk1xrm567" path="res://ResourceData/Passage/level_0/scene_0_12.tres" id="18_yrab3"]
 
 [sub_resource type="Gradient" id="Gradient_k6k0u"]
 offsets = PackedFloat32Array(0, 0.555556, 1)

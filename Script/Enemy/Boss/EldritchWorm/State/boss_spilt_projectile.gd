@@ -8,7 +8,6 @@ class_name BossSplitProjectile
 var boss : EldritchWorm
 
 func _ready():
-	super._ready()
 	boss = agent as EldritchWorm
 
 func on_enter():

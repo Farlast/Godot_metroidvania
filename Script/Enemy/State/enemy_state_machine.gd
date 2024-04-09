@@ -2,6 +2,7 @@ extends Node
 class_name EnemyStateMachine
 
 @export var InitialState : EnemyState
+@export var animation_player : AnimationPlayer
 @export_group("Debug")
 @export var current_state_display : Label
 
@@ -13,6 +14,8 @@ func _ready():
 		if child is EnemyState:
 			states[child.name.to_lower()] = child
 			child.transition.connect(on_child_transition)
+			child.animator = animation_player
+			child.agent = owner as Enemy
 	if InitialState : 
 		InitialState.on_enter()
 		current_state = InitialState

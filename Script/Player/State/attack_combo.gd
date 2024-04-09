@@ -13,6 +13,7 @@ extends State
 @export_group("Move distance")
 @export var velocity_move : Vector2 = Vector2(200,0)
 @export var air_movement : bool
+@export var knockback_from_attack : bool = true
 
 var attack_box_col : CollisionShape2D
 var active_input : bool
@@ -33,10 +34,11 @@ func _ready():
 ############
 func on_enter():
 	attack_box.get_damage_data().add(damage_data)
+	var move_dir = player.direction_holder.scale.x * velocity_move.x
 	if air_movement:
-		player.velocity = Vector2(player.velocity.x/2,velocity_move.y)
+		player.velocity = Vector2(player.velocity.x/2 + move_dir,velocity_move.y)
 	else:
-		player.velocity = Vector2(player.direction_holder.scale.x * velocity_move.x,velocity_move.y)
+		player.velocity = Vector2(move_dir,velocity_move.y)
 	
 	super.on_enter()
 	active_input = true
@@ -48,7 +50,8 @@ func on_enter():
 	attack_system.allow_skip_animation.connect(allow_next_animation)
 
 func on_attack_success():
-	if not active_input: return	
+	if not active_input: return
+	if not knockback_from_attack: return
 	if player.get_hit_direction != Vector2.ZERO:
 		player.velocity.x = velocity_move.x/2 * -player.get_hit_direction.x
 
@@ -75,7 +78,13 @@ func on_exit():
 
 func on_physics_update(_delta : float):
 	super.on_physics_update(_delta)
-	player.add_fall_gravity(_delta)
+	if air_movement:
+		player.velocity.y += 500 * _delta
+	elif not air_movement and not player.is_on_floor():
+		player.velocity.x = 50 * player.direction_holder.scale.x
+		player.velocity.y = 0
+	else:
+		player.add_fall_gravity(_delta)
 	player.add_drag(_delta)
 	player.move_and_slide()
 
@@ -92,8 +101,6 @@ func  _unhandled_input(event):
 		attack_buffer = true
 		if listen_input_window:
 			allow_next_animation()
-	elif listen_input_window and player.is_on_floor() and event.is_action_pressed("move_left") || event.is_action_pressed("move_right"):
-		transition.emit(self,"run")
 
 func play_animation():
 	animator.play(animation_name)

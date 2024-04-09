@@ -1,7 +1,6 @@
 extends CanvasLayer
 class_name MainMenu
 
-#@onready var continue_button : Button = $Main/ButtonGroup/Continue
 @onready var first_select_button : Button = $Main/ButtonGroup/Start
 @onready var first_select_save : Button = $SaveSelect/SaveVBoxContainer/SaveSlot/SaveInfo
 
@@ -14,10 +13,6 @@ enum Menu {main,save,ui}
 var current_menu : Menu = Menu.main
 
 func _ready():
-	#if GameManager.setting_data.last_save_played_index > 0:
-	#	continue_button.show()
-	#else:
-	#	continue_button.hide()
 	call_deferred("set_button_focus")
 
 func set_button_focus():
@@ -31,10 +26,17 @@ func set_button_focus():
 			main_option.hide()
 			save_select.show()
 
+func play_ui_select():
+	var audio_player : AudioPlayer = GameManager.audio_player
+	audio_player.play_ui_select()
+
+func play_ui_pressed():
+	var audio_player : AudioPlayer = GameManager.audio_player
+	audio_player.play_ui_pressed()
+
 func start_game():
 	current_menu = Menu.save
 	set_button_focus()
-	#GameManager.new_game()
 	
 func continue_game():
 	if GameManager.setting_data.last_save_played_index > 0:
@@ -47,7 +49,6 @@ func quit_menu():
 	get_tree().quit()
 
 ### save select
-
 func back():
 	current_menu = Menu.main
 	set_button_focus()

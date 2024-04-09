@@ -11,8 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://dbffa3d86qrba" path="res://Art/Effect/Tex_random.png" id="5_ufiah"]
 [ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="6_6w2mu"]
 [ext_resource type="PackedScene" uid="uid://bkijr6cnrf2dy" path="res://Scenes/Effect/dead_particle.tscn" id="7_ikyqw"]
-[ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/HitSound/body_hit_finisher_23.wav" id="9_ffurv"]
-[ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/HitSound/face_hit_small_78.wav" id="9_q786d"]
+[ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/Effect/HitSound/body_hit_finisher_23.wav" id="9_ffurv"]
+[ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/Effect/HitSound/face_hit_small_78.wav" id="9_q786d"]
 [ext_resource type="Texture2D" uid="uid://byku3155bejsl" path="res://Art/Effect/hollow fade circle.png" id="9_thbx5"]
 [ext_resource type="Script" path="res://Script/Enemy/State/enemy_state_machine.gd" id="11_o7bgh"]
 [ext_resource type="Script" path="res://Script/Enemy/State/patrol_state.gd" id="12_r6ywx"]
@@ -41,9 +41,10 @@ size = Vector2(34, 23)
 script = ExtResource("3_k24pt")
 damage = 1.0
 impact = 0.0
+knockback_force = 0
+element = 0
 take_damage_rule = 0
 take_damage_mask = 0
-element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o4i44"]
 size = Vector2(58, 41)
@@ -379,9 +380,10 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="EnemyStateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+[node name="EnemyStateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "animation_player")]
 script = ExtResource("11_o7bgh")
 InitialState = NodePath("Patrol")
+animation_player = NodePath("../AnimationPlayer")
 
 [node name="Patrol" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("12_r6ywx")

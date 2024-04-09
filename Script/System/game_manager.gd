@@ -17,15 +17,19 @@ var game_state : GameState :
 
 ### player data relay
 var player_data : PlayerData = preload("res://Script/Player/Data/player_data_resource.tres")
-var setting_data : SettingData
+var audio_player_scene := preload("res://Scenes/UIComponent/audio_player.tscn")
 ### system relay
+var setting_data : SettingData
 var save_system : SaveSystem
 var main_camera : CinematicCamera2D
 var time_manager : TimeManager
+var audio_player : AudioPlayer
 
 func _ready():
 	save_system = SaveSystem.new()
 	time_manager = TimeManager.new(self)
+	audio_player = audio_player_scene.instantiate() as AudioPlayer
+	add_child(audio_player)
 	setting_data = save_system.load_setting()
 	setup_settings.emit()
 	game_state = GameState.GAMEPLAY
@@ -49,7 +53,7 @@ func new_game():
 	# clear data and start at default scene
 	player_data.current_health = player_data.max_health
 	player_data.current_mana = player_data.max_mana
-	SceneManager.change_scene_by_name("res://Scenes/Level/level_0_0.tscn")
+	SceneManager.change_scene_by_name("res://Scenes/Level/Test/dev_room.tscn")
 	
 func continue_game():
 	save_system.load_game(save_system.current_save_index)

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FootstepsContainer" load_steps=6 format=3 uid="uid://cffogaestjnl5"]
+
+[ext_resource type="AudioStream" uid="uid://b0vttddufmk53" path="res://Audio/Effect/Footsteps/Sand/Footsteps_Sand_Jump_01.wav" id="1_k8a7w"]
+[ext_resource type="AudioStream" uid="uid://yyavjxjs2mgm" path="res://Audio/Effect/Footsteps/Sand/Footsteps_Sand_Land_01.wav" id="2_q6p5s"]
+[ext_resource type="AudioStream" uid="uid://bviioa2rdq2xt" path="res://Audio/Effect/Footsteps/Sand/Footsteps_Sand_Run_01.wav" id="3_gkkr6"]
+[ext_resource type="AudioStream" uid="uid://c2d3hid1qnel" path="res://Audio/Effect/Footsteps/Sand/Footsteps_Sand_Run_02.wav" id="4_ehg4v"]
+[ext_resource type="Script" path="res://Script/Audio/footsteps_container.gd" id="5_jjocj"]
+
+[resource]
+script = ExtResource("5_jjocj")
+ground_type = 3
+run_audios = Array[AudioStream]([ExtResource("3_gkkr6"), ExtResource("4_ehg4v")])
+jump_audios = Array[AudioStream]([ExtResource("1_k8a7w")])
+land_sound = ExtResource("2_q6p5s")

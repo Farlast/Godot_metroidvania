@@ -1,5 +1,5 @@
 extends EnemyState
-class_name enemy_idle
+class_name EnemyIdle
 
 
 func on_enter():

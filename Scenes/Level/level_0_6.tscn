@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=3 uid="uid://cq6mlf3c8lkot"]
 
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_ty766"]
-[ext_resource type="TileSet" uid="uid://dfn081kuhi648" path="res://Data/base_tileset.tres" id="2_0nsr8"]
+[ext_resource type="TileSet" uid="uid://dfn081kuhi648" path="res://ResourceData/base_tileset.tres" id="2_0nsr8"]
 [ext_resource type="PackedScene" uid="uid://b0byka5d5aixx" path="res://Scenes/Player/player.tscn" id="3_sun5u"]
 [ext_resource type="Script" path="res://addons/cinematic_camera_2d/scripts/cinematic_camera_2d.gd" id="4_hcgre"]
 [ext_resource type="Script" path="res://addons/cinematic_camera_2d/scripts/virtual_camera_2d.gd" id="5_qv14s"]
@@ -12,8 +12,8 @@
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="9_2p5ge"]
 [ext_resource type="Texture2D" uid="uid://d2mosp34qr7db" path="res://Art/Environment/Thorns/thorns.png" id="10_4ct2y"]
 [ext_resource type="Script" path="res://Script/Levels/next_area_path.gd" id="11_aj38m"]
-[ext_resource type="Resource" uid="uid://lvwmfwkygib3" path="res://Data/Passage/level_0/scene_0_6.tres" id="12_cl1j2"]
-[ext_resource type="Resource" uid="uid://claqc3vwlxgxx" path="res://Data/Passage/level_0/scene_0_3.tres" id="13_oro8f"]
+[ext_resource type="Resource" uid="uid://lvwmfwkygib3" path="res://ResourceData/Passage/level_0/scene_0_6.tres" id="12_cl1j2"]
+[ext_resource type="Resource" uid="uid://claqc3vwlxgxx" path="res://ResourceData/Passage/level_0/scene_0_3.tres" id="13_oro8f"]
 
 [sub_resource type="Resource" id="Resource_7mn3x"]
 script = ExtResource("8_ym5p5")

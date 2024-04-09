@@ -1,4 +1,4 @@
-[gd_scene load_steps=101 format=3 uid="uid://b0byka5d5aixx"]
+[gd_scene load_steps=106 format=3 uid="uid://b0byka5d5aixx"]
 
 [ext_resource type="Script" path="res://Script/Player/player.gd" id="1_clpn5"]
 [ext_resource type="Resource" uid="uid://dot44gd0wwyic" path="res://Script/Player/Event/HP_Event.tres" id="2_xwgl7"]
@@ -35,17 +35,20 @@
 [ext_resource type="Script" path="res://Script/Player/State/state.gd" id="27_0wr0v"]
 [ext_resource type="Script" path="res://Script/Player/State/dash.gd" id="28_oacl1"]
 [ext_resource type="Script" path="res://Script/Player/State/attack_combo.gd" id="29_u7p7h"]
-[ext_resource type="Script" path="res://Script/Player/State/chargeable_attack.gd" id="30_rceje"]
+[ext_resource type="Script" path="res://Script/Player/State/chargeable.gd" id="30_rceje"]
 [ext_resource type="Texture2D" uid="uid://c1qhwi8ewswm4" path="res://Art/Effect/Tex_circle_small.png" id="32_haw5u"]
 [ext_resource type="AudioStream" uid="uid://cxl6a1s8kp2ar" path="res://Audio/Effect/Attack/SFX_whoosh-1.wav" id="32_tyyfq"]
 [ext_resource type="Script" path="res://Script/Player/State/busy.gd" id="33_0j15e"]
-[ext_resource type="AudioStream" uid="uid://qfhojxuubk3m" path="res://Audio/HitSound/blade_hit_08.wav" id="33_56kgd"]
+[ext_resource type="AudioStream" uid="uid://qfhojxuubk3m" path="res://Audio/Effect/HitSound/blade_hit_08.wav" id="33_56kgd"]
 [ext_resource type="Script" path="res://Script/Player/State/crouch.gd" id="36_cta4m"]
 [ext_resource type="Script" path="res://Script/Player/Skill/skill_system.gd" id="37_2ex0y"]
-[ext_resource type="Script" path="res://Script/Player/audio_player.gd" id="39_c00jx"]
+[ext_resource type="AudioStream" uid="uid://sv86s0vl7x27" path="res://Audio/Effect/SFX_DashSound.wav" id="38_84j70"]
 [ext_resource type="Script" path="res://Script/Player/State/perform_skill.gd" id="39_dwgav"]
 [ext_resource type="Script" path="res://Script/Player/State/slide.gd" id="40_awlj2"]
 [ext_resource type="AudioStream" uid="uid://3wfbsdxewftq" path="res://Audio/Effect/Attack/SFX_swosh-01.wav" id="42_ckt1o"]
+[ext_resource type="Script" path="res://Script/Audio/footstep_player.gd" id="45_dg32l"]
+[ext_resource type="Resource" uid="uid://d1ixtvfsq6u2u" path="res://ResourceData/Audio/footsteps_rock.tres" id="46_mwsma"]
+[ext_resource type="Resource" uid="uid://cffogaestjnl5" path="res://ResourceData/Audio/footsteps_sand.tres" id="47_ncase"]
 [ext_resource type="Script" path="res://Script/Player/attack_system.gd" id="47_nus0m"]
 [ext_resource type="Resource" uid="uid://cfmmp7r24x8il" path="res://Script/Player/Skill/container/fireball.tres" id="47_tkrid"]
 [ext_resource type="Resource" uid="uid://bufx1cabwc6kd" path="res://Script/Player/Skill/container/water_splash.tres" id="48_0uwvg"]
@@ -53,7 +56,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_og76b"]
 radius = 13.0
-height = 112.0
+height = 144.0
 
 [sub_resource type="Gradient" id="Gradient_u8lym"]
 
@@ -145,13 +148,13 @@ take_damage_rule = 0
 take_damage_mask = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2xt3"]
-size = Vector2(192, 120)
+size = Vector2(168, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ik3tv"]
 size = Vector2(192, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_04jkv"]
-size = Vector2(256, 133)
+size = Vector2(192, 133)
 
 [sub_resource type="Animation" id="Animation_jes0p"]
 resource_name = "Jump"
@@ -202,6 +205,20 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FootstepPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_jump"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_kyr2d"]
@@ -769,19 +786,19 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_svq7f"]
 resource_name = "charge_attack"
-length = 0.6
+length = 0.5
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerArt:texture")
+tracks/0/path = NodePath("PlayerArt:offset")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("5_4d6nm")]
+"update": 0,
+"values": [Vector2(0, -90)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -798,38 +815,61 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("PlayerArt:vframes")
+tracks/2/path = NodePath("PlayerArt:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PlayerArt:vframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerArt:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
-"transitions": PackedFloat32Array(1, 0.31864, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3]
-}
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerArt:offset")
+tracks/4/path = NodePath("PlayerArt:texture")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -90)]
+"update": 1,
+"values": [ExtResource("19_h5mmm")]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AttackSystem")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"start_iframe"
+}, {
+"args": [],
+"method": &"set_enable_hitbox"
+}, {
+"args": [],
+"method": &"stop_iframe"
+}, {
+"args": [],
+"method": &"set_disable_hitbox"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_5hau6"]
@@ -1065,34 +1105,34 @@ tracks/2/keys = {
 "update": 1,
 "values": [0]
 }
-tracks/3/type = "method"
+tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("StateMachine/Dash")
+tracks/3/path = NodePath("PlayerArt:material:shader_parameter/active")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.15),
 "transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"dash_iframe_start"
-}, {
-"args": [],
-"method": &"dash_iframe_end"
-}]
+"update": 1,
+"values": [true, false]
 }
-tracks/4/type = "value"
+tracks/4/type = "method"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerArt:material:shader_parameter/active")
+tracks/4/path = NodePath("AttackSystem")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.15),
 "transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
+"values": [{
+"args": [],
+"method": &"start_iframe"
+}, {
+"args": [],
+"method": &"stop_iframe"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_bpryr"]
@@ -1301,7 +1341,6 @@ tracks/5/keys = {
 
 [sub_resource type="Animation" id="Animation_kdhtk"]
 resource_name = "idle"
-length = 0.5
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1464,6 +1503,23 @@ tracks/4/keys = {
 "update": 0,
 "values": [Vector2(0, 0)]
 }
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("FootstepPlayer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.3, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"play_run_audio"
+}, {
+"args": [],
+"method": &"play_run_audio"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_4nlr4"]
 resource_name = "sample"
@@ -1619,15 +1675,17 @@ _data = {
 }
 
 [sub_resource type="Resource" id="Resource_beir8"]
+resource_local_to_scene = true
 script = ExtResource("19_v6ssd")
-damage = 0.0
+damage = 0.5
 impact = 1.0
-knockback_force = 0
+knockback_force = 2
 element = 0
 take_damage_rule = 0
 take_damage_mask = 0
 
 [sub_resource type="Resource" id="Resource_yhtq5"]
+resource_local_to_scene = true
 script = ExtResource("19_v6ssd")
 damage = 0.0
 impact = 1.0
@@ -1637,27 +1695,40 @@ take_damage_rule = 0
 take_damage_mask = 0
 
 [sub_resource type="Resource" id="Resource_mqm6q"]
+resource_local_to_scene = true
 script = ExtResource("19_v6ssd")
-damage = 1.0
-impact = 5.0
+damage = 0.5
+impact = 2.0
 knockback_force = 2
 element = 0
 take_damage_rule = 0
 take_damage_mask = 0
 
-[sub_resource type="Resource" id="Resource_7kr4u"]
+[sub_resource type="Resource" id="Resource_s3j6t"]
+resource_local_to_scene = true
 script = ExtResource("19_v6ssd")
 damage = 0.0
-impact = 0.0
+impact = 1.0
+knockback_force = 1
+element = 0
+take_damage_rule = 0
+take_damage_mask = 0
+
+[sub_resource type="Resource" id="Resource_7kr4u"]
+resource_local_to_scene = true
+script = ExtResource("19_v6ssd")
+damage = 0.0
+impact = 1.0
 knockback_force = 0
 element = 0
 take_damage_rule = 0
 take_damage_mask = 0
 
 [sub_resource type="Resource" id="Resource_7k5ai"]
+resource_local_to_scene = true
 script = ExtResource("19_v6ssd")
 damage = 0.0
-impact = 0.0
+impact = 1.0
 knockback_force = 0
 element = 0
 take_damage_rule = 0
@@ -1666,6 +1737,16 @@ take_damage_mask = 0
 [sub_resource type="Curve" id="Curve_tfimr"]
 _data = [Vector2(0, 1), 0.0, 1.15111e-06, 0, 0, Vector2(0.854369, 0.00776207), -1.82609, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="Resource" id="Resource_ionfl"]
+resource_local_to_scene = true
+script = ExtResource("19_v6ssd")
+damage = 0.0
+impact = 1.0
+knockback_force = 1
+element = 0
+take_damage_rule = 0
+take_damage_mask = 0
 
 [sub_resource type="Curve" id="Curve_a7cwo"]
 _data = [Vector2(0, 1), 0.0, -0.98736, 0, 0, Vector2(0.993528, 0.0329884), -1.11357, 0.0, 0, 0]
@@ -1682,30 +1763,31 @@ floor_snap_length = 5.0
 platform_floor_layers = 1
 platform_wall_layers = 1
 script = ExtResource("1_clpn5")
+walk_speed = 500.0
 knockback_force = 300.0
+jump_velocity = -1300.0
 coyote_time = 0.15
 attack_system = NodePath("AttackSystem")
 hp_event = ExtResource("2_xwgl7")
 mp_event = ExtResource("3_812ml")
 player_data = ExtResource("3_rcy5y")
 iframe_duration = 1.5
-hurt_audio = NodePath("Audio/Hurt")
+hurt_audio = NodePath("AudioPlayer/Hurt")
 
 [node name="PlayerArt" type="Sprite2D" parent="."]
 material = ExtResource("5_7g2se")
-position = Vector2(0, -68.88)
-scale = Vector2(0.27, 0.27)
+position = Vector2(0, -88)
+scale = Vector2(0.35, 0.35)
 texture = ExtResource("11_avpkp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -56)
+position = Vector2(0, -72)
 shape = SubResource("CapsuleShape2D_og76b")
 
 [node name="celling_ray" type="RayCast2D" parent="."]
-visible = false
-position = Vector2(0, -56)
+position = Vector2(0, -64)
 enabled = false
-target_position = Vector2(0, -64)
+target_position = Vector2(0, -88)
 
 [node name="Directions" type="Node2D" parent="."]
 position = Vector2(0, -64)
@@ -1750,7 +1832,6 @@ anim_speed_max = 1.0
 
 [node name="DashEffect" type="GPUParticles2D" parent="Directions/Effect"]
 z_index = -1
-position = Vector2(-0.120003, -3.12)
 emitting = false
 amount = 5
 process_material = SubResource("ParticleProcessMaterial_a7yw0")
@@ -1768,7 +1849,7 @@ damage_data = SubResource("Resource_asfkc")
 
 [node name="AttackArea" type="CollisionShape2D" parent="Directions/AttackBox"]
 unique_name_in_owner = true
-position = Vector2(31.88, 3.99999)
+position = Vector2(99.88, 7.99999)
 shape = SubResource("RectangleShape2D_v2xt3")
 disabled = true
 debug_color = Color(0.901961, 0.243137, 0.498039, 0.419608)
@@ -1845,24 +1926,34 @@ script = ExtResource("17_ftkwo")
 [node name="Fall" type="Node" parent="StateMachine"]
 script = ExtResource("18_30rd3")
 
-[node name="Chargeable_Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "audio_player", "charge_finish_audio", "attack_audio_player")]
+[node name="Chargeable_Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_normal_sate", "next_chrage_sate", "attack_box", "audio_player", "charge_finish_audio", "attack_audio_player")]
 script = ExtResource("30_rceje")
-charge_time = 0.4
-next_attack_sate = NodePath("../AttackCombo")
+next_normal_sate = NodePath("../AttackCombo")
+next_chrage_sate = NodePath("../ChargeAttack")
 attack_box = NodePath("../../Directions/AttackBox")
 damage_multiply = 1.5
-audio_player = NodePath("../../Audio")
+audio_player = NodePath("../../AudioPlayer")
 charge_audio = ExtResource("32_tyyfq")
-charge_finish_audio = NodePath("../../Audio/ChargeComplete")
-attack_audio_player = NodePath("../../Audio/BasicAttack")
+charge_finish_audio = NodePath("../../AudioPlayer/ChargeComplete")
+attack_audio_player = NodePath("../../AudioPlayer/BasicAttack")
 velocity_move = Vector2(1500, 0)
+
+[node name="ChargeAttack" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
+script = ExtResource("29_u7p7h")
+animation_name = "charge_attack"
+next_attack_sate = NodePath("../AttackCombo3")
+attack_box = NodePath("../../Directions/AttackBox")
+damage_data = SubResource("Resource_beir8")
+attack_audio = NodePath("../../AudioPlayer/BasicAttack")
+velocity_move = Vector2(2000, 0)
+knockback_from_attack = false
 
 [node name="AttackCombo" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
 next_attack_sate = NodePath("../AttackCombo2")
 attack_box = NodePath("../../Directions/AttackBox")
 damage_data = SubResource("Resource_beir8")
-attack_audio = NodePath("../../Audio/BasicAttack")
+attack_audio = NodePath("../../AudioPlayer/BasicAttack")
 
 [node name="AttackCombo2" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
@@ -1870,18 +1961,19 @@ animation_name = "attack_1"
 next_attack_sate = NodePath("../AttackCombo3")
 attack_box = NodePath("../../Directions/AttackBox")
 damage_data = SubResource("Resource_yhtq5")
-attack_audio = NodePath("../../Audio/BasicAttack")
+attack_audio = NodePath("../../AudioPlayer/BasicAttack")
 
 [node name="AttackCombo3" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
 attack_box = NodePath("../../Directions/AttackBox")
 damage_data = SubResource("Resource_mqm6q")
-attack_audio = NodePath("../../Audio/BasicAttack")
+attack_audio = NodePath("../../AudioPlayer/BasicAttack")
 
 [node name="Attack_up" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
 script = ExtResource("19_ly7k1")
 attack_box = NodePath("../../Directions/AttackBox_Up")
-attack_audio = NodePath("../../Audio/BasicAttack")
+damage_data = SubResource("Resource_s3j6t")
+attack_audio = NodePath("../../AudioPlayer/BasicAttack")
 animation_name = "attack_up"
 freely_move = true
 velocity_move = Vector2(0, 0)
@@ -1891,21 +1983,32 @@ script = ExtResource("29_u7p7h")
 next_attack_sate = NodePath("../Air_Attack_combo2")
 attack_box = NodePath("../../Directions/AttackBox")
 damage_data = SubResource("Resource_7kr4u")
-attack_audio = NodePath("../../Audio/BasicAttack")
-velocity_move = Vector2(0, -500)
+attack_audio = NodePath("../../AudioPlayer/BasicAttack")
+velocity_move = Vector2(0, 0)
 air_movement = true
 
-[node name="Air_Attack_combo2" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
+[node name="Air_Attack_combo2" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
 animation_name = "attack_1"
+next_attack_sate = NodePath("../Air_Attack_combo3")
 attack_box = NodePath("../../Directions/AttackBox")
 damage_data = SubResource("Resource_7k5ai")
-attack_audio = NodePath("../../Audio/BasicAttack")
-velocity_move = Vector2(0, -300)
+attack_audio = NodePath("../../AudioPlayer/BasicAttack")
+velocity_move = Vector2(0, 0)
 air_movement = true
 
-[node name="Absorb" type="Node" parent="StateMachine"]
+[node name="Air_Attack_combo3" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
+script = ExtResource("29_u7p7h")
+attack_box = NodePath("../../Directions/AttackBox")
+damage_data = SubResource("Resource_7kr4u")
+attack_audio = NodePath("../../AudioPlayer/BasicAttack")
+velocity_move = Vector2(0, 0)
+air_movement = true
+
+[node name="Absorb" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_normal_sate", "next_chrage_sate")]
 script = ExtResource("20_n6gdi")
+next_normal_sate = NodePath("../PerformSkill")
+next_chrage_sate = NodePath("../Busy")
 
 [node name="Knockback" type="Node" parent="StateMachine"]
 script = ExtResource("21_63e6s")
@@ -1919,11 +2022,13 @@ dash_duration = 0.4
 dash_speed = 1200.0
 dash_effect = NodePath("../../Directions/Effect/DashEffect")
 curve = SubResource("Curve_tfimr")
+dashsound = ExtResource("38_84j70")
 
 [node name="Crouch_attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
 script = ExtResource("19_ly7k1")
 attack_box = NodePath("../../Directions/AttackBox_Low")
-attack_audio = NodePath("../../Audio/BasicAttack")
+damage_data = SubResource("Resource_ionfl")
+attack_audio = NodePath("../../AudioPlayer/BasicAttack")
 animation_name = "crouch_attack_water"
 velocity_move = Vector2(0, 0)
 
@@ -1937,6 +2042,7 @@ curve = SubResource("Curve_a7cwo")
 
 [node name="PerformSkill" type="Node" parent="StateMachine"]
 script = ExtResource("39_dwgav")
+cast_time = 0.35
 
 [node name="Empty" type="Node" parent="StateMachine"]
 script = ExtResource("27_0wr0v")
@@ -1956,36 +2062,37 @@ object_tag = 2
 shape = SubResource("RectangleShape2D_br3f6")
 debug_color = Color(0.14902, 0.623529, 0.462745, 0.419608)
 
-[node name="Audio" type="Node2D" parent="." node_paths=PackedStringArray("audio_player_2d")]
+[node name="AudioPlayer" type="Node2D" parent="."]
 visible = false
 position = Vector2(0.120003, -68.88)
-script = ExtResource("39_c00jx")
-audio_player_2d = NodePath("Empty")
 
-[node name="Empty" type="AudioStreamPlayer2D" parent="Audio"]
-bus = &"Effect"
-
-[node name="ChargeComplete" type="AudioStreamPlayer2D" parent="Audio"]
+[node name="ChargeComplete" type="AudioStreamPlayer2D" parent="AudioPlayer"]
 stream = ExtResource("32_tyyfq")
 pitch_scale = 4.0
 max_polyphony = 3
 bus = &"Effect"
 
-[node name="BasicAttack" type="AudioStreamPlayer2D" parent="Audio"]
+[node name="BasicAttack" type="AudioStreamPlayer2D" parent="AudioPlayer"]
 stream = ExtResource("42_ckt1o")
 max_polyphony = 3
 bus = &"Effect"
 
-[node name="Hurt" type="AudioStreamPlayer" parent="Audio"]
+[node name="Hurt" type="AudioStreamPlayer" parent="AudioPlayer"]
 stream = ExtResource("33_56kgd")
 bus = &"Effect"
+
+[node name="FootstepPlayer" type="Node2D" parent="." node_paths=PackedStringArray("ray")]
+script = ExtResource("45_dg32l")
+ray = NodePath("RayCast2D")
+footsteps = Array[Resource("res://Script/Audio/footsteps_container.gd")]([ExtResource("46_mwsma"), ExtResource("47_ncase")])
+
+[node name="RayCast2D" type="RayCast2D" parent="FootstepPlayer"]
+target_position = Vector2(0, 10)
 
 [node name="SkillSystem" type="Node2D" parent="."]
 visible = false
 script = ExtResource("37_2ex0y")
-fire_skill_container = ExtResource("47_tkrid")
-water_skill_container = ExtResource("48_0uwvg")
-grass_skill_container = ExtResource("49_suqrq")
+skill_list = Array[Resource("res://Script/Player/Skill/container/skill_container.gd")]([ExtResource("47_tkrid"), ExtResource("48_0uwvg"), ExtResource("49_suqrq")])
 
 [node name="AttackSystem" type="Node2D" parent="."]
 visible = false

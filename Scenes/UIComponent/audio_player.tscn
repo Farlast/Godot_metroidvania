@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://gcl855d0exl0"]
+
+[ext_resource type="Script" path="res://Script/Audio/audio_player.gd" id="1_dw4i6"]
+[ext_resource type="AudioStream" uid="uid://bfajwijj8qlf0" path="res://Audio/UI/SFX_UI_select.wav" id="2_3oahd"]
+[ext_resource type="AudioStream" uid="uid://b5ksh30stwb2k" path="res://Audio/UI/SFX_UI_select_2.wav" id="2_yslle"]
+
+[node name="AudioPlayer" type="Node" node_paths=PackedStringArray("ambient_player", "bgm_player", "audio_player")]
+script = ExtResource("1_dw4i6")
+ambient_player = NodePath("Ambient")
+bgm_player = NodePath("BGM")
+audio_player = NodePath("UI")
+select = ExtResource("2_yslle")
+press = ExtResource("2_3oahd")
+
+[node name="UI" type="AudioStreamPlayer" parent="."]
+bus = &"Effect"
+
+[node name="Ambient" type="AudioStreamPlayer" parent="."]
+bus = &"Ambient"
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+bus = &"Music"

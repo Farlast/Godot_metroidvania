@@ -5,17 +5,20 @@ class_name Dash
 @export var dash_speed : float = 500
 @export var dash_effect : GPUParticles2D
 @export var curve : Curve
+@export var dashsound : AudioStream
 
 var dash_timer : float
 var direction : int
+var active_input : bool
 
 func on_enter():
 	super.on_enter()
 	if not player.is_on_floor():
 		player.is_airdash_used = true
-	
+	GameManager.audio_player.play(dashsound,player.global_position)
 	dash_effect.emitting = true
 	dash_timer = 0
+	active_input = true
 	animator.play("dash")
 	
 	direction = ceil(Input.get_axis("move_left", "move_right"))
@@ -30,7 +33,7 @@ func on_enter():
 func on_exit():
 	super.on_exit()
 	player.dash_cooldown()
-	player.dash_iframe = false
+	active_input = false
 
 func on_update(_delta : float):
 	super.on_update(_delta)
@@ -53,8 +56,8 @@ func next_stage():
 		else:
 			transition.emit(self,"run")
 
-func dash_iframe_start():
-	player.dash_iframe = true
-	
-func dash_iframe_end():
-	player.dash_iframe = false
+func  _unhandled_input(event):
+	if not is_controllable(): return
+	if not active_input: return
+	if event.is_action_pressed("jump"):
+		player.check_jumpbuffer_time()

@@ -16,10 +16,10 @@
 [ext_resource type="PackedScene" uid="uid://bkijr6cnrf2dy" path="res://Scenes/Effect/dead_particle.tscn" id="7_tsa6o"]
 [ext_resource type="Texture2D" uid="uid://byku3155bejsl" path="res://Art/Effect/hollow fade circle.png" id="8_8jd00"]
 [ext_resource type="Script" path="res://Script/Enemy/Boss/EldritchWorm/State/enemy_underground.gd" id="8_t1of4"]
-[ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/HitSound/face_hit_small_78.wav" id="9_17gou"]
+[ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/Effect/HitSound/face_hit_small_78.wav" id="9_17gou"]
 [ext_resource type="Script" path="res://Script/Enemy/Boss/EldritchWorm/State/boss_spilt_projectile.gd" id="9_uphaw"]
-[ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/HitSound/body_hit_finisher_23.wav" id="10_xbivy"]
-[ext_resource type="Script" path="res://Script/Enemy/Boss/EldritchWorm/State/boss_dead.gd" id="12_8tdos"]
+[ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/Effect/HitSound/body_hit_finisher_23.wav" id="10_xbivy"]
+[ext_resource type="Script" path="res://Script/Enemy/State/enemy_state.gd" id="14_7gjhl"]
 
 [sub_resource type="Resource" id="Resource_evyiw"]
 resource_local_to_scene = true
@@ -46,9 +46,10 @@ size = Vector2(178, 340)
 script = ExtResource("5_6niub")
 damage = 1.0
 impact = 0.0
+knockback_force = 0
+element = 0
 take_damage_rule = 0
 take_damage_mask = 0
-element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fo6ov"]
 size = Vector2(144, 320)
@@ -517,7 +518,7 @@ script = ExtResource("9_uphaw")
 mouth = NodePath("../../mouth")
 
 [node name="dead" type="Node" parent="EnemyStateMachine"]
-script = ExtResource("12_8tdos")
+script = ExtResource("14_7gjhl")
 
 [node name="Particle" type="Node2D" parent="."]
 position = Vector2(0, -104)

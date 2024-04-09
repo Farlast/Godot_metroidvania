@@ -7,3 +7,4 @@ script = ExtResource("1_oiej2")
 path_dir = "res://Scenes/Player/rock_bullet.tscn"
 cooldown = 0.0
 cost = 0.0
+element = 3

@@ -4,9 +4,9 @@
 [ext_resource type="Script" path="res://Script/UI/HUD/status_bar.gd" id="3_1dtdw"]
 [ext_resource type="Texture2D" uid="uid://bdk6t6ouad607" path="res://Art/UI/ui_hp_bar_fill.png" id="3_do2tk"]
 [ext_resource type="Resource" uid="uid://dot44gd0wwyic" path="res://Script/Player/Event/HP_Event.tres" id="5_5wbci"]
-[ext_resource type="StyleBox" uid="uid://dmmoqnu1vcbi" path="res://Data/StyleBox/button_main_menu.tres" id="7_20wfa"]
+[ext_resource type="StyleBox" uid="uid://dmmoqnu1vcbi" path="res://ResourceData/StyleBox/button_main_menu.tres" id="7_20wfa"]
 [ext_resource type="Resource" uid="uid://cyla5i0xjaskn" path="res://Script/Player/Event/MP_Event.tres" id="8_dr1ct"]
-[ext_resource type="FontFile" uid="uid://c5fpksk7u1rcn" path="res://Data/Font/Maitree-Bold.ttf" id="10_mvonx"]
+[ext_resource type="FontFile" uid="uid://c5fpksk7u1rcn" path="res://ResourceData/Font/Maitree-Bold.ttf" id="10_mvonx"]
 [ext_resource type="Texture2D" uid="uid://dfcbq0t5gh3it" path="res://Art/UI/panel-border-007.png" id="11_hr0p6"]
 [ext_resource type="Texture2D" uid="uid://o4426trj0b4j" path="res://Art/UI/panel-border-023.png" id="11_kaqna"]
 [ext_resource type="Script" path="res://Script/System/DisplayText/popup.gd" id="12_jdfm0"]
@@ -183,15 +183,13 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_6vdrb")
 [node name="Pause" type="Control" parent="." node_paths=PackedStringArray("defualt_button")]
 visible = false
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_aisc1")
-defualt_button = NodePath("BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Continue")
+defualt_button = NodePath("Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Continue")
 
 [node name="blur" type="ColorRect" parent="Pause"]
 material = SubResource("ShaderMaterial_6r5mw")
@@ -199,14 +197,24 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -741.0
-offset_top = -293.0
-offset_right = 742.0
-offset_bottom = 293.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BG" type="ColorRect" parent="Pause"]
+[node name="Control" type="Control" parent="Pause"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="ColorRect" parent="Pause/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -219,7 +227,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.188235, 0.188235, 0.188235, 0.894118)
 
-[node name="Panel" type="Panel" parent="Pause/BG"]
+[node name="Panel" type="Panel" parent="Pause/Control/BG"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -234,7 +242,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_64hno")
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Pause/BG/Panel"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Pause/Control/BG/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -243,28 +251,28 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="Pause/BG/Panel/VBoxContainer2"]
+[node name="MarginContainer" type="MarginContainer" parent="Pause/Control/BG/Panel/VBoxContainer2"]
 layout_mode = 2
 theme_override_constants/margin_bottom = 50
 
-[node name="Label" type="Label" parent="Pause/BG/Panel/VBoxContainer2/MarginContainer"]
+[node name="Label" type="Label" parent="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer"]
 layout_mode = 2
 text = "OPTIONS"
 label_settings = SubResource("LabelSettings_agah8")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer2" type="MarginContainer" parent="Pause/BG/Panel/VBoxContainer2"]
+[node name="MarginContainer2" type="MarginContainer" parent="Pause/Control/BG/Panel/VBoxContainer2"]
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_right = 50
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Pause/BG/Panel/VBoxContainer2/MarginContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer2"]
 show_behind_parent = true
 layout_mode = 2
 alignment = 1
 
-[node name="Continue" type="Button" parent="Pause/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer"]
+[node name="Continue" type="Button" parent="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 focus_neighbor_top = NodePath("../Quit")
@@ -273,7 +281,7 @@ focus_next = NodePath("../Settings")
 theme_override_styles/hover = ExtResource("7_20wfa")
 text = "Continue"
 
-[node name="Settings" type="Button" parent="Pause/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer"]
+[node name="Settings" type="Button" parent="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 focus_neighbor_top = NodePath("../Continue")
@@ -281,7 +289,7 @@ focus_neighbor_bottom = NodePath("../Main menu")
 theme_override_styles/hover = ExtResource("7_20wfa")
 text = "Settings"
 
-[node name="Main menu" type="Button" parent="Pause/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer"]
+[node name="Main menu" type="Button" parent="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 focus_neighbor_top = NodePath("../Settings")
@@ -289,7 +297,7 @@ focus_neighbor_bottom = NodePath("../Quit")
 theme_override_styles/hover = ExtResource("7_20wfa")
 text = "Exit to main menu"
 
-[node name="Quit" type="Button" parent="Pause/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer"]
+[node name="Quit" type="Button" parent="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 focus_neighbor_top = NodePath("../Main menu")
@@ -366,8 +374,8 @@ text = "FPS:"
 label_settings = SubResource("LabelSettings_ipdu6")
 script = ExtResource("17_041yv")
 
-[connection signal="pressed" from="Pause/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
-[connection signal="pressed" from="Pause/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]
-[connection signal="pressed" from="Pause/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Main menu" to="Pause" method="on_to_menu_press"]
-[connection signal="pressed" from="Pause/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Quit" to="Pause" method="_on_quit_pressed"]
+[connection signal="pressed" from="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
+[connection signal="pressed" from="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]
+[connection signal="pressed" from="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Main menu" to="Pause" method="on_to_menu_press"]
+[connection signal="pressed" from="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Quit" to="Pause" method="_on_quit_pressed"]
 [connection signal="pressed" from="DisplayPanel/Button" to="DisplayPanel" method="hide_layout"]

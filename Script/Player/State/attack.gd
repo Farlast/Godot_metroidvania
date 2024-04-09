@@ -5,6 +5,7 @@ extends State
 ### exp up_attack
 @export_group("Attack box")
 @export var attack_box : AttackBox
+@export var damage_data : DamageData
 @export_group("Audio")
 @export var attack_audio : AudioStreamPlayer2D
 @export_group("State transition")
@@ -24,6 +25,7 @@ func _ready():
 	player.attack_success.connect(on_attack_success)
 	attack_box_col = attack_box.get_child(0)
 	attack_system = player.attack_system
+	attack_box.get_damage_data().add(damage_data)
 
 func on_enter():
 	super.on_enter()
