@@ -1,5 +1,5 @@
 class_name AttackSystem
-extends Node2D
+extends Node
 
 signal allow_skip_animation
 signal next_combo_state

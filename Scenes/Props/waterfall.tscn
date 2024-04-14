@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cl663tye2vgke"]
+[gd_scene load_steps=7 format=3 uid="uid://cl663tye2vgke"]
 
 [ext_resource type="Script" path="res://Script/CombatComponent/element_box.gd" id="2_amufq"]
+[ext_resource type="Resource" uid="uid://dunlucggxu66w" path="res://ResourceData/Skill/Throwable/water_orb.tres" id="3_ayn6e"]
 [ext_resource type="Texture2D" uid="uid://doxbn3m5i8dh6" path="res://Art/Player/Skill/water_orb.png" id="3_gpjw2"]
 [ext_resource type="Script" path="res://Script/CombatComponent/element_data.gd" id="3_qovy2"]
 
@@ -18,6 +19,7 @@ collision_layer = 256
 collision_mask = 256
 script = ExtResource("2_amufq")
 element_data = SubResource("Resource_crtcx")
+skill_bundle = ExtResource("3_ayn6e")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ElementBox"]
 position = Vector2(8, 183)

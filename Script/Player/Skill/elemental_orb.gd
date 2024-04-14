@@ -1,36 +1,41 @@
 class_name ElementalOrb
 extends Area2D
 
+### ================
+### Orb use for grab object and display current throwable
+### 
+### ================
 signal send_element(element : ElementData, contact_position : Vector2)
 
-@export var move_speed : float = 800
-@export var life_time : float = 0.5
+### Display
+@export var move_speed : float = 6
+
+enum Mode {FOLLOW,HUNT}
+var current_mode : Mode
+var lerp_target : Node2D
 var direction : Vector2
-var moving : bool
+var current_throw_skill : SkillContainer
 
-func _ready():
-	moving = true
-	area_entered.connect(get_element)
-	$AnimationPlayer.play("idle")
-	await get_tree().create_timer(life_time).timeout
-	destory()
+# Call when find grapable object
+func setup(start_position : Vector2, _lerp_target : Node2D,skill_bundle : Grabable):
+	current_mode = Mode.FOLLOW
+	global_position = start_position
+	lerp_target = _lerp_target
+	$Sprite2D.texture = skill_bundle.sprite
+	current_throw_skill = skill_bundle.throw
+	current_throw_skill.request_load_scene()
+	show()
+	set_process(true)
+	set_physics_process(true)
 
-func get_element(body : Area2D):
-	if body is ElementBox:
-		var element_obj = body as ElementBox
-		send_element.emit(element_obj.element_data,global_position)
-		destory()
-
-func ground_contact(_body : Node2D):
-	destory()
-	
-func destory():
-	moving = false
-	$Particles2D.set_deferred("emitting",false)
-	$AnimationPlayer.play("pop")
-	await $AnimationPlayer.animation_finished
-	queue_free()
+func set_display_off():
+	hide()
+	set_process(false)
+	set_physics_process(false)
 
 func _physics_process(delta):
-	if not moving: return
-	global_position += direction * (move_speed * delta)
+	lerp_to_player(delta)
+
+func lerp_to_player(delta):
+	if is_instance_valid(lerp_target) and current_mode == Mode.FOLLOW:
+		global_position = lerp(global_position,lerp_target.global_position, move_speed * delta)

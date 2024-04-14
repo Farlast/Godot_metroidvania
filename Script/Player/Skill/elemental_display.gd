@@ -28,5 +28,3 @@ func _physics_process(delta):
 
 func set_display_off():
 	hide()
-	#lerp_target = null
-	#queue_free()

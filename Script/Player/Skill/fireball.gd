@@ -4,8 +4,7 @@ extends SkillEmiter
 @export_file("*.tscn") var bullet_path : String
 @onready var bullet_scene : PackedScene = load(bullet_path)
 
-
-func active_skill():	
+func active_skill():
 	var bullet_ins := bullet_scene.instantiate() as Bullet
 	bullet_ins.position = position
 	bullet_ins.direction = Vector2(direction.x,0)

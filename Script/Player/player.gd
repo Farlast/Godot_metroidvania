@@ -67,17 +67,15 @@ func _ready():
 	SceneManager.respawn_at_position.connect(respawn_after_dead)
 	attack_system.iframe_start.connect(on_animation_iframe_start)
 	attack_system.iframe_end.connect(on_animation_iframe_end)
-	skill_system.setup(self)
+	
 	var shader = player_sprite.material as ShaderMaterial
-	globals_sprites_position = player_sprite.global_position
-	
 	shader.set_shader_parameter("active",false)
+	globals_sprites_position = player_sprite.global_position
 	last_ground_position = global_position
-	
-	await get_tree().process_frame
 	update_hud_display()
 	position_on_start_game()
-	skill_system.setup_after_reload()
+	
+	skill_system.setup(self)
 
 func _process(delta):
 	countdown_iframe(delta)
@@ -215,12 +213,10 @@ func slide_cooldown(slide_cooldown_time : float):
 	is_can_slide = true
 
 ### Ghost call
-func  is_can_use_skill(event : InputEvent):
+func  is_can_use_skill(event : InputEvent) -> bool:
 	if not event.is_action_pressed("absorp"): return false
-	if not player_data.is_skill_unlock: return
-	if skill_system.orb_status == skill_system.OrbStatus.Active:
-		return true
-	return skill_system.is_can_used_skill()
+	if not player_data.is_skill_unlock: return false
+	return true
 
 ### Skill
 func is_can_cast_skill(event : InputEvent):
