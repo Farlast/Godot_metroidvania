@@ -3,6 +3,7 @@ class_name Player
 
 signal attack_success
 signal was_dead
+signal take_damage_trigger(damage_data : DamageData)
 
 @onready var state_machine : StateMachine = $StateMachine
 @onready var player_sprite :Sprite2D = $PlayerArt
@@ -227,13 +228,11 @@ func is_can_cast_skill(event : InputEvent):
 #region heal
 func is_can_heal(event : InputEvent)-> bool:
 	if not event.is_action_pressed("heal"): return false
-	if not skill_system.is_have_mana_for_skill(2): return false
 	return true
 
 func start_heal():
-	$AnimationPlayer.play("heal")
-	busy_duration = 1.0
-	state_machine.current_state.transition.emit(state_machine.current_state,"busy")
+	#$AnimationPlayer.play("heal")
+	state_machine.current_state.transition.emit(state_machine.current_state,"heal")
 
 func heal():
 	if player_data.current_health < player_data.max_health:
@@ -249,10 +248,10 @@ func take_damage(damage_data : DamageData)->bool:
 			return false
 		if animation_iframe :
 			return false
-	
 	is_iframe_active = true
 	iframe_timer = 0
 	player_data.current_health -= damage_data.damage
+	take_damage_trigger.emit(damage_data)
 	
 	slash_effect.restart()
 	pulse_effect.restart()

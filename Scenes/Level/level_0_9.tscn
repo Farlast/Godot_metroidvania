@@ -20,7 +20,7 @@
 [ext_resource type="AudioStream" uid="uid://csk6rh1tb4t2i" path="res://Audio/Ambient/Ambiance_Cave_Dark_Loop_Stereo.wav" id="18_0m4ev"]
 [ext_resource type="PackedScene" uid="uid://de1emibi6ixjc" path="res://Scenes/UIComponent/tutorial.tscn" id="19_yhv2b"]
 [ext_resource type="Script" path="res://Script/System/DisplayText/text_display_requester.gd" id="20_68yq4"]
-[ext_resource type="Resource" uid="uid://o61lla2xmbd2" path="res://Script/System/EventChannel/tutorial_event_resource.tres" id="21_e5g5d"]
+[ext_resource type="Resource" uid="uid://o61lla2xmbd2" path="res://ResourceData/Event/tutorial_event_resource.tres" id="21_e5g5d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7xrif"]
 size = Vector2(64, 192)

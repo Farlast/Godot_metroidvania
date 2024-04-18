@@ -29,7 +29,7 @@
 [ext_resource type="PackedScene" uid="uid://cuwwx7vh0cyq7" path="res://Scenes/Props/plant_1.tscn" id="27_7u1yg"]
 [ext_resource type="PackedScene" uid="uid://de1emibi6ixjc" path="res://Scenes/UIComponent/tutorial.tscn" id="28_o4tf8"]
 [ext_resource type="Script" path="res://Script/System/DisplayText/text_display_requester.gd" id="29_k83uo"]
-[ext_resource type="Resource" uid="uid://o61lla2xmbd2" path="res://Script/System/EventChannel/tutorial_event_resource.tres" id="30_r8wnp"]
+[ext_resource type="Resource" uid="uid://o61lla2xmbd2" path="res://ResourceData/Event/tutorial_event_resource.tres" id="30_r8wnp"]
 
 [sub_resource type="Resource" id="Resource_crgbc"]
 script = ExtResource("9_g573n")

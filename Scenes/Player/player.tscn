@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=3 uid="uid://b0byka5d5aixx"]
+[gd_scene load_steps=105 format=3 uid="uid://b0byka5d5aixx"]
 
 [ext_resource type="Script" path="res://Script/Player/player.gd" id="1_clpn5"]
 [ext_resource type="Resource" uid="uid://dot44gd0wwyic" path="res://Script/Player/Event/HP_Event.tres" id="2_xwgl7"]
@@ -46,10 +46,12 @@
 [ext_resource type="Script" path="res://Script/Player/State/perform_skill.gd" id="39_dwgav"]
 [ext_resource type="Script" path="res://Script/Player/State/slide.gd" id="40_awlj2"]
 [ext_resource type="AudioStream" uid="uid://3wfbsdxewftq" path="res://Audio/Effect/Attack/SFX_swosh-01.wav" id="42_ckt1o"]
+[ext_resource type="Script" path="res://Script/Player/State/heal.gd" id="42_rpw6u"]
 [ext_resource type="Script" path="res://Script/Audio/footstep_player.gd" id="45_dg32l"]
 [ext_resource type="Resource" uid="uid://d1ixtvfsq6u2u" path="res://ResourceData/Audio/footsteps_rock.tres" id="46_mwsma"]
 [ext_resource type="Resource" uid="uid://cffogaestjnl5" path="res://ResourceData/Audio/footsteps_sand.tres" id="47_ncase"]
 [ext_resource type="Script" path="res://Script/Player/attack_system.gd" id="47_nus0m"]
+[ext_resource type="Resource" uid="uid://t3hmdbc8tu21" path="res://ResourceData/Event/active_skill_status.tres" id="50_afdg2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_og76b"]
 radius = 13.0
@@ -1186,75 +1188,61 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_qlrro"]
 resource_name = "heal"
-tracks/0/type = "method"
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".")
+tracks/0/path = NodePath("PlayerArt:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.7),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"heal"
-}]
+"update": 1,
+"values": [ExtResource("20_vheql")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerArt:texture")
+tracks/1/path = NodePath("PlayerArt:offset")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [ExtResource("20_vheql"), ExtResource("6_lfvxb")]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PlayerArt:offset")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PlayerArt:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerArt:hframes")
+tracks/3/path = NodePath("PlayerArt:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [1]
+"values": [0]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerArt:frame")
+tracks/4/path = NodePath("PlayerArt:vframes")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("PlayerArt:vframes")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -1899,11 +1887,11 @@ debug_color = Color(0.901961, 0.243137, 0.498039, 0.419608)
 position = Vector2(-64, -64)
 
 [node name="FrontPoint" type="Node2D" parent="Directions"]
-position = Vector2(40, -32)
+position = Vector2(48, -32)
 
 [node name="Element_ray" type="RayCast2D" parent="Directions"]
-position = Vector2(32, -56)
-target_position = Vector2(150, 0)
+position = Vector2(24, -48)
+target_position = Vector2(168, 0)
 collision_mask = 256
 collide_with_areas = true
 
@@ -1945,6 +1933,7 @@ attack_box = NodePath("../../Directions/AttackBox")
 damage_data = SubResource("Resource_beir8")
 attack_audio = NodePath("../../AudioPlayer/BasicAttack")
 velocity_move = Vector2(2000, 0)
+air_fix_movement = true
 knockback_from_attack = false
 
 [node name="AttackCombo" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
@@ -1953,6 +1942,7 @@ next_attack_sate = NodePath("../AttackCombo2")
 attack_box = NodePath("../../Directions/AttackBox")
 damage_data = SubResource("Resource_beir8")
 attack_audio = NodePath("../../AudioPlayer/BasicAttack")
+air_fix_movement = true
 
 [node name="AttackCombo2" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
@@ -1961,12 +1951,14 @@ next_attack_sate = NodePath("../AttackCombo3")
 attack_box = NodePath("../../Directions/AttackBox")
 damage_data = SubResource("Resource_yhtq5")
 attack_audio = NodePath("../../AudioPlayer/BasicAttack")
+air_fix_movement = true
 
 [node name="AttackCombo3" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
 attack_box = NodePath("../../Directions/AttackBox")
 damage_data = SubResource("Resource_mqm6q")
 attack_audio = NodePath("../../AudioPlayer/BasicAttack")
+air_fix_movement = true
 
 [node name="Attack_up" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
 script = ExtResource("19_ly7k1")
@@ -1984,7 +1976,7 @@ attack_box = NodePath("../../Directions/AttackBox")
 damage_data = SubResource("Resource_7kr4u")
 attack_audio = NodePath("../../AudioPlayer/BasicAttack")
 velocity_move = Vector2(0, 0)
-air_movement = true
+air_fix_movement = true
 
 [node name="Air_Attack_combo2" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_attack_sate", "attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
@@ -1993,16 +1985,18 @@ next_attack_sate = NodePath("../Air_Attack_combo3")
 attack_box = NodePath("../../Directions/AttackBox")
 damage_data = SubResource("Resource_7k5ai")
 attack_audio = NodePath("../../AudioPlayer/BasicAttack")
-velocity_move = Vector2(0, 0)
-air_movement = true
+velocity_move = Vector2(100, 0)
+air_fix_movement = true
+fall_gravity = false
 
 [node name="Air_Attack_combo3" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_box", "attack_audio")]
 script = ExtResource("29_u7p7h")
 attack_box = NodePath("../../Directions/AttackBox")
 damage_data = SubResource("Resource_7kr4u")
 attack_audio = NodePath("../../AudioPlayer/BasicAttack")
-velocity_move = Vector2(0, 0)
-air_movement = true
+velocity_move = Vector2(100, 0)
+air_fix_movement = true
+fall_gravity = false
 
 [node name="Absorb" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_normal_sate", "next_chrage_sate")]
 script = ExtResource("20_n6gdi")
@@ -2049,6 +2043,9 @@ script = ExtResource("27_0wr0v")
 [node name="Busy" type="Node" parent="StateMachine"]
 script = ExtResource("33_0j15e")
 
+[node name="Heal" type="Node" parent="StateMachine"]
+script = ExtResource("42_rpw6u")
+
 [node name="HurtBox" type="Area2D" parent="."]
 visible = false
 position = Vector2(0.120003, -68.88)
@@ -2090,6 +2087,7 @@ target_position = Vector2(0, 10)
 
 [node name="SkillSystem" type="Node" parent="."]
 script = ExtResource("37_2ex0y")
+ui_event = ExtResource("50_afdg2")
 
 [node name="AttackSystem" type="Node" parent="."]
 script = ExtResource("47_nus0m")

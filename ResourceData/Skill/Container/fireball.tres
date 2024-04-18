@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="SingleBullet" load_steps=5 format=3 uid="uid://b7gayra12dcja"]
+
+[ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="1_c3ava"]
+[ext_resource type="Script" path="res://Script/Player/Skill/container/SingleBullet.gd" id="1_twrlu"]
+[ext_resource type="Texture2D" uid="uid://dbk82p8ylxt2w" path="res://Art/Player/Spirit/fire.png" id="2_vcu35"]
+
+[sub_resource type="Resource" id="Resource_nsi7y"]
+script = ExtResource("1_c3ava")
+damage = 1.0
+impact = 0.0
+knockback_force = 0
+element = 2
+take_damage_rule = 0
+take_damage_mask = 0
+
+[resource]
+script = ExtResource("1_twrlu")
+direction = Vector2(0, 0)
+speed = 1000.0
+damage_data = SubResource("Resource_nsi7y")
+path_dir = "res://Scenes/Effect/fire_bullet.tscn"
+cooldown = 1.5
+cost = 2.5
+cast_time = 0.3
+animation_name = "sample"
+icon = ExtResource("2_vcu35")

@@ -23,7 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://c1hwcuglxktfc" path="res://Scenes/Enemy/living_vine.tscn" id="13_5sp8v"]
 [ext_resource type="PackedScene" uid="uid://ccwgdqlbypx40" path="res://Scenes/Enemy/patrol_enemy.tscn" id="14_7cwkq"]
 [ext_resource type="Script" path="res://Script/System/DisplayText/text_display_requester.gd" id="15_xxv1k"]
-[ext_resource type="Resource" uid="uid://o61lla2xmbd2" path="res://Script/System/EventChannel/tutorial_event_resource.tres" id="16_7adn1"]
+[ext_resource type="Resource" uid="uid://o61lla2xmbd2" path="res://ResourceData/Event/tutorial_event_resource.tres" id="16_7adn1"]
 [ext_resource type="PackedScene" uid="uid://de1emibi6ixjc" path="res://Scenes/UIComponent/tutorial.tscn" id="17_nx5tr"]
 [ext_resource type="Script" path="res://Script/Levels/next_area_path.gd" id="18_y3xoh"]
 [ext_resource type="Resource" uid="uid://2nkndsnwrmsi" path="res://ResourceData/Passage/level_0/scene_0_0.tres" id="20_bwaru"]

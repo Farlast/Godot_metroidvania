@@ -12,7 +12,8 @@ extends State
 @export var attack_audio : AudioStreamPlayer2D
 @export_group("Move distance")
 @export var velocity_move : Vector2 = Vector2(200,0)
-@export var air_movement : bool
+@export var air_fix_movement : bool
+@export var fall_gravity : bool = true
 @export var knockback_from_attack : bool = true
 
 var attack_box_col : CollisionShape2D
@@ -34,13 +35,11 @@ func _ready():
 ############
 func on_enter():
 	attack_box.get_damage_data().add(damage_data)
-	var move_dir = player.direction_holder.scale.x * velocity_move.x
-	if air_movement:
-		player.velocity = Vector2(player.velocity.x/2 + move_dir,velocity_move.y)
-	else:
-		player.velocity = Vector2(move_dir,velocity_move.y)
-	
 	super.on_enter()
+	if air_fix_movement:
+		player.velocity = Vector2(player.direction_holder.scale.x * velocity_move.x,velocity_move.y)
+	else:
+		player.velocity = Vector2(player.velocity.x,player.velocity.y/2)
 	active_input = true
 	listen_input_window = false
 	play_animation()
@@ -53,7 +52,7 @@ func on_attack_success():
 	if not active_input: return
 	if not knockback_from_attack: return
 	if player.get_hit_direction != Vector2.ZERO:
-		player.velocity.x = velocity_move.x/2 * -player.get_hit_direction.x
+		player.velocity.x += (-player.get_hit_direction.x * velocity_move.x)
 
 func on_animation_finish(_animation_name : String):
 	disable_hitbox()
@@ -78,12 +77,9 @@ func on_exit():
 
 func on_physics_update(_delta : float):
 	super.on_physics_update(_delta)
-	if air_movement:
-		player.velocity.y += 500 * _delta
-	elif not air_movement and not player.is_on_floor():
-		player.velocity.x = 50 * player.direction_holder.scale.x
+	if air_fix_movement:
 		player.velocity.y = 0
-	else:
+	if fall_gravity:
 		player.add_fall_gravity(_delta)
 	player.add_drag(_delta)
 	player.move_and_slide()
@@ -91,7 +87,7 @@ func on_physics_update(_delta : float):
 func  _unhandled_input(event):
 	if not is_controllable(): return
 	if not active_input: return
-	if air_movement and event.is_action_released("move_left") || event.is_action_released("move_right"):
+	if air_fix_movement and event.is_action_released("move_left") || event.is_action_released("move_right"):
 		player.velocity.x = 0
 	if event.is_action_pressed("dash") && player.is_can_dash():
 		transition.emit(self,"dash")

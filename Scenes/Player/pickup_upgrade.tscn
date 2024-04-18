@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://cqow16cipyw6e"]
 
 [ext_resource type="Script" path="res://Script/PickUp/pickupable.gd" id="1_6kv1j"]
-[ext_resource type="Resource" uid="uid://byoer52eg2g0h" path="res://Script/System/EventChannel/powerup_event_resource.tres" id="2_k74v3"]
+[ext_resource type="Resource" uid="uid://byoer52eg2g0h" path="res://ResourceData/Event/powerup_event_resource.tres" id="2_k74v3"]
 [ext_resource type="Texture2D" uid="uid://b58vau1im1n4k" path="res://Art/Effect/Tex_circle.png" id="4_oddqr"]
 [ext_resource type="Texture2D" uid="uid://c1qhwi8ewswm4" path="res://Art/Effect/Tex_circle_small.png" id="5_dpiqo"]
 

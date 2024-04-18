@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="Grabable" load_steps=4 format=3 uid="uid://cqq1gvmr1lfdp"]
+[gd_resource type="Resource" script_class="Grabbable" load_steps=4 format=3 uid="uid://cqq1gvmr1lfdp"]
 
-[ext_resource type="Script" path="res://Script/Player/Skill/container/grabable.gd" id="1_oyqx5"]
-[ext_resource type="Texture2D" uid="uid://ddfh6bx4kuvsu" path="res://Art/Player/Skill/bubble_idle.png" id="2_tahkf"]
-[ext_resource type="Resource" uid="uid://cfmmp7r24x8il" path="res://ResourceData/Skill/fireball.tres" id="3_tt6ei"]
+[ext_resource type="Script" path="res://Script/Player/Skill/grabbable.gd" id="1_oyqx5"]
+[ext_resource type="Texture2D" uid="uid://dbk82p8ylxt2w" path="res://Art/Player/Spirit/fire.png" id="2_1iqnd"]
+[ext_resource type="Resource" uid="uid://b7gayra12dcja" path="res://ResourceData/Skill/Container/fireball.tres" id="3_hp4b7"]
 
 [resource]
 script = ExtResource("1_oyqx5")
-throw = ExtResource("3_tt6ei")
-sprite = ExtResource("2_tahkf")
+throw = ExtResource("3_hp4b7")
+sprite = ExtResource("2_1iqnd")

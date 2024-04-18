@@ -1,5 +1,5 @@
-extends Area2D
 class_name Pickupable
+extends Area2D
 
 @onready var stay_effect : CPUParticles2D = $IdleParticles
 @onready var pickup_effect : CPUParticles2D = $PickupParticles

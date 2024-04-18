@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c62j7aiwvcjda"]
+[gd_scene load_steps=31 format=3 uid="uid://c62j7aiwvcjda"]
 
 [ext_resource type="Script" path="res://Script/UI/ESCMenu/pause_menu.gd" id="1_aisc1"]
 [ext_resource type="Script" path="res://Script/UI/HUD/status_bar.gd" id="3_1dtdw"]
@@ -10,8 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://dfcbq0t5gh3it" path="res://Art/UI/panel-border-007.png" id="11_hr0p6"]
 [ext_resource type="Texture2D" uid="uid://o4426trj0b4j" path="res://Art/UI/panel-border-023.png" id="11_kaqna"]
 [ext_resource type="Script" path="res://Script/System/DisplayText/popup.gd" id="12_jdfm0"]
-[ext_resource type="Resource" uid="uid://byoer52eg2g0h" path="res://Script/System/EventChannel/powerup_event_resource.tres" id="13_h60o1"]
+[ext_resource type="Resource" uid="uid://byoer52eg2g0h" path="res://ResourceData/Event/powerup_event_resource.tres" id="13_h60o1"]
 [ext_resource type="Texture2D" uid="uid://b2ghjo6da5elg" path="res://Art/UI/panel-001.png" id="14_ssfhs"]
+[ext_resource type="Script" path="res://Script/Player/UI/active_skill_display.gd" id="15_n5ibt"]
+[ext_resource type="Resource" uid="uid://t3hmdbc8tu21" path="res://ResourceData/Event/active_skill_status.tres" id="16_lc2q8"]
 [ext_resource type="Script" path="res://Script/System/fps_counter.gd" id="17_041yv"]
 [ext_resource type="Shader" path="res://Shader/blur.gdshader" id="18_jwncr"]
 
@@ -373,6 +375,37 @@ layout_mode = 2
 text = "FPS:"
 label_settings = SubResource("LabelSettings_ipdu6")
 script = ExtResource("17_041yv")
+
+[node name="SkillDisplay" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Skill_1" type="ProgressBar" parent="SkillDisplay"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 48.0
+offset_right = 120.0
+offset_bottom = 112.0
+max_value = 1.0
+value = 1.0
+fill_mode = 3
+show_percentage = false
+script = ExtResource("15_n5ibt")
+skill_status = ExtResource("16_lc2q8")
+
+[node name="TextureRect" type="TextureRect" parent="SkillDisplay/Skill_1"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -64.0
+offset_right = 64.0
+grow_vertical = 0
+expand_mode = 1
 
 [connection signal="pressed" from="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
 [connection signal="pressed" from="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]

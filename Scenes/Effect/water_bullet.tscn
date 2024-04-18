@@ -10,9 +10,10 @@
 script = ExtResource("4_h1xlc")
 damage = 1.0
 impact = 0.0
+knockback_force = 0
+element = 1
 take_damage_rule = 0
 take_damage_mask = 0
-element = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8e1am"]
 radius = 16.0
@@ -21,9 +22,10 @@ radius = 16.0
 script = ExtResource("4_h1xlc")
 damage = 1.0
 impact = 0.0
+knockback_force = 0
+element = 1
 take_damage_rule = 0
 take_damage_mask = 0
-element = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6sflg"]
 radius = 25.2982

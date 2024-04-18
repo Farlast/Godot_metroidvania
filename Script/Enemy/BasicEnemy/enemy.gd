@@ -3,6 +3,7 @@ class_name Enemy
 
 signal on_dead
 signal stance_breaked
+signal take_damage_trigger(damage_data : DamageData)
 
 @export var health_system : HealthSystem 
 @export var gravity_multiply :float = 2.5

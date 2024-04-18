@@ -3,7 +3,6 @@ extends Area2D
 
 ### ================
 ### Orb use for grab object and display current throwable
-### 
 ### ================
 signal send_element(element : ElementData, contact_position : Vector2)
 
@@ -17,7 +16,7 @@ var direction : Vector2
 var current_throw_skill : SkillContainer
 
 # Call when find grapable object
-func setup(start_position : Vector2, _lerp_target : Node2D,skill_bundle : Grabable):
+func setup(start_position : Vector2, _lerp_target : Node2D,skill_bundle : Grabbable):
 	current_mode = Mode.FOLLOW
 	global_position = start_position
 	lerp_target = _lerp_target

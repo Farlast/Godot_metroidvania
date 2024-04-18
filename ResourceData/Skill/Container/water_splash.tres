@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="SplashBullet" load_steps=5 format=3 uid="uid://cubkttxhovbps"]
+
+[ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="1_ce5rg"]
+[ext_resource type="Script" path="res://Script/Player/Skill/container/SplashBullet.gd" id="1_xk6o6"]
+[ext_resource type="Texture2D" uid="uid://uuorvi37gf7d" path="res://Art/Player/Spirit/water.png" id="2_nsxpw"]
+
+[sub_resource type="Resource" id="Resource_rppns"]
+script = ExtResource("1_ce5rg")
+damage = 1.0
+impact = 0.0
+knockback_force = 0
+element = 1
+take_damage_rule = 0
+take_damage_mask = 0
+
+[resource]
+script = ExtResource("1_xk6o6")
+bullet_amount = 4.0
+direction = Vector2(0, 0)
+speed = 900.0
+damage_data = SubResource("Resource_rppns")
+fan_radius = 0.4
+path_dir = "res://Scenes/Effect/water_bullet.tscn"
+cooldown = 1.0
+cost = 2.0
+cast_time = 0.3
+animation_name = "sample"
+icon = ExtResource("2_nsxpw")

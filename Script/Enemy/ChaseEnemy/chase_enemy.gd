@@ -3,6 +3,7 @@ class_name ChaseEnemy
 
 @onready var front_ray : RayCast2D = $Direction/FrontRay
 @onready var down_ray : RayCast2D = $Direction/DownRay
+@onready var soul := preload("res://Scenes/Interactable/skill_memo.tscn")
 
 @export_category("Movement")
 @export var move_speed : float = 200
@@ -66,6 +67,9 @@ func on_stance_break():
 
 func dead():
 	state_machine.current_state.transition.emit(state_machine.current_state,"empty")
+	var scene :SkillMemo= soul.instantiate()
+	scene.position = front_ray.global_position
+	add_sibling.call_deferred(scene)
 	if is_on_screen:
 		var camera = GameManager.main_camera
 		camera.add_trauma(0.5)

@@ -1,8 +1,9 @@
-[gd_scene load_steps=60 format=3 uid="uid://dfshfluoqcc1w"]
+[gd_scene load_steps=61 format=3 uid="uid://dfshfluoqcc1w"]
 
 [ext_resource type="Script" path="res://Script/Enemy/FlyEnemy/fly_enemy_base.gd" id="1_ieynj"]
 [ext_resource type="Script" path="res://Script/CombatComponent/status_value.gd" id="2_5avuf"]
 [ext_resource type="Script" path="res://Script/UI/HUD/status_bar.gd" id="2_hvmrp"]
+[ext_resource type="Resource" uid="uid://cubkttxhovbps" path="res://ResourceData/Skill/Container/water_splash.tres" id="2_sncvh"]
 [ext_resource type="Script" path="res://Script/CombatComponent/health_system.gd" id="3_lfmor"]
 [ext_resource type="Script" path="res://Script/Player/Event/Health_Event.gd" id="3_q8ekf"]
 [ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="4_w6rn4"]
@@ -285,6 +286,7 @@ platform_on_leave = 2
 platform_floor_layers = 4294901761
 platform_wall_layers = 1
 script = ExtResource("1_ieynj")
+skill_drop = ExtResource("2_sncvh")
 health_system = SubResource("Resource_cgjx1")
 gravity_multiply = 0.0
 hp_bar = NodePath("Control/VBoxContainer/HP bar")
