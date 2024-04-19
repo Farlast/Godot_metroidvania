@@ -30,7 +30,7 @@ func on_physics_update(_delta : float):
 		else :
 			transition.emit(self,"Idle")
 		return
-	player.move_horizontal()
+	player.move_horizontal(player.walk_speed)
 	player.move_and_slide()
 	
 func _unhandled_input(event):

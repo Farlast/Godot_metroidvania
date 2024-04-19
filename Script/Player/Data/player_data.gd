@@ -57,8 +57,6 @@ extends NodeSaveData
 
 @export_group("skill")
 @export var orb_status : SkillSystem.OrbStatus
-@export var current_orb_element : ElementData.ElementType
-@export var current_used_element : ElementData.ElementType
 
 func replace_data(data : PlayerData):
 	current_health = data.current_health

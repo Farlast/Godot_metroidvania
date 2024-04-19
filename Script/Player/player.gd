@@ -17,8 +17,8 @@ signal take_damage_trigger(damage_data : DamageData)
 @onready var footstep_player : FootstepPlayer = $FootstepPlayer
 
 @export_group("Move")
-@export var walk_speed :float = 400.0
-@export var knockback_force : float = 500
+@export var walk_speed :float = 500.0
+@export var knockback_force : float = 300
 
 @export_group("Jump")
 @export var jump_velocity :float = -1200.0
@@ -61,7 +61,7 @@ var animation_iframe : bool
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var globals_sprites_position: Vector2
 
-#region OVERRIDE
+#region MAIN OVERRIDE
 func _ready():
 	GameManager.game_state_changed.connect(on_game_state_change)
 	SceneManager.set_player_position.connect(setup_after_enter_room)
@@ -95,9 +95,6 @@ func jitter_fix(delta):
 		player_sprite.position = Vector2(0, -88)
 #endregion
 #region Set Position and Status
-###############
-## CUSTOM
-###############
 func on_game_state_change(game_state : GameManager.GameState):
 	if game_state == GameManager.GameState.GAMEPLAY:
 		set_process(true)
@@ -157,12 +154,12 @@ func add_drag(delta : float, check_on_floor : bool = true, drag : float = 5):
 	else:
 		velocity.x += abs(velocity.x * (delta * drag))
 
-func move_horizontal(flip : bool = true):
+func move_horizontal(speed:float,flip : bool = true):
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction:
-		velocity.x = direction * walk_speed
+		velocity.x += (direction * speed) - velocity.x
 	else:
-		velocity.x = move_toward(velocity.x, 0, walk_speed)	
+		velocity.x = move_toward(velocity.x, 0, speed)
 	if flip:
 		flip_sprite(direction)
 
@@ -231,14 +228,8 @@ func is_can_heal(event : InputEvent)-> bool:
 	return true
 
 func start_heal():
-	#$AnimationPlayer.play("heal")
 	state_machine.current_state.transition.emit(state_machine.current_state,"heal")
 
-func heal():
-	if player_data.current_health < player_data.max_health:
-		player_data.current_mana -= 2
-		player_data.current_health += 1
-	update_hud_display()
 #endregion
 #endregion
 #region Attack and damage

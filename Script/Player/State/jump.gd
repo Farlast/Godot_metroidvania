@@ -36,7 +36,7 @@ func on_physics_update(_delta : float):
 		transition.emit(self,"fall")
 		return
 	
-	player.move_horizontal()
+	player.move_horizontal(player.walk_speed)
 	player.move_and_slide()
 		
 func _unhandled_input(event):

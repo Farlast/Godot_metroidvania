@@ -23,6 +23,7 @@ const FPS_OPTIONS : Dictionary = {
 	"No limit":-1,
 	"30": 30,
 	"60": 60,
+	"75": 75,
 	"120": 120
 }
 func _ready():

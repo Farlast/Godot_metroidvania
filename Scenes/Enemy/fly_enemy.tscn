@@ -277,7 +277,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oq5fp"]
-radius = 384.083
+radius = 448.071
 
 [node name="Fly_Enemy" type="CharacterBody2D" node_paths=PackedStringArray("hp_bar", "stagger_bar")]
 collision_layer = 0

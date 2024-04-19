@@ -53,11 +53,7 @@ func next_stage():
 		var h_direction = Input.get_axis("move_left", "move_right")
 		if h_direction == 0:
 			transition.emit(self,"idle")
+		elif Input.is_action_pressed("dash"):
+			transition.emit(self,"sprint")
 		else:
 			transition.emit(self,"run")
-
-func  _unhandled_input(event):
-	if not is_controllable(): return
-	if not active_input: return
-	if event.is_action_pressed("jump"):
-		player.check_jumpbuffer_time()

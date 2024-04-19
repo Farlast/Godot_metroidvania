@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://b0byka5d5aixx"]
+[gd_scene load_steps=106 format=3 uid="uid://b0byka5d5aixx"]
 
 [ext_resource type="Script" path="res://Script/Player/player.gd" id="1_clpn5"]
 [ext_resource type="Resource" uid="uid://dot44gd0wwyic" path="res://Script/Player/Event/HP_Event.tres" id="2_xwgl7"]
@@ -48,7 +48,6 @@
 [ext_resource type="AudioStream" uid="uid://3wfbsdxewftq" path="res://Audio/Effect/Attack/SFX_swosh-01.wav" id="42_ckt1o"]
 [ext_resource type="Script" path="res://Script/Player/State/heal.gd" id="42_rpw6u"]
 [ext_resource type="Script" path="res://Script/Player/State/sprint.gd" id="43_d5qd6"]
-[ext_resource type="Script" path="res://Script/Player/State/bullet_jump.gd" id="44_3wjfr"]
 [ext_resource type="Script" path="res://Script/Audio/footstep_player.gd" id="45_dg32l"]
 [ext_resource type="Resource" uid="uid://d1ixtvfsq6u2u" path="res://ResourceData/Audio/footsteps_rock.tres" id="46_mwsma"]
 [ext_resource type="Resource" uid="uid://cffogaestjnl5" path="res://ResourceData/Audio/footsteps_sand.tres" id="47_ncase"]
@@ -2049,10 +2048,6 @@ script = ExtResource("33_0j15e")
 
 [node name="Heal" type="Node" parent="StateMachine"]
 script = ExtResource("42_rpw6u")
-
-[node name="BulletJump" type="Node" parent="StateMachine"]
-script = ExtResource("44_3wjfr")
-shooting_time = 1.0
 
 [node name="HurtBox" type="Area2D" parent="."]
 visible = false

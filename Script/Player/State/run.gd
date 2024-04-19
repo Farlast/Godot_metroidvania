@@ -1,13 +1,16 @@
 extends State
 class_name Run
 
+@export var run_speed :float = 500.0
+@export var animation_name :String = "run"
+
 var active_input : bool
 var position_update_time : float = 0.3
 var position_update_timer : float
 
 func on_enter():
 	super.on_enter()
-	animator.play("run")
+	animator.play(animation_name)
 	active_input = true
 	player.update_area()
 	position_update_timer = 0
@@ -35,7 +38,7 @@ func on_physics_update(_delta : float):
 		player.check_coyote_time()
 		transition.emit(self,"fall")
 	
-	player.move_horizontal()
+	player.move_horizontal(run_speed)
 	player.move_and_slide()
 
 func _unhandled_input(event):
@@ -43,9 +46,6 @@ func _unhandled_input(event):
 	if not active_input: return
 	var h_direction = Input.get_axis("move_left", "move_right")
 	if h_direction == 0:
-		transition.emit(self,"idle")
-		return
-	if event.is_action_released("move_left") or event.is_action_released("move_right"):
 		transition.emit(self,"idle")
 	elif event.is_action_pressed("jump") && player.is_on_floor():
 		transition.emit(self,"Jump")
