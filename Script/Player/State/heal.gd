@@ -1,5 +1,6 @@
 class_name Heal extends State
 
+@onready var effect :GPUParticles2D= $"../../Directions/Effect/HealEffect"
 @export var heal_over_time : float = 0.5
 @export var cost_over_time : float = 1.5
 var active_input : bool
@@ -8,10 +9,12 @@ func on_enter():
 	super.on_enter()
 	active_input = true
 	animator.play("heal")
+	effect.emitting = true
 	
 func on_exit():
 	super.on_exit()
 	active_input = false
+	effect.emitting = false
 	
 func on_update(_delta : float):
 	super.on_update(_delta)

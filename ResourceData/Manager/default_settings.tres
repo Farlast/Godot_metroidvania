@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="GameManagerSettings" load_steps=2 format=3 uid="uid://hvbobn0iqvid"]
+
+[ext_resource type="Script" path="res://Script/System/game_manager_setting.gd" id="1_8hgiq"]
+
+[resource]
+script = ExtResource("1_8hgiq")
+default_first_scene = "res://Scenes/Level/level_0_0.tscn"

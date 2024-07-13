@@ -1,8 +1,10 @@
 class_name PlayerData
 extends NodeSaveData
 
-@export_group("Health")
+### For save system and share data between scene
+
 #region Health
+@export_group("Health")
 @export var max_health : float = 3:
 	get:
 		return max_health + max_health_extend
@@ -42,21 +44,25 @@ extends NodeSaveData
 			current_mana = max_mana
 #endregion
 
-@export_group("Unlockables")
-@export var is_doublejump_unlock : bool = false
-@export var is_dash_unlock : bool = false
-### element
-@export var is_skill_unlock : bool = false
-@export var is_water_unlock : bool = false
-@export var is_fire_unlock : bool = false
-@export var is_plant_unlock : bool = false
-@export var is_electricit_unlock : bool = false
+#region Unlocks
+@export_group("Unlocks")
+@export var unlock_dict : Dictionary # [string,bool]
 
 @export_group("start position")
 @export var last_scene_visit_path : String
 
-@export_group("skill")
-@export var orb_status : SkillSystem.OrbStatus
+func unlock_abilities(name : String):
+	if unlock_dict.has(name):
+		unlock_dict[name] = true
+
+func is_abilitie_unlock(key : String)->bool:
+	if not unlock_dict.has(key): return false
+	return unlock_dict[key]
+
+func clear_all_unlock():
+	for key in unlock_dict:
+		unlock_dict[key] = false
+#endregion
 
 func replace_data(data : PlayerData):
 	current_health = data.current_health
@@ -70,10 +76,4 @@ func replace_data(data : PlayerData):
 	position = data.position
 	last_scene_visit_path = data.last_scene_visit_path
 	
-	is_doublejump_unlock = data.is_doublejump_unlock
-	is_skill_unlock = data.is_skill_unlock
-	is_dash_unlock = data.is_dash_unlock
-	is_water_unlock = data.is_water_unlock
-	is_fire_unlock = data.is_fire_unlock
-	is_plant_unlock = data.is_plant_unlock
-	is_electricit_unlock = data.is_electricit_unlock
+	unlock_dict = data.unlock_dict.duplicate()

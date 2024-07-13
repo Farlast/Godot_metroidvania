@@ -11,7 +11,7 @@ var opening : bool = false
 func _ready():
 	if open:
 		animation.play("open")
-	trigger.switch_triggered.connect(on_triggered)
+	if trigger: trigger.switch_triggered.connect(on_triggered)
 
 func on_triggered():
 	if opening: return

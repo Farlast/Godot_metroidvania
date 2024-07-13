@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UnlockableData" load_steps=2 format=3 uid="uid://bwcms0i0ypitx"]
+
+[ext_resource type="Script" path="res://ResourceData/Unlockables/unlockable_data.gd" id="1_ku5af"]
+
+[resource]
+resource_name = "air_dash"
+script = ExtResource("1_ku5af")
+unlocked = false

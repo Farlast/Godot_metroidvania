@@ -1,32 +1,26 @@
-[gd_resource type="Resource" script_class="SceneHandle" load_steps=7 format=3 uid="uid://bsckjck4envwv"]
+[gd_resource type="Resource" script_class="SceneHandle" load_steps=6 format=3 uid="uid://bsckjck4envwv"]
 
 [ext_resource type="Script" path="res://Script/Levels/passage_Handle.gd" id="1_wc5pb"]
 [ext_resource type="Script" path="res://Script/Levels/scene_Handle.gd" id="2_oj05y"]
 
 [sub_resource type="Resource" id="Resource_shuog"]
 script = ExtResource("1_wc5pb")
-passage_name = "Left bottom"
+passage_name = "Left"
 target_scene_path = "res://Scenes/Level/level_0_2.tscn"
 target_passage_id = 0
 
 [sub_resource type="Resource" id="Resource_plr6j"]
 script = ExtResource("1_wc5pb")
-passage_name = "Right mid"
+passage_name = "Right up"
 target_scene_path = "res://Scenes/Level/level_0_2.tscn"
 target_passage_id = 1
 
 [sub_resource type="Resource" id="Resource_fmnrb"]
 script = ExtResource("1_wc5pb")
-passage_name = "Right far"
+passage_name = "Right down"
 target_scene_path = "res://Scenes/Level/level_0_2.tscn"
 target_passage_id = 2
 
-[sub_resource type="Resource" id="Resource_x3c84"]
-script = ExtResource("1_wc5pb")
-passage_name = "Right up"
-target_scene_path = "res://Scenes/Level/level_0_2.tscn"
-target_passage_id = 3
-
 [resource]
 script = ExtResource("2_oj05y")
-passage_list = Array[ExtResource("1_wc5pb")]([SubResource("Resource_shuog"), SubResource("Resource_plr6j"), SubResource("Resource_fmnrb"), SubResource("Resource_x3c84")])
+passage_list = Array[ExtResource("1_wc5pb")]([SubResource("Resource_shuog"), SubResource("Resource_plr6j"), SubResource("Resource_fmnrb")])

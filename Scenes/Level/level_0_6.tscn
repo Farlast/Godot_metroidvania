@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cq6mlf3c8lkot"]
+[gd_scene load_steps=19 format=3 uid="uid://cq6mlf3c8lkot"]
 
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_ty766"]
 [ext_resource type="TileSet" uid="uid://dfn081kuhi648" path="res://ResourceData/base_tileset.tres" id="2_0nsr8"]
@@ -6,32 +6,21 @@
 [ext_resource type="Script" path="res://addons/cinematic_camera_2d/scripts/cinematic_camera_2d.gd" id="4_hcgre"]
 [ext_resource type="Script" path="res://addons/cinematic_camera_2d/scripts/virtual_camera_2d.gd" id="5_qv14s"]
 [ext_resource type="PackedScene" uid="uid://dt8k0y2ux3c2k" path="res://Scenes/Props/one_way_platform.tscn" id="6_buy1g"]
-[ext_resource type="PackedScene" uid="uid://cqow16cipyw6e" path="res://Scenes/Player/pickup_upgrade.tscn" id="7_41y4p"]
 [ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="8_byl6j"]
-[ext_resource type="Script" path="res://Script/Player/Item/Unlockable/unlockable.gd" id="8_ym5p5"]
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="9_2p5ge"]
 [ext_resource type="Texture2D" uid="uid://d2mosp34qr7db" path="res://Art/Environment/Thorns/thorns.png" id="10_4ct2y"]
 [ext_resource type="Script" path="res://Script/Levels/next_area_path.gd" id="11_aj38m"]
 [ext_resource type="Resource" uid="uid://lvwmfwkygib3" path="res://ResourceData/Passage/level_0/scene_0_6.tres" id="12_cl1j2"]
 [ext_resource type="Resource" uid="uid://claqc3vwlxgxx" path="res://ResourceData/Passage/level_0/scene_0_3.tres" id="13_oro8f"]
 
-[sub_resource type="Resource" id="Resource_7mn3x"]
-script = ExtResource("8_ym5p5")
-unlock_type = 0
-
-[sub_resource type="Resource" id="Resource_1hnog"]
-script = ExtResource("8_ym5p5")
-unlock_type = 1
-
 [sub_resource type="Resource" id="Resource_8e3ye"]
 script = ExtResource("9_2p5ge")
 damage = 1.0
 impact = 0.0
-knockback = 300.0
-sender_position = Vector2(0, 0)
+knockback_force = 0
+element = 0
 take_damage_rule = 1
 take_damage_mask = 0
-element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o5k8c"]
 size = Vector2(192, 56)
@@ -78,17 +67,6 @@ limit_bottom = 1100
 
 [node name="OneWayPlatform" parent="." instance=ExtResource("6_buy1g")]
 position = Vector2(3136, 768)
-
-[node name="Pickup_upgrade" parent="." instance=ExtResource("7_41y4p")]
-position = Vector2(1215, 640)
-text_to_display = "Dash unlock!
-press 'C' or 'Right trigger' to dash"
-unlock_type = SubResource("Resource_7mn3x")
-
-[node name="Pickup_upgrade2" parent="." instance=ExtResource("7_41y4p")]
-position = Vector2(192, 896)
-text_to_display = "Double jump unlock"
-unlock_type = SubResource("Resource_1hnog")
 
 [node name="Hazard" type="Node2D" parent="."]
 

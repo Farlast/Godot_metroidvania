@@ -3,16 +3,16 @@ signal transition(state : EnemyState , new_state_name : String)
 
 var animator : AnimationPlayer
 var agent : Enemy
+var state_active :bool
 
 func on_enter():
-	pass
+	state_active = true
 
 func on_exit():
-	pass
+	state_active = false
 
 func on_update(_delta : float):
 	pass
 
 func on_physics_update(_delta : float):
-	agent.add_gravity(_delta)
 	agent.move_and_slide()

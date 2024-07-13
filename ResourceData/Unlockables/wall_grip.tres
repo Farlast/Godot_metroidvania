@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UnlockableData" load_steps=2 format=3 uid="uid://cnav3iu6xgki4"]
+
+[ext_resource type="Script" path="res://ResourceData/Unlockables/unlockable_data.gd" id="1_nthgo"]
+
+[resource]
+resource_name = "wall_grip"
+script = ExtResource("1_nthgo")
+unlocked = true

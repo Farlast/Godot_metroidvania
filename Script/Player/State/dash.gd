@@ -1,10 +1,8 @@
 extends State
 class_name Dash
 
-@export var dash_duration : float = 0.5
-@export var dash_speed : float = 500
-@export var dash_effect : GPUParticles2D
-@export var curve : Curve
+@export var dash_duration : float = 0.3
+@export var dash_speed : float = 1400
 @export var dashsound : AudioStream
 
 var dash_timer : float
@@ -16,7 +14,6 @@ func on_enter():
 	if not player.is_on_floor():
 		player.is_airdash_used = true
 	GameManager.audio_player.play(dashsound,player.global_position)
-	dash_effect.emitting = true
 	dash_timer = 0
 	active_input = true
 	animator.play("dash")
@@ -28,7 +25,8 @@ func on_enter():
 		else:
 			direction = 1
 	player.flip_sprite(direction)
-	#player.velocity.x = direction * dash_speed
+	player.velocity.x = direction * dash_speed
+	player.velocity.y = 0
 	
 func on_exit():
 	super.on_exit()
@@ -42,8 +40,6 @@ func on_update(_delta : float):
 	next_stage()
 
 func on_physics_update(_delta : float):
-	super.on_physics_update(_delta)
-	player.velocity = Vector2((curve.sample(dash_timer/dash_duration)*dash_speed)*direction ,0)
 	player.move_and_slide()
 
 func next_stage():
@@ -53,7 +49,7 @@ func next_stage():
 		var h_direction = Input.get_axis("move_left", "move_right")
 		if h_direction == 0:
 			transition.emit(self,"idle")
-		elif Input.is_action_pressed("dash"):
+		elif Input.is_action_pressed("dash") and player.is_can_sprint():
 			transition.emit(self,"sprint")
 		else:
 			transition.emit(self,"run")

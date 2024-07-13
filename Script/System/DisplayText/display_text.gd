@@ -2,7 +2,7 @@ extends CanvasLayer
 class_name DisplayText
 
 @export var display_event : CustomEventChannel
-@onready var lable : Label = $DisplayLayout/Label
+@onready var lable : RichTextLabel = $DisplayLayout/Label
 @onready var layout : Control = $DisplayLayout
 
 var exit : bool = false

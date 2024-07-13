@@ -1,6 +1,8 @@
 extends State
 class_name Jump
 
+@export var effect : GPUParticles2D
+
 var off_ground : bool
 var active_input : bool
 var v_direction : float
@@ -10,6 +12,7 @@ func on_enter():
 	player.velocity.y = player.jump_velocity
 	off_ground = false
 	animator.play("Jump")
+	effect.restart()
 	active_input = true
 	if not Input.is_action_pressed("jump"):
 		player.velocity.y += abs(player.velocity.y)/2

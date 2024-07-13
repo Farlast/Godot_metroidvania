@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://jbgrqsik1vdk"]
+[gd_scene load_steps=34 format=3 uid="uid://jbgrqsik1vdk"]
 
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_3kq4i"]
 [ext_resource type="PackedScene" uid="uid://b0byka5d5aixx" path="res://Scenes/Player/player.tscn" id="2_604q7"]
@@ -19,8 +19,6 @@
 [ext_resource type="Texture2D" uid="uid://d2mosp34qr7db" path="res://Art/Environment/Thorns/thorns.png" id="16_wdeob"]
 [ext_resource type="PackedScene" uid="uid://b08nxbr1cmil6" path="res://Scenes/Props/save_point.tscn" id="18_76sfc"]
 [ext_resource type="Script" path="res://Script/Levels/passage_Handle.gd" id="19_7h0ge"]
-[ext_resource type="PackedScene" uid="uid://cqow16cipyw6e" path="res://Scenes/Player/pickup_upgrade.tscn" id="20_w6tdf"]
-[ext_resource type="Script" path="res://Script/Player/Item/Unlockable/unlockable.gd" id="21_6em76"]
 [ext_resource type="Texture2D" uid="uid://dm1k3wuihhcxr" path="res://Art/BG/Cove/clound.png" id="22_gd5sp"]
 [ext_resource type="Texture2D" uid="uid://djhgo1gnoqtqg" path="res://Art/BG/Cove/coast_rock_1.png" id="23_wc5ba"]
 [ext_resource type="AudioStream" uid="uid://csk6rh1tb4t2i" path="res://Audio/Ambient/Ambiance_Cave_Dark_Loop_Stereo.wav" id="24_w58q3"]
@@ -41,9 +39,10 @@ load_path = "res://.godot/imported/Gradient light.png-9aaf2fd178fa7e8c49f99711a8
 script = ExtResource("15_d7k2c")
 damage = 1.0
 impact = 0.0
+knockback_force = 0
+element = 0
 take_damage_rule = 1
 take_damage_mask = 0
-element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6oexe"]
 size = Vector2(1344, 64)
@@ -60,10 +59,6 @@ script = ExtResource("19_7h0ge")
 passage_name = "Savepoint"
 target_scene_path = "res://Scenes/Level/level_0_8.tscn"
 target_passage_id = -1
-
-[sub_resource type="Resource" id="Resource_3a7ef"]
-script = ExtResource("21_6em76")
-unlock_type = 1
 
 [sub_resource type="Gradient" id="Gradient_n6qkl"]
 offsets = PackedFloat32Array(0, 0.0651341, 1)
@@ -342,11 +337,6 @@ path_data = SubResource("Resource_bsdhh")
 cinematic_camera = NodePath("../Cameras/CinematicCamera2D")
 virtual_camera = NodePath("../Cameras/Left")
 player = NodePath("../Player")
-
-[node name="Pickup_upgrade2" parent="." instance=ExtResource("20_w6tdf")]
-position = Vector2(1982, 321)
-text_to_display = "Double jump unlock"
-unlock_type = SubResource("Resource_3a7ef")
 
 [node name="Parallax" type="Node2D" parent="."]
 

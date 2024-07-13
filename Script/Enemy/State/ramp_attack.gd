@@ -8,11 +8,11 @@ extends EnemyState
 var active_state : bool
 
 func on_enter():
-	agent.super_armor = true
 	active_state = true
 	agent.velocity.x = 0
 	animator.animation_finished.connect(on_animation_finish)
 	animator.play("ramp_attack")
+	agent.super_armor = true
 
 func on_exit():
 	super.on_exit()

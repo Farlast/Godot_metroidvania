@@ -54,9 +54,6 @@ func change_scene_by_name_no_fadeout(scene : String, entered_path :PassageHandle
 	current_scene = scene
 	scene_load_finished.emit()
 
-func callback_test(callback := Callable()):
-	callback.call()
-
 func is_exit_path(_passage : PassageHandle):
 	if entered_passage == null: return false
 	return entered_passage.target_passage_id == _passage.target_passage_id

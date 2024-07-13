@@ -6,7 +6,7 @@ class_name StateMachine
 var current_state : State
 var states : Dictionary = {}
 
-func _ready():
+func _ready()->void:
 	GameManager.game_state_changed.connect(on_game_state_change)
 	for child in get_children():
 		if child is State:
@@ -16,27 +16,27 @@ func _ready():
 		InitialState.on_enter()
 		current_state = InitialState
 
-func _process(delta):
+func _process(delta:float)->void:
 	if GameManager.game_state != GameManager.GameState.GAMEPLAY: return
 	if current_state:
 		current_state.on_update(delta)
 
-func  _physics_process(delta):
+func  _physics_process(delta:float)->void:
 	if GameManager.game_state != GameManager.GameState.GAMEPLAY: return
 	if current_state:
 		current_state.on_physics_update(delta)
 		
-func on_child_transition(state : State , new_state_name : String):
+func on_child_transition(state : State , new_state_name : String)->void:
 	if GameManager.game_state != GameManager.GameState.GAMEPLAY: return
 	if state != current_state : return
 	var new_state : State = states.get(new_state_name.to_lower())
 	if !new_state: return
 	if state == new_state : return
 	if current_state: current_state.on_exit()
-	new_state.on_enter()
 	current_state = new_state
+	new_state.on_enter()
 
-func on_game_state_change(game_state : GameManager.GameState):
+func on_game_state_change(game_state : GameManager.GameState)->void:
 	if game_state == GameManager.GameState.GAMEPLAY:
 		set_process(true)
 		set_physics_process(true)

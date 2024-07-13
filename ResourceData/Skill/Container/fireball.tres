@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="1_c3ava"]
 [ext_resource type="Script" path="res://Script/Player/Skill/container/SingleBullet.gd" id="1_twrlu"]
-[ext_resource type="Texture2D" uid="uid://dbk82p8ylxt2w" path="res://Art/Player/Spirit/fire.png" id="2_vcu35"]
+[ext_resource type="Texture2D" uid="uid://b8tgwsqq1ttw5" path="res://Art/Interact/FirePlant/fire_plant_flower.png" id="2_hev5n"]
 
 [sub_resource type="Resource" id="Resource_nsi7y"]
 script = ExtResource("1_c3ava")
-damage = 1.0
+damage = 5.0
 impact = 0.0
-knockback_force = 0
+knockback_force = 1
 element = 2
 take_damage_rule = 0
 take_damage_mask = 0
@@ -23,4 +23,4 @@ cooldown = 1.5
 cost = 2.5
 cast_time = 0.3
 animation_name = "sample"
-icon = ExtResource("2_vcu35")
+icon = ExtResource("2_hev5n")

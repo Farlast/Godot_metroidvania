@@ -18,9 +18,10 @@
 script = ExtResource("4_2what")
 damage = 1.0
 impact = 0.0
+knockback_force = 0
+element = 0
 take_damage_rule = 0
 take_damage_mask = 0
-element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_afwn2"]
 size = Vector2(203.5, 171)
@@ -353,7 +354,7 @@ _data = {
 "idle": SubResource("Animation_jshf1")
 }
 
-[node name="LivingVine" type="StaticBody2D"]
+[node name="LivingVine" type="StaticBody2D" groups=["enemy"]]
 collision_layer = 0
 script = ExtResource("1_xkl8g")
 attack_cooldown_duration = 0.5

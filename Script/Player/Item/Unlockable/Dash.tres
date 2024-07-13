@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="Unlockable" load_steps=2 format=3 uid="uid://bihup0fvuf68u"]
-
-[ext_resource type="Script" path="res://Script/Player/Item/Unlockable/unlockable.gd" id="1_j5dqn"]
-
-[resource]
-script = ExtResource("1_j5dqn")
-unlock_type = 0

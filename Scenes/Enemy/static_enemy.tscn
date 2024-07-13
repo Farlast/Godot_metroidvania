@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Script/Enemy/StaticEnemy/static_enemy.gd" id="1_qnp7s"]
 [ext_resource type="Material" uid="uid://cmv24i1lrmfiw" path="res://Shader/enemy.tres" id="2_yjw6n"]
-[ext_resource type="Texture2D" uid="uid://brk1b5mbfdu7q" path="res://Art/Player/summon_water.png" id="3_vlurf"]
+[ext_resource type="Texture2D" uid="uid://brk1b5mbfdu7q" path="res://Art/Player/Spirit/summon_water.png" id="3_vlurf"]
 [ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="4_5py86"]
 [ext_resource type="Texture2D" uid="uid://dbffa3d86qrba" path="res://Art/Effect/Tex_random.png" id="5_qhwq1"]
 [ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="6_wp828"]

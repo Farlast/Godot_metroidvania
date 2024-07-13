@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://d4ap8sf0s0i2v"]
 
-[ext_resource type="Script" path="res://Script/CombatComponent/bullet_physic.gd" id="1_crdmg"]
+[ext_resource type="Script" path="res://Script/Bullets/bullet_physic.gd" id="1_crdmg"]
 [ext_resource type="Texture2D" uid="uid://b58vau1im1n4k" path="res://Art/Effect/Tex_circle.png" id="2_p0t14"]
 [ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="3_7ygai"]
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="4_pgfwh"]

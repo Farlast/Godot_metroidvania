@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://bq074ptod3bfe"]
 
-[ext_resource type="Script" path="res://Script/CombatComponent/bullet.gd" id="1_g77aw"]
+[ext_resource type="Script" path="res://Script/Bullets/bullet.gd" id="1_g77aw"]
 [ext_resource type="Texture2D" uid="uid://doxbn3m5i8dh6" path="res://Art/Player/Skill/water_orb.png" id="2_g4hc0"]
 [ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="3_e1otj"]
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="4_h1xlc"]
@@ -149,6 +149,7 @@ _data = {
 [node name="water_bullet" type="Area2D"]
 script = ExtResource("1_g77aw")
 damage_data = SubResource("Resource_4t4o8")
+time_to_free = 0.3
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 3)

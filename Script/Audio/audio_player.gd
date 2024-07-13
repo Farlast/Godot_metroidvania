@@ -32,7 +32,7 @@ func play_ui_pressed():
 
 #region Custom pooling
 ### ============ Custom pooling ===============
-func play(audio_stream:AudioStream, position : Vector2):
+func play(audio_stream:AudioStream, position : Vector2, volume_db : float = 0):
 	var avalible_player: AudioStreamPlayer2D = null
 	for player in audio_pool_2d:
 		if not player.playing:
@@ -44,11 +44,13 @@ func play(audio_stream:AudioStream, position : Vector2):
 		new_player.bus = "Effect"
 		new_player.stream = audio_stream
 		new_player.position = position
+		new_player.volume_db = volume_db
 		add_child(new_player)
 		new_player.play()
 	else:
 		avalible_player.stream = audio_stream
 		avalible_player.position = position
+		avalible_player.volume_db = volume_db
 		avalible_player.play()
 	clear_oversize_pool()
 

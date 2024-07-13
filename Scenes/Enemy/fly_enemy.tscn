@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://Script/Enemy/FlyEnemy/fly_enemy_base.gd" id="1_ieynj"]
 [ext_resource type="Script" path="res://Script/CombatComponent/status_value.gd" id="2_5avuf"]
 [ext_resource type="Script" path="res://Script/UI/HUD/status_bar.gd" id="2_hvmrp"]
-[ext_resource type="Resource" uid="uid://cubkttxhovbps" path="res://ResourceData/Skill/Container/water_splash.tres" id="2_sncvh"]
 [ext_resource type="Script" path="res://Script/CombatComponent/health_system.gd" id="3_lfmor"]
 [ext_resource type="Script" path="res://Script/Player/Event/Health_Event.gd" id="3_q8ekf"]
 [ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="4_w6rn4"]
@@ -15,6 +14,7 @@
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="8_0uquc"]
 [ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="8_7wwfu"]
 [ext_resource type="PackedScene" uid="uid://bkijr6cnrf2dy" path="res://Scenes/Effect/dead_particle.tscn" id="9_toppt"]
+[ext_resource type="Script" path="res://Script/System/Effect/effect_emiter.gd" id="9_vdlvi"]
 [ext_resource type="Texture2D" uid="uid://dn04fmj7at105" path="res://Art/Effect/Tex_Gilnt.png" id="9_ye8lv"]
 [ext_resource type="Texture2D" uid="uid://byku3155bejsl" path="res://Art/Effect/hollow fade circle.png" id="10_iy75y"]
 [ext_resource type="Script" path="res://Script/Enemy/State/enemy_state_machine.gd" id="16_nlgrv"]
@@ -23,8 +23,8 @@
 [ext_resource type="Script" path="res://Script/Enemy/State/enemy_idle.gd" id="18_xufwl"]
 [ext_resource type="Script" path="res://Script/Enemy/FlyEnemy/fly_to.gd" id="19_la6hv"]
 [ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/Effect/HitSound/body_hit_finisher_23.wav" id="19_ok7g3"]
-[ext_resource type="Script" path="res://Script/Enemy/State/stagger_state.gd" id="20_7p5iu"]
-[ext_resource type="Script" path="res://Script/Enemy/BasicEnemy/stance_break.gd" id="22_2mhmy"]
+[ext_resource type="Script" path="res://Script/Enemy/State/stagger.gd" id="20_7p5iu"]
+[ext_resource type="Script" path="res://Script/Enemy/State/stance_break.gd" id="22_2mhmy"]
 
 [sub_resource type="Resource" id="Resource_5ey4u"]
 resource_local_to_scene = true
@@ -67,57 +67,57 @@ script = ExtResource("3_q8ekf")
 atlas = ExtResource("7_ow7mi")
 region = Rect2(40.1037, 196.189, 117.956, 113.449)
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hv2rc"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_n84u6"]
 particles_animation = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 4
 particles_anim_loop = true
 
-[sub_resource type="Gradient" id="Gradient_h4or2"]
+[sub_resource type="Gradient" id="Gradient_g1ce8"]
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_80i21"]
-gradient = SubResource("Gradient_h4or2")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1ar76"]
+gradient = SubResource("Gradient_g1ce8")
 
-[sub_resource type="Curve" id="Curve_wn43c"]
+[sub_resource type="Curve" id="Curve_c1say"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.649457, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.936842), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_4wyov"]
-curve = SubResource("Curve_wn43c")
+[sub_resource type="CurveTexture" id="CurveTexture_eqkdr"]
+curve = SubResource("Curve_c1say")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oglfs"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j2log"]
 particle_flag_disable_z = true
 gravity = Vector3(0, 0, 0)
 scale_min = 0.5
 scale_max = 0.5
-scale_curve = SubResource("CurveTexture_4wyov")
-color_ramp = SubResource("GradientTexture1D_80i21")
+scale_curve = SubResource("CurveTexture_eqkdr")
+color_ramp = SubResource("GradientTexture1D_1ar76")
 sub_emitter_mode = 2
 sub_emitter_amount_at_end = 20
 
-[sub_resource type="Gradient" id="Gradient_tbxlf"]
+[sub_resource type="Gradient" id="Gradient_t2s88"]
 offsets = PackedFloat32Array(0, 0.916914, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0.197937, 0.197937, 0.197937, 1, 0.0705882, 0.0705882, 0.0705882, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_1a63i"]
-gradient = SubResource("Gradient_tbxlf")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jx7vk"]
+gradient = SubResource("Gradient_t2s88")
 
-[sub_resource type="Curve" id="Curve_3cdl2"]
+[sub_resource type="Curve" id="Curve_8b7he"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.389474), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_fy66m"]
-curve = SubResource("Curve_3cdl2")
+[sub_resource type="CurveTexture" id="CurveTexture_1s3si"]
+curve = SubResource("Curve_8b7he")
 
-[sub_resource type="Curve" id="Curve_xtrql"]
+[sub_resource type="Curve" id="Curve_y435b"]
 max_value = 1024.0
 _data = [Vector2(0, 1024), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_rveq2"]
-curve = SubResource("Curve_xtrql")
+[sub_resource type="CurveTexture" id="CurveTexture_imf5f"]
+curve = SubResource("Curve_y435b")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_87tdx"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qnc58"]
 lifetime_randomness = 0.4
 particle_flag_disable_z = true
 emission_shape = 1
@@ -126,16 +126,16 @@ direction = Vector3(0, -1, 0)
 spread = 180.0
 initial_velocity_min = 110.24
 initial_velocity_max = 365.35
-velocity_limit_curve = SubResource("CurveTexture_rveq2")
+velocity_limit_curve = SubResource("CurveTexture_imf5f")
 gravity = Vector3(0, -98, 0)
 linear_accel_max = 100.0
 scale_min = 0.01
 scale_max = 0.3
-scale_curve = SubResource("CurveTexture_fy66m")
+scale_curve = SubResource("CurveTexture_1s3si")
 color = Color(1, 0.6, 0.521569, 1)
-color_ramp = SubResource("GradientTexture1D_1a63i")
+color_ramp = SubResource("GradientTexture1D_jx7vk")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h3eta"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1870x"]
 atlas = ExtResource("7_ow7mi")
 region = Rect2(41.5117, 196.086, 115.429, 114.746)
 
@@ -279,14 +279,13 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_oq5fp"]
 radius = 448.071
 
-[node name="Fly_Enemy" type="CharacterBody2D" node_paths=PackedStringArray("hp_bar", "stagger_bar")]
+[node name="Fly_Enemy" type="CharacterBody2D" node_paths=PackedStringArray("hp_bar", "stagger_bar") groups=["enemy"]]
 collision_layer = 0
 motion_mode = 1
 platform_on_leave = 2
 platform_floor_layers = 4294901761
 platform_wall_layers = 1
 script = ExtResource("1_ieynj")
-skill_drop = ExtResource("2_sncvh")
 health_system = SubResource("Resource_cgjx1")
 gravity_multiply = 0.0
 hp_bar = NodePath("Control/VBoxContainer/HP bar")
@@ -297,7 +296,7 @@ shape = SubResource("RectangleShape2D_56ait")
 
 [node name="HurtBox" type="Area2D" parent="."]
 visible = false
-collision_layer = 8
+collision_layer = 32
 collision_mask = 10
 script = ExtResource("4_w6rn4")
 object_tag = 1
@@ -383,8 +382,11 @@ damping_max = 9.0
 scale_amount_min = 0.01
 scale_amount_max = 0.3
 
-[node name="SlashEffect" type="CPUParticles2D" parent="Particle"]
-material = SubResource("CanvasItemMaterial_hv2rc")
+[node name="TakeDamageVFX" type="Node2D" parent="Particle"]
+script = ExtResource("9_vdlvi")
+
+[node name="SlashEffect" type="CPUParticles2D" parent="Particle/TakeDamageVFX"]
+material = SubResource("CanvasItemMaterial_n84u6")
 rotation = 0.565487
 emitting = false
 amount = 1
@@ -400,22 +402,25 @@ scale_amount_max = 0.7
 anim_speed_min = 1.0
 anim_speed_max = 1.0
 
-[node name="DeadParticle" parent="Particle" instance=ExtResource("9_toppt")]
+[node name="DeadVFX" type="Node2D" parent="Particle"]
+script = ExtResource("9_vdlvi")
 
-[node name="Pulse" type="GPUParticles2D" parent="Particle"]
+[node name="DeadParticle" parent="Particle/DeadVFX" instance=ExtResource("9_toppt")]
+
+[node name="Pulse" type="GPUParticles2D" parent="Particle/DeadVFX"]
 emitting = false
 amount = 1
 sub_emitter = NodePath("Dust")
-process_material = SubResource("ParticleProcessMaterial_oglfs")
+process_material = SubResource("ParticleProcessMaterial_j2log")
 texture = ExtResource("10_iy75y")
 lifetime = 0.3
 one_shot = true
 
-[node name="Dust" type="GPUParticles2D" parent="Particle/Pulse"]
+[node name="Dust" type="GPUParticles2D" parent="Particle/DeadVFX/Pulse"]
 emitting = false
 amount = 20
-process_material = SubResource("ParticleProcessMaterial_87tdx")
-texture = SubResource("AtlasTexture_h3eta")
+process_material = SubResource("ParticleProcessMaterial_qnc58")
+texture = SubResource("AtlasTexture_1870x")
 one_shot = true
 explosiveness = 0.76
 randomness = 0.26
@@ -442,7 +447,7 @@ texture = ExtResource("6_u5t5v")
 [node name="MeleeAttackBox" type="Area2D" parent="Direction"]
 visible = false
 collision_layer = 4
-collision_mask = 0
+collision_mask = 16
 script = ExtResource("7_ngg3n")
 damage_data = SubResource("Resource_sv8m4")
 

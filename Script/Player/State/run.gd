@@ -3,6 +3,7 @@ class_name Run
 
 @export var run_speed :float = 500.0
 @export var animation_name :String = "run"
+@export var effect : GPUParticles2D
 
 var active_input : bool
 var position_update_time : float = 0.3
@@ -14,11 +15,15 @@ func on_enter():
 	active_input = true
 	player.update_area()
 	position_update_timer = 0
+	if effect:
+		effect.emitting = true
 	
 func on_exit():
 	super.on_exit()
 	active_input = false
 	player.update_area()
+	if effect:
+		effect.emitting = false
 	
 func on_update(_delta : float):
 	super.on_update(_delta)
@@ -37,7 +42,7 @@ func on_physics_update(_delta : float):
 	if not player.is_on_floor() && player.velocity.y > 0:
 		player.check_coyote_time()
 		transition.emit(self,"fall")
-	
+	player.check_and_refill_doublejump()
 	player.move_horizontal(run_speed)
 	player.move_and_slide()
 

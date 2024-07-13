@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="Grabbable" load_steps=4 format=3 uid="uid://c01ycyadc3j2h"]
 
 [ext_resource type="Script" path="res://Script/Player/Skill/grabbable.gd" id="1_5i2li"]
-[ext_resource type="Texture2D" uid="uid://cmqqtg1k88xyr" path="res://Art/Player/Spirit/plant.png" id="2_5nlv8"]
-[ext_resource type="Resource" uid="uid://cubkttxhovbps" path="res://ResourceData/Skill/Container/water_splash.tres" id="3_ui61l"]
+[ext_resource type="Resource" uid="uid://k8dpxwmyrn3g" path="res://ResourceData/Skill/Container/spike_explode.tres" id="1_s17jb"]
+[ext_resource type="Texture2D" uid="uid://bht7ymuai483e" path="res://Art/Interact/SpikePlant/spike_seed.png" id="3_b168i"]
 
 [resource]
 script = ExtResource("1_5i2li")
-throw = ExtResource("3_ui61l")
-sprite = ExtResource("2_5nlv8")
+element_object = ExtResource("1_s17jb")
+sprite = ExtResource("3_b168i")

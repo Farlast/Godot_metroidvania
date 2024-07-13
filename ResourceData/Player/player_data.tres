@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="PlayerData" load_steps=2 format=3 uid="uid://m8erulxnk715"]
+
+[ext_resource type="Script" path="res://Script/Player/Data/player_data.gd" id="1_4unau"]
+
+[resource]
+script = ExtResource("1_4unau")
+max_health = 3.0
+max_health_extend = 0.0
+current_health = 0.0
+max_mana = 6.0
+max_mana_extend = 0.0
+current_mana = 0.0
+unlock_dict = {
+"air_dash": false,
+"command": false,
+"doublejump": false,
+"glide": false,
+"sprint": false,
+"wall_grip": false
+}
+last_scene_visit_path = ""
+id = "player"
+status = false
+position = Vector2(0, 0)

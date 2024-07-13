@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UnlockableData" load_steps=2 format=3 uid="uid://dw32wt762luem"]
+
+[ext_resource type="Script" path="res://ResourceData/Unlockables/unlockable_data.gd" id="1_secwn"]
+
+[resource]
+resource_name = "doublejump"
+script = ExtResource("1_secwn")
+unlocked = false

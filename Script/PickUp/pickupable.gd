@@ -6,7 +6,7 @@ extends Area2D
 
 @export var display_event : CustomEventChannel
 @export_multiline var text_to_display : String
-@export var unlock_type : Unlockable
+@export var unlock_data : UnlockableData
 
 var data : NodeSaveData
 
@@ -28,7 +28,7 @@ func pickup(_body):
 	set_deferred("monitoring",false)
 	stay_effect.emitting = false
 	pickup_effect.restart()
-	player.pick_up_upgrade(unlock_type)
+	player.player_data.unlock_abilities(unlock_data.resource_name)
 	display_event.string_event_sended.emit(text_to_display)
 	data.status = true
 	GameManager.store_object(data.id,data)

@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="Grabbable" load_steps=4 format=3 uid="uid://dunlucggxu66w"]
 
 [ext_resource type="Script" path="res://Script/Player/Skill/grabbable.gd" id="1_ycjvu"]
-[ext_resource type="Texture2D" uid="uid://uuorvi37gf7d" path="res://Art/Player/Spirit/water.png" id="2_nyvet"]
+[ext_resource type="Texture2D" uid="uid://bcrbadfj616k8" path="res://Art/Player/Spirit/familiar.png" id="3_2qhkg"]
 [ext_resource type="Resource" uid="uid://cubkttxhovbps" path="res://ResourceData/Skill/Container/water_splash.tres" id="3_fimo6"]
 
 [resource]
 script = ExtResource("1_ycjvu")
-throw = ExtResource("3_fimo6")
-sprite = ExtResource("2_nyvet")
+element_object = ExtResource("3_fimo6")
+sprite = ExtResource("3_2qhkg")

@@ -1,10 +1,7 @@
 class_name FlyEnemy extends Enemy
 
-@onready var soul := preload("res://Scenes/Interactable/skill_memo.tscn")
-@export var skill_drop : SkillContainer
-
-func on_idle(state : EnemyState):
-	super.on_idle(state)
+func on_idle(state : EnemyState,_delta:float):
+	super.on_idle(state,_delta)
 	if health_system.stance.current_value > 0:
 		state.transition.emit(state,"flyto")
 
@@ -20,9 +17,4 @@ func take_damage(damage_data : DamageData)->bool:
 
 func dead():
 	state_machine.current_state.transition.emit(state_machine.current_state,"empty")
-	var scene :SkillMemo= soul.instantiate()
-	scene.position = global_position
-	scene.skill = skill_drop
-	add_sibling.call_deferred(scene)
-	
 	super.dead()

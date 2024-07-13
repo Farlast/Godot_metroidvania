@@ -1,31 +1,13 @@
-[gd_resource type="Resource" script_class="SceneHandle" load_steps=9 format=3 uid="uid://claqc3vwlxgxx"]
+[gd_resource type="Resource" script_class="SceneHandle" load_steps=6 format=3 uid="uid://claqc3vwlxgxx"]
 
 [ext_resource type="Script" path="res://Script/Levels/passage_Handle.gd" id="1_vjh6o"]
 [ext_resource type="Script" path="res://Script/Levels/scene_Handle.gd" id="2_1h3jo"]
 
-[sub_resource type="Resource" id="Resource_rcb12"]
-script = ExtResource("1_vjh6o")
-passage_name = "Top passage"
-target_scene_path = "res://Scenes/Level/level_0_3.tscn"
-target_passage_id = 0
-
 [sub_resource type="Resource" id="Resource_hmdd6"]
 script = ExtResource("1_vjh6o")
-passage_name = "Left top"
+passage_name = "Left"
 target_scene_path = "res://Scenes/Level/level_0_3.tscn"
 target_passage_id = 1
-
-[sub_resource type="Resource" id="Resource_3jgo4"]
-script = ExtResource("1_vjh6o")
-passage_name = "Left down"
-target_scene_path = "res://Scenes/Level/level_0_3.tscn"
-target_passage_id = 2
-
-[sub_resource type="Resource" id="Resource_awysl"]
-script = ExtResource("1_vjh6o")
-passage_name = "bottom passage"
-target_scene_path = "res://Scenes/Level/level_0_3.tscn"
-target_passage_id = 3
 
 [sub_resource type="Resource" id="Resource_p1h4g"]
 script = ExtResource("1_vjh6o")
@@ -35,10 +17,10 @@ target_passage_id = 4
 
 [sub_resource type="Resource" id="Resource_pbvke"]
 script = ExtResource("1_vjh6o")
-passage_name = "Right mid"
+passage_name = "Right up"
 target_scene_path = "res://Scenes/Level/level_0_3.tscn"
 target_passage_id = 5
 
 [resource]
 script = ExtResource("2_1h3jo")
-passage_list = Array[ExtResource("1_vjh6o")]([SubResource("Resource_rcb12"), SubResource("Resource_hmdd6"), SubResource("Resource_3jgo4"), SubResource("Resource_awysl"), SubResource("Resource_p1h4g"), SubResource("Resource_pbvke")])
+passage_list = Array[ExtResource("1_vjh6o")]([SubResource("Resource_hmdd6"), SubResource("Resource_p1h4g"), SubResource("Resource_pbvke")])

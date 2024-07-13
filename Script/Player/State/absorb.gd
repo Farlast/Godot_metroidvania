@@ -22,13 +22,15 @@ func on_enter():
 	charging = true
 	charge_timer = 0
 	player.velocity = Vector2.ZERO
+	animator.play("sample")
+	player.skill_system.command_familiar()
 	
-	if player.skill_system.is_orb_active():
-		animator.play("sample")
-		player.skill_system.throw_orb()
-	else:
-		animator.play("sample")
-		player.skill_system.skill_absorb()
+	#if player.skill_system.is_orb_active():
+		#animator.play("sample")
+		#player.skill_system.throw_orb()
+	#else:
+		#animator.play("sample")
+		#player.skill_system.skill_absorb()
 
 func on_exit():
 	animator.animation_finished.disconnect(on_animation_finish)

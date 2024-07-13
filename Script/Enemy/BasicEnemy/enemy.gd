@@ -6,38 +6,33 @@ signal stance_breaked
 signal take_damage_trigger(damage_data : DamageData)
 
 @export var health_system : HealthSystem 
-@export var gravity_multiply :float = 2.5
+@export var gravity_multiply :float = 1
 
 @export_group("Debug")
 @export var hp_bar : StatusBar
 @export var stagger_bar : StatusBar
-
+## audio
 @onready var hit_sound : AudioStreamPlayer2D = $Audio/HitSound
 @onready var dead_sound : AudioStreamPlayer2D = $Audio/DeadSound
-@onready var animator : AnimationPlayer = $AnimationPlayer
-
-##@export_group("Particle")
+## Particle
+@onready var take_damage_effects : EffectEmiter = $Particle/TakeDamageVFX
+@onready var dead_effect : EffectEmiter = $Particle/DeadVFX
 @onready var hit_effect : CPUParticles2D = $Particle/HitEffect
-@onready var slash_effect : CPUParticles2D = $Particle/SlashEffect
-@onready var dead_particle : GPUParticles2D = $Particle/DeadParticle
-@onready var pulse_particle : GPUParticles2D = $Particle/Pulse
 
-##@export_group("Area2D")
+## Area2D
 @onready var hurtbox : CollisionShape2D = $HurtBox/CollisionShape2D
-@onready var collion : CollisionShape2D = $GroundCollision
+@onready var collision : CollisionShape2D = $GroundCollision
 
 @onready var state_machine : EnemyStateMachine = $EnemyStateMachine
-
+@onready var animator : AnimationPlayer = $AnimationPlayer
 @onready var direction_holder : Node2D = $Direction
 @onready var sprite : Sprite2D = $Direction/Sprite2D
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var get_hit_direction : Vector2
-
 var shader : ShaderMaterial
 var flashing_duration : float = 0.1
 var super_armor : bool
-
 var target : Node2D
 
 func _ready():
@@ -56,12 +51,13 @@ func take_damage(damage_data : DamageData)->bool:
 		flash_on_hit()
 		hit_effect.rotation = get_angle_to(damage_data.sender_position) + PI
 		hit_effect.restart()
-		slash_effect.restart()
+		take_damage_effects.restart_all()
 		hit_sound.play()
 	return is_hit
 
 func calculate_damage(damage_data : DamageData)-> bool:
 	health_system.calculate_damage(damage_data)
+	take_damage_trigger.emit(damage_data)
 	return true
 
 func flash_on_hit():
@@ -76,14 +72,13 @@ func add_gravity(delta):
 func dead():
 	animator.play("dead")
 	dead_sound.play()
-	dead_particle.restart()
-	pulse_particle.restart()
+	dead_effect.restart_all()
 	set_process(false)
 	set_physics_process(false)
 	state_machine.set_process(false)
 	state_machine.set_physics_process(false)
 	hurtbox.set_deferred("disabled",true)
-	collion.set_deferred("disabled",true)
+	collision.set_deferred("disabled",true)
 	on_dead.emit()
 	await get_tree().create_timer(1.5).timeout
 	queue_free()
@@ -91,15 +86,11 @@ func dead():
 func on_stance_break():
 	pass
 
-func on_idle(_state : EnemyState):
+func on_idle(_state : EnemyState,_delta:float):
 	pass
 
 func flip_direction():
 	direction_holder.scale.x = -direction_holder.scale.x
 
 func add_drag(delta : float, drag : float = 5):
-	if is_on_floor():
-		if velocity.x > 0:
-			velocity.x -= abs(velocity.x * delta * drag)
-		else:
-			velocity.x += abs(velocity.x * delta * drag)
+	velocity.x = move_toward(velocity.x,0,delta * drag)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://cwtxhoydrofhh"]
+[gd_scene load_steps=69 format=3 uid="uid://cwtxhoydrofhh"]
 
 [ext_resource type="Script" path="res://Script/Enemy/ChaseEnemy/chase_enemy.gd" id="1_aur87"]
 [ext_resource type="Material" uid="uid://cmv24i1lrmfiw" path="res://Shader/enemy.tres" id="2_pg0cq"]
@@ -10,15 +10,16 @@
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="6_wg7p8"]
 [ext_resource type="Script" path="res://Script/Enemy/State/enemy_state_machine.gd" id="7_7wij7"]
 [ext_resource type="Script" path="res://Script/Enemy/State/enemy_idle.gd" id="8_kk3ql"]
-[ext_resource type="Script" path="res://Script/Enemy/State/stagger_state.gd" id="9_1llv7"]
+[ext_resource type="Script" path="res://Script/Enemy/State/stagger.gd" id="9_1llv7"]
 [ext_resource type="Script" path="res://Script/Enemy/ChaseEnemy/State/chase.gd" id="10_naq1y"]
 [ext_resource type="Texture2D" uid="uid://bsn8dtb8jl10c" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0004.png" id="10_pplfq"]
+[ext_resource type="Script" path="res://Script/System/Effect/effect_emiter.gd" id="11_43vxu"]
 [ext_resource type="Texture2D" uid="uid://dbffa3d86qrba" path="res://Art/Effect/Tex_random.png" id="11_mqkoj"]
 [ext_resource type="Script" path="res://Script/Enemy/State/enemy_state.gd" id="11_xu62c"]
 [ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="12_gtaqg"]
 [ext_resource type="Texture2D" uid="uid://dtytbqyts58yo" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0003.png" id="12_q0lwj"]
 [ext_resource type="Script" path="res://Script/Enemy/State/ramp_attack.gd" id="12_qx0l6"]
-[ext_resource type="Script" path="res://Script/Enemy/BasicEnemy/stance_break.gd" id="12_wb7s4"]
+[ext_resource type="Script" path="res://Script/Enemy/State/stance_break.gd" id="12_wb7s4"]
 [ext_resource type="Texture2D" uid="uid://nwb4oqf22xe4" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0005.png" id="13_2boxu"]
 [ext_resource type="PackedScene" uid="uid://bkijr6cnrf2dy" path="res://Scenes/Effect/dead_particle.tscn" id="13_c4nw1"]
 [ext_resource type="Texture2D" uid="uid://byku3155bejsl" path="res://Art/Effect/hollow fade circle.png" id="14_1lm6k"]
@@ -29,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://bdk6t6ouad607" path="res://Art/UI/ui_hp_bar_fill.png" id="26_f07bo"]
 [ext_resource type="Script" path="res://Script/UI/HUD/status_bar.gd" id="27_clcth"]
 [ext_resource type="Script" path="res://Script/Player/Event/Health_Event.gd" id="28_lqfom"]
+[ext_resource type="Script" path="res://Script/Enemy/State/fall.gd" id="30_17dfd"]
 
 [sub_resource type="Resource" id="Resource_hv358"]
 resource_local_to_scene = true
@@ -100,7 +102,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -292,78 +294,75 @@ _data = {
 atlas = ExtResource("11_mqkoj")
 region = Rect2(40.1037, 196.189, 117.956, 113.449)
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_37gha"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_p222l"]
 particles_animation = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 4
 particles_anim_loop = true
 
-[sub_resource type="Gradient" id="Gradient_l1u4q"]
+[sub_resource type="Gradient" id="Gradient_umtxp"]
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_wcxq5"]
-gradient = SubResource("Gradient_l1u4q")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2bhdb"]
+gradient = SubResource("Gradient_umtxp")
 
-[sub_resource type="Curve" id="Curve_iro4m"]
+[sub_resource type="Curve" id="Curve_jdugg"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.649457, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.936842), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_y3vj8"]
-curve = SubResource("Curve_iro4m")
+[sub_resource type="CurveTexture" id="CurveTexture_plnpj"]
+curve = SubResource("Curve_jdugg")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_roycg"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lxd2q"]
 particle_flag_disable_z = true
 gravity = Vector3(0, 0, 0)
 scale_min = 0.5
 scale_max = 0.5
-scale_curve = SubResource("CurveTexture_y3vj8")
-color_ramp = SubResource("GradientTexture1D_wcxq5")
+scale_curve = SubResource("CurveTexture_plnpj")
+color_ramp = SubResource("GradientTexture1D_2bhdb")
 sub_emitter_mode = 2
 sub_emitter_amount_at_end = 20
 
-[sub_resource type="Gradient" id="Gradient_jxwbb"]
+[sub_resource type="Gradient" id="Gradient_xw7v7"]
 offsets = PackedFloat32Array(0, 0.916914, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0.197937, 0.197937, 0.197937, 1, 0.0705882, 0.0705882, 0.0705882, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ny28i"]
-gradient = SubResource("Gradient_jxwbb")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cjnwq"]
+gradient = SubResource("Gradient_xw7v7")
 
-[sub_resource type="Curve" id="Curve_470j5"]
-_data = [Vector2(0, 103.079), 0.0, 0.0, 0, 0, Vector2(1e-05, 10), -0.270757, -0.270757, 0, 0, Vector2(2e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, 0), -2.69561, -2.69561, 0, 0, Vector2(1, -200), -561.412, 0.0, 0, 0]
-point_count = 5
-
-[sub_resource type="CurveTexture" id="CurveTexture_2x7iu"]
-curve = SubResource("Curve_470j5")
-
-[sub_resource type="Curve" id="Curve_hev7e"]
+[sub_resource type="Curve" id="Curve_cfqbp"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.389474), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_gmjhb"]
-curve = SubResource("Curve_hev7e")
+[sub_resource type="CurveTexture" id="CurveTexture_bo2x4"]
+curve = SubResource("Curve_cfqbp")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pmi04"]
+[sub_resource type="Curve" id="Curve_txmyk"]
+max_value = 1024.0
+_data = [Vector2(0, 1024), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_kkyhd"]
+curve = SubResource("Curve_txmyk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1ovlt"]
 lifetime_randomness = 0.4
 particle_flag_disable_z = true
-particle_flag_damping_as_friction = true
 emission_shape = 1
 emission_sphere_radius = 23.5
 direction = Vector3(0, -1, 0)
 spread = 180.0
 initial_velocity_min = 110.24
 initial_velocity_max = 365.35
-gravity = Vector3(0, 0, 0)
-linear_accel_min = 14.08
+velocity_limit_curve = SubResource("CurveTexture_kkyhd")
+gravity = Vector3(0, -98, 0)
 linear_accel_max = 100.0
-linear_accel_curve = SubResource("CurveTexture_2x7iu")
-damping_min = 0.2
-damping_max = 0.5
 scale_min = 0.01
 scale_max = 0.3
-scale_curve = SubResource("CurveTexture_gmjhb")
+scale_curve = SubResource("CurveTexture_bo2x4")
 color = Color(1, 0.6, 0.521569, 1)
-color_ramp = SubResource("GradientTexture1D_ny28i")
+color_ramp = SubResource("GradientTexture1D_cjnwq")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fs71m"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bs447"]
 atlas = ExtResource("11_mqkoj")
 region = Rect2(41.5117, 196.086, 115.429, 114.746)
 
@@ -400,13 +399,16 @@ modulate_color = Color(0.980392, 0.701961, 0.286275, 1)
 [sub_resource type="Resource" id="Resource_gk8w1"]
 script = ExtResource("28_lqfom")
 
-[node name="ChaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("onscreen_noti", "hp_bar", "stagger_bar")]
+[node name="ChaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("onscreen_noti", "hp_bar", "stagger_bar") groups=["enemy"]]
 collision_layer = 0
 script = ExtResource("1_aur87")
 move_speed = 400.0
+turn_left = null
+turning = null
 stunt_time = 2.0
 onscreen_noti = NodePath("VisibleOnScreenNotifier2D")
 health_system = SubResource("Resource_kcrr3")
+gravity_multiply = null
 hp_bar = NodePath("Control/VBoxContainer/HP bar")
 stagger_bar = NodePath("Control/VBoxContainer/Stagger bar")
 
@@ -464,9 +466,11 @@ damping_max = 9.0
 scale_amount_min = 0.01
 scale_amount_max = 0.3
 
-[node name="SlashEffect" type="CPUParticles2D" parent="Particle"]
-z_index = 1
-material = SubResource("CanvasItemMaterial_37gha")
+[node name="TakeDamageVFX" type="Node2D" parent="Particle"]
+script = ExtResource("11_43vxu")
+
+[node name="SlashEffect" type="CPUParticles2D" parent="Particle/TakeDamageVFX"]
+material = SubResource("CanvasItemMaterial_p222l")
 rotation = 0.565487
 emitting = false
 amount = 1
@@ -482,22 +486,25 @@ scale_amount_max = 0.7
 anim_speed_min = 1.0
 anim_speed_max = 1.0
 
-[node name="DeadParticle" parent="Particle" instance=ExtResource("13_c4nw1")]
+[node name="DeadVFX" type="Node2D" parent="Particle"]
+script = ExtResource("11_43vxu")
 
-[node name="Pulse" type="GPUParticles2D" parent="Particle"]
+[node name="DeadParticle" parent="Particle/DeadVFX" instance=ExtResource("13_c4nw1")]
+
+[node name="Pulse" type="GPUParticles2D" parent="Particle/DeadVFX"]
 emitting = false
 amount = 1
 sub_emitter = NodePath("Dust")
-process_material = SubResource("ParticleProcessMaterial_roycg")
+process_material = SubResource("ParticleProcessMaterial_lxd2q")
 texture = ExtResource("14_1lm6k")
 lifetime = 0.3
 one_shot = true
 
-[node name="Dust" type="GPUParticles2D" parent="Particle/Pulse"]
+[node name="Dust" type="GPUParticles2D" parent="Particle/DeadVFX/Pulse"]
 emitting = false
 amount = 20
-process_material = SubResource("ParticleProcessMaterial_pmi04")
-texture = SubResource("AtlasTexture_fs71m")
+process_material = SubResource("ParticleProcessMaterial_1ovlt")
+texture = SubResource("AtlasTexture_bs447")
 one_shot = true
 explosiveness = 0.76
 randomness = 0.26
@@ -542,6 +549,7 @@ damage_data = SubResource("Resource_o3ql3")
 position = Vector2(6.49999, 5.50001)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_c5jhj")
+disabled = true
 debug_color = Color(0.823529, 0.345098, 0.537255, 0.419608)
 
 [node name="GlintEffect" type="CPUParticles2D" parent="Direction"]
@@ -627,11 +635,12 @@ script = ExtResource("8_kk3ql")
 
 [node name="stagger" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("9_1llv7")
-stagger_duration = 1.0
+knockback_force = 400.0
 
 [node name="StanceBreak" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("12_wb7s4")
 stunt_time = 2.5
+knockback_force = 400.0
 
 [node name="chase" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("next_state")]
 script = ExtResource("10_naq1y")
@@ -643,6 +652,9 @@ attack_box_col = NodePath("../../Direction/MeleeAttackBox/ramp_area")
 
 [node name="Empty" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("11_xu62c")
+
+[node name="Fall" type="Node" parent="EnemyStateMachine"]
+script = ExtResource("30_17dfd")
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="on_screen_enter"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="on_screen_exit"]

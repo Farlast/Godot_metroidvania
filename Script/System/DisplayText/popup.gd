@@ -1,7 +1,7 @@
 extends Control
 
 @export var display_event : CustomEventChannel
-@onready var lable : Label = $Label
+@onready var lable : RichTextLabel = $Control/Label
 @onready var button : Button = $Button
 
 var exit : bool = false

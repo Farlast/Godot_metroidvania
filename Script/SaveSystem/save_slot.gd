@@ -10,12 +10,15 @@ extends Control
 
 var is_new_save:bool
 
-func _ready():
+func _ready()->void:
 	save_info.pressed.connect(on_select)
 	save_clear.pressed.connect(on_clear)
 	display_save()
 
-func set_focus():
+func get_focus()->void:
+	save_info.grab_focus()
+
+func set_focus()->void:
 	#current node
 	save_info.focus_neighbor_right = save_clear.get_path()
 	save_clear.focus_neighbor_left = save_info.get_path()
@@ -28,7 +31,7 @@ func set_focus():
 		save_info.focus_neighbor_bottom = bottom_node.save_info.get_path()
 		save_clear.focus_neighbor_bottom = bottom_node.save_clear.get_path()
 
-func on_select():
+func on_select()->void:
 	var saveSys :SaveSystem = GameManager.save_system as SaveSystem
 	GameManager.setting_data.last_save_played_index = index
 	GameManager.save_system.save_setting(GameManager.setting_data)
@@ -40,12 +43,12 @@ func on_select():
 		SceneManager.change_scene_by_name(GameManager.player_data.last_scene_visit_path)
 		SceneManager.need_respawn = true
 
-func on_clear():
+func on_clear()->void:
 	var saveSys :SaveSystem = GameManager.save_system as SaveSystem
 	saveSys.delete_save(index)
 	display_save()
 
-func display_save():
+func display_save()->void:
 	var saveSys :SaveSystem = GameManager.save_system as SaveSystem
 	var save_data:SaveData = saveSys.get_save_data(index)
 	if save_data:
@@ -55,8 +58,8 @@ func display_save():
 		is_new_save = true
 		save_info.text = "Empty Save"
 
-func play_select_audio():
+func play_select_audio()->void:
 	GameManager.audio_player.play_ui_select()
 	
-func play_pressed_audio():
+func play_pressed_audio()->void:
 	GameManager.audio_player.play_ui_pressed()

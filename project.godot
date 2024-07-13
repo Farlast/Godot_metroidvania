@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Spirimantal"
+config/name="DreamFeather"
 config/tags=PackedStringArray("inprogress")
 run/main_scene="res://Scenes/Menu/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
@@ -22,9 +22,13 @@ buses/default_bus_layout="res://ResourceData/AudioBus/default_bus_layout.tres"
 
 [autoload]
 
-SettingsMenu="*res://Scenes/Menu/settings_menu.tscn"
-SceneManager="*res://Scenes/Menu/scene_manager.tscn"
 GameManager="*res://Script/System/game_manager.gd"
+SceneManager="*res://Scenes/Menu/scene_manager.tscn"
+SettingsMenu="*res://Scenes/Menu/settings_menu.tscn"
+
+[debug]
+
+gdscript/warnings/untyped_declaration=1
 
 [display]
 
@@ -42,7 +46,7 @@ project/assembly_name="Platformer"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/cinematic_camera_2d/plugin.cfg")
+enabled=PackedStringArray("res://addons/cinematic_camera_2d/plugin.cfg", "res://addons/rmsmartshape/plugin.cfg")
 
 [file_customization]
 
@@ -123,7 +127,7 @@ dash={
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":5,"axis_value":1.0,"script":null)
 ]
 }
-absorp={
+action_2={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"key_label":0,"unicode":100,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
@@ -141,6 +145,12 @@ skill={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":3,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
+glide={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":32,"echo":false,"script":null)
+, Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":5,"axis_value":1.0,"script":null)
+]
+}
 
 [layer_names]
 
@@ -148,9 +158,15 @@ skill={
 2d_physics/layer_2="HitBox"
 2d_physics/layer_3="Enemy_HitBox"
 2d_physics/layer_4="Player_HitBox"
-2d_physics/layer_5="Player_Body"
-2d_physics/layer_6="enemy_body"
+2d_physics/layer_5="player_hurtbox"
+2d_physics/layer_6="enemy_hurtbox"
+2d_physics/layer_7="collision"
 2d_physics/layer_9="Elements"
+2d_physics/layer_16="water"
+
+[physics]
+
+common/physics_jitter_fix=1.0
 
 [rendering]
 

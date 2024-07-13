@@ -24,7 +24,7 @@ var sender_position : Vector2
 var damage_multiply : float
 var impact_add : float
 
-func add(data:DamageData):
+func add(data:DamageData)->void:
 	damage_multiply = data.damage
 	impact = data.impact
 	knockback_force = data.knockback_force

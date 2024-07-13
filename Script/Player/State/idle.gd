@@ -5,18 +5,18 @@ var active_input : bool
 var v_direction : float
 var h_direction : float
 
-func on_enter():
+func on_enter()->void:
 	super.on_enter()
 	animator.play("idle")
 	active_input = true
 	player.update_area()
 	player.velocity = Vector2.ZERO
 	
-func on_exit():
+func on_exit()->void:
 	super.on_exit()
 	active_input = false
 
-func on_update(_delta : float):
+func on_update(_delta : float)->void:
 	super.on_update(_delta)
 	if not player.is_on_floor():
 		transition.emit(self,"fall")
@@ -29,12 +29,13 @@ func on_update(_delta : float):
 	elif h_direction != 0:
 		transition.emit(self,"Run")
 	
-func on_physics_update(_delta : float):
+func on_physics_update(_delta : float)->void:
 	super.on_physics_update(_delta)
 	player.add_fall_gravity(_delta)
 	player.move_and_slide()
+	player.check_and_refill_doublejump()
 	
-func _unhandled_input(event):
+func _unhandled_input(event:InputEvent)->void:
 	if not is_controllable(): return
 	if not active_input: return
 	player.update_area()

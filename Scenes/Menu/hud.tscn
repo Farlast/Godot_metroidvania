@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c62j7aiwvcjda"]
+[gd_scene load_steps=28 format=3 uid="uid://c62j7aiwvcjda"]
 
 [ext_resource type="Script" path="res://Script/UI/ESCMenu/pause_menu.gd" id="1_aisc1"]
 [ext_resource type="Script" path="res://Script/UI/HUD/status_bar.gd" id="3_1dtdw"]
@@ -12,8 +12,6 @@
 [ext_resource type="Script" path="res://Script/System/DisplayText/popup.gd" id="12_jdfm0"]
 [ext_resource type="Resource" uid="uid://byoer52eg2g0h" path="res://ResourceData/Event/powerup_event_resource.tres" id="13_h60o1"]
 [ext_resource type="Texture2D" uid="uid://b2ghjo6da5elg" path="res://Art/UI/panel-001.png" id="14_ssfhs"]
-[ext_resource type="Script" path="res://Script/Player/UI/active_skill_display.gd" id="15_n5ibt"]
-[ext_resource type="Resource" uid="uid://t3hmdbc8tu21" path="res://ResourceData/Event/active_skill_status.tres" id="16_lc2q8"]
 [ext_resource type="Script" path="res://Script/System/fps_counter.gd" id="17_041yv"]
 [ext_resource type="Shader" path="res://Shader/blur.gdshader" id="18_jwncr"]
 
@@ -45,6 +43,9 @@ modulate_color = Color(0, 0.580392, 0.984314, 1)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6vdrb"]
 texture = ExtResource("11_hr0p6")
 
+[sub_resource type="LabelSettings" id="LabelSettings_ipdu6"]
+font_size = 25
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6r5mw"]
 shader = ExtResource("18_jwncr")
 shader_parameter/lod = 1.0
@@ -68,9 +69,6 @@ texture_margin_right = 50.0
 texture_margin_bottom = 50.0
 region_rect = Rect2(0, -1, 97, 97)
 
-[sub_resource type="LabelSettings" id="LabelSettings_oe8y5"]
-font_size = 30
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xq3v1"]
 texture = ExtResource("14_ssfhs")
 texture_margin_left = 50.0
@@ -86,11 +84,8 @@ texture_margin_right = 50.0
 texture_margin_bottom = 20.0
 modulate_color = Color(0, 0, 0, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_ipdu6"]
-font_size = 25
-
 [node name="HUD" type="CanvasLayer"]
-layer = 50
+layer = 9
 
 [node name="Status" type="Control" parent="."]
 layout_mode = 3
@@ -182,20 +177,29 @@ rotation = 0.785398
 scale = Vector2(1.5, 1.5)
 theme_override_styles/panel = SubResource("StyleBoxTexture_6vdrb")
 
-[node name="Pause" type="Control" parent="." node_paths=PackedStringArray("defualt_button")]
-visible = false
-layout_mode = 3
-anchors_preset = 15
+[node name="DebugInfo" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(100, 0)
+anchors_preset = 1
+anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -49.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="FPSCounter" type="Label" parent="DebugInfo"]
+layout_mode = 2
+text = "FPS:"
+label_settings = SubResource("LabelSettings_ipdu6")
+script = ExtResource("17_041yv")
+
+[node name="Pause" type="CanvasLayer" parent="." node_paths=PackedStringArray("defualt_focus")]
+layer = 51
+visible = false
 script = ExtResource("1_aisc1")
-defualt_button = NodePath("Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Continue")
+defualt_focus = NodePath("Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Continue")
 
 [node name="blur" type="ColorRect" parent="Pause"]
 material = SubResource("ShaderMaterial_6r5mw")
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -203,7 +207,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Control" type="Control" parent="Pause"]
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -315,9 +319,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -464.0
-offset_top = -484.0
+offset_top = -391.0
 offset_right = 464.0
-offset_bottom = 293.0
+offset_bottom = 393.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_u1pg0")
@@ -332,21 +336,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.792157)
-
-[node name="Label" type="Label" parent="DisplayPanel"]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -32.5
-offset_bottom = 9.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Dash ability unlock"
-label_settings = SubResource("LabelSettings_oe8y5")
-horizontal_alignment = 1
+color = Color(0, 0, 0, 0.972549)
 
 [node name="Button" type="Button" parent="DisplayPanel"]
 layout_mode = 0
@@ -361,51 +351,36 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_xq3v1")
 theme_override_styles/hover = SubResource("StyleBoxTexture_rhhvw")
 text = "Close"
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-custom_minimum_size = Vector2(100, 0)
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -49.0
-offset_bottom = 40.0
-grow_horizontal = 0
+[node name="Control" type="Control" parent="DisplayPanel"]
+anchors_preset = 0
+offset_left = 80.0
+offset_top = 161.0
+offset_right = 848.0
+offset_bottom = 656.0
 
-[node name="FPSCounter" type="Label" parent="MarginContainer"]
-layout_mode = 2
-text = "FPS:"
-label_settings = SubResource("LabelSettings_ipdu6")
-script = ExtResource("17_041yv")
-
-[node name="SkillDisplay" type="Control" parent="."]
-layout_mode = 3
+[node name="Label" type="RichTextLabel" parent="DisplayPanel/Control"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "Dash ability unlock"
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
 
-[node name="Skill_1" type="ProgressBar" parent="SkillDisplay"]
+[node name="Label" type="Label" parent="DisplayPanel"]
 layout_mode = 0
-offset_left = 56.0
-offset_top = 48.0
-offset_right = 120.0
-offset_bottom = 112.0
-max_value = 1.0
-value = 1.0
-fill_mode = 3
-show_percentage = false
-script = ExtResource("15_n5ibt")
-skill_status = ExtResource("16_lc2q8")
-
-[node name="TextureRect" type="TextureRect" parent="SkillDisplay/Skill_1"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -64.0
-offset_right = 64.0
-grow_vertical = 0
-expand_mode = 1
+offset_left = 24.0
+offset_top = 32.0
+offset_right = 904.0
+offset_bottom = 136.0
+theme_override_font_sizes/font_size = 30
+text = "Ability unlock!"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
 [connection signal="pressed" from="Pause/Control/BG/Panel/VBoxContainer2/MarginContainer2/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]

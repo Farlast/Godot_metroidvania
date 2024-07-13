@@ -21,7 +21,7 @@ func on_save(_body):
 	effect.restart()
 	SceneManager.last_savepoint_visit = path_data
 	SceneManager.savepoint_scene = path_data.target_scene_path
-	player.player_data.position = spawn_position.global_position
+	GameManager.player_data.position = spawn_position.global_position
 	var saveSys :SaveSystem = GameManager.save_system as SaveSystem
 	saveSys.save_game()
 	

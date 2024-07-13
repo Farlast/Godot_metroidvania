@@ -10,11 +10,27 @@ font_size = 100
 default_base_scale = 1.0
 default_font_size = 30
 
-[node name="SettingsMenu" type="CanvasLayer"]
+[node name="SettingsMenu" type="CanvasLayer" node_paths=PackedStringArray("fullscreen_btt", "resolution_option", "fps_option", "master_volume", "music_volume", "effect_volume", "defualt_focus")]
 layer = 10
 script = ExtResource("1_g4j2k")
+fullscreen_btt = NodePath("Control/TabMargin/VBoxContainer/TabContainer/Display/Fullscreen")
+resolution_option = NodePath("Control/TabMargin/VBoxContainer/TabContainer/Display/Resolution")
+fps_option = NodePath("Control/TabMargin/VBoxContainer/TabContainer/Display/MaxFPS")
+master_volume = NodePath("Control/TabMargin/VBoxContainer/TabContainer/Audio/Master/HBox/MarginValue/Master")
+music_volume = NodePath("Control/TabMargin/VBoxContainer/TabContainer/Audio/Music/HBoxContainer/Margin/Music")
+effect_volume = NodePath("Control/TabMargin/VBoxContainer/TabContainer/Audio/Effect/HBoxContainer/Margin/Effect")
+defualt_focus = NodePath("Control/TabMargin/VBoxContainer/TabContainer/Display/Fullscreen")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="Control"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -23,7 +39,8 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.290196, 0.290196, 0.290196, 1)
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="TabMargin" type="MarginContainer" parent="Control"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -34,62 +51,62 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 50
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Margin"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/TabMargin"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Margin/VBoxContainer"]
+[node name="Label" type="Label" parent="Control/TabMargin/VBoxContainer"]
 layout_mode = 2
 text = "Settings"
 label_settings = SubResource("LabelSettings_vq5pw")
 
-[node name="TabContainer" type="TabContainer" parent="Margin/VBoxContainer"]
+[node name="TabContainer" type="TabContainer" parent="Control/TabMargin/VBoxContainer"]
 layout_mode = 2
 theme = SubResource("Theme_pqswe")
 
-[node name="Display" type="VBoxContainer" parent="Margin/VBoxContainer/TabContainer"]
+[node name="Display" type="VBoxContainer" parent="Control/TabMargin/VBoxContainer/TabContainer"]
 layout_mode = 2
 
-[node name="Fullscreen" type="CheckButton" parent="Margin/VBoxContainer/TabContainer/Display"]
+[node name="Fullscreen" type="CheckButton" parent="Control/TabMargin/VBoxContainer/TabContainer/Display"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "Fullscreen"
 
-[node name="Resolution" type="OptionButton" parent="Margin/VBoxContainer/TabContainer/Display"]
+[node name="Resolution" type="OptionButton" parent="Control/TabMargin/VBoxContainer/TabContainer/Display"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="Max FPS" type="OptionButton" parent="Margin/VBoxContainer/TabContainer/Display"]
+[node name="MaxFPS" type="OptionButton" parent="Control/TabMargin/VBoxContainer/TabContainer/Display"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="Audio" type="VBoxContainer" parent="Margin/VBoxContainer/TabContainer"]
+[node name="Audio" type="VBoxContainer" parent="Control/TabMargin/VBoxContainer/TabContainer"]
 visible = false
 custom_minimum_size = Vector2(500, 20)
 layout_mode = 2
 
-[node name="Master" type="HBoxContainer" parent="Margin/VBoxContainer/TabContainer/Audio"]
+[node name="Master" type="HBoxContainer" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 
-[node name="HBox" type="HBoxContainer" parent="Margin/VBoxContainer/TabContainer/Audio/Master"]
+[node name="HBox" type="HBoxContainer" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Master"]
 layout_mode = 2
 
-[node name="MarginText" type="MarginContainer" parent="Margin/VBoxContainer/TabContainer/Audio/Master/HBox"]
+[node name="MarginText" type="MarginContainer" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Master/HBox"]
 custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_right = 100
 
-[node name="Label" type="Label" parent="Margin/VBoxContainer/TabContainer/Audio/Master/HBox/MarginText"]
+[node name="Label" type="Label" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Master/HBox/MarginText"]
 layout_mode = 2
 text = "Master :"
 vertical_alignment = 1
 
-[node name="MarginValue" type="MarginContainer" parent="Margin/VBoxContainer/TabContainer/Audio/Master/HBox"]
+[node name="MarginValue" type="MarginContainer" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Master/HBox"]
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_constants/margin_left = 20
 
-[node name="Master" type="HSlider" parent="Margin/VBoxContainer/TabContainer/Audio/Master/HBox/MarginValue"]
+[node name="Master" type="HSlider" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Master/HBox/MarginValue"]
 custom_minimum_size = Vector2(500, 20)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -99,32 +116,32 @@ step = 0.001
 value = 1.0
 script = ExtResource("2_0smr7")
 
-[node name="HSeparator" type="HSeparator" parent="Margin/VBoxContainer/TabContainer/Audio"]
+[node name="HSeparator" type="HSeparator" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 
-[node name="Music" type="HBoxContainer" parent="Margin/VBoxContainer/TabContainer/Audio"]
+[node name="Music" type="HBoxContainer" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Margin/VBoxContainer/TabContainer/Audio/Music"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Music"]
 layout_mode = 2
 
-[node name="MarginText" type="MarginContainer" parent="Margin/VBoxContainer/TabContainer/Audio/Music/HBoxContainer"]
+[node name="MarginText" type="MarginContainer" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Music/HBoxContainer"]
 custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_right = 100
 
-[node name="Label" type="Label" parent="Margin/VBoxContainer/TabContainer/Audio/Music/HBoxContainer/MarginText"]
+[node name="Label" type="Label" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Music/HBoxContainer/MarginText"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Background music :"
 vertical_alignment = 1
 
-[node name="Margin" type="MarginContainer" parent="Margin/VBoxContainer/TabContainer/Audio/Music/HBoxContainer"]
+[node name="Margin" type="MarginContainer" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Music/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 
-[node name="Music" type="HSlider" parent="Margin/VBoxContainer/TabContainer/Audio/Music/HBoxContainer/Margin"]
+[node name="Music" type="HSlider" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Music/HBoxContainer/Margin"]
 custom_minimum_size = Vector2(500, 20)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -134,32 +151,32 @@ value = 1.0
 script = ExtResource("2_0smr7")
 bus_index = 1
 
-[node name="HSeparator2" type="HSeparator" parent="Margin/VBoxContainer/TabContainer/Audio"]
+[node name="HSeparator2" type="HSeparator" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 
-[node name="Effect" type="HBoxContainer" parent="Margin/VBoxContainer/TabContainer/Audio"]
+[node name="Effect" type="HBoxContainer" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Margin/VBoxContainer/TabContainer/Audio/Effect"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Effect"]
 layout_mode = 2
 
-[node name="MarginText" type="MarginContainer" parent="Margin/VBoxContainer/TabContainer/Audio/Effect/HBoxContainer"]
+[node name="MarginText" type="MarginContainer" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Effect/HBoxContainer"]
 custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_right = 100
 
-[node name="Label" type="Label" parent="Margin/VBoxContainer/TabContainer/Audio/Effect/HBoxContainer/MarginText"]
+[node name="Label" type="Label" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Effect/HBoxContainer/MarginText"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Effect :"
 vertical_alignment = 1
 
-[node name="Margin" type="MarginContainer" parent="Margin/VBoxContainer/TabContainer/Audio/Effect/HBoxContainer"]
+[node name="Margin" type="MarginContainer" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Effect/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 
-[node name="Effect" type="HSlider" parent="Margin/VBoxContainer/TabContainer/Audio/Effect/HBoxContainer/Margin"]
+[node name="Effect" type="HSlider" parent="Control/TabMargin/VBoxContainer/TabContainer/Audio/Effect/HBoxContainer/Margin"]
 custom_minimum_size = Vector2(500, 20)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -169,18 +186,18 @@ value = 1.0
 script = ExtResource("2_0smr7")
 bus_index = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Margin/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/TabMargin/VBoxContainer"]
 layout_mode = 2
 alignment = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Margin/VBoxContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/TabMargin/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="Back" type="Button" parent="Margin/VBoxContainer/HBoxContainer/MarginContainer"]
+[node name="Back" type="Button" parent="Control/TabMargin/VBoxContainer/HBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/outline_size = 1
-text = "Back"
+text = "Save and Back"
 
-[connection signal="toggled" from="Margin/VBoxContainer/TabContainer/Display/Fullscreen" to="." method="_on_fullscreen_toggled"]
-[connection signal="pressed" from="Margin/VBoxContainer/HBoxContainer/MarginContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="toggled" from="Control/TabMargin/VBoxContainer/TabContainer/Display/Fullscreen" to="." method="_on_fullscreen_toggled"]
+[connection signal="pressed" from="Control/TabMargin/VBoxContainer/HBoxContainer/MarginContainer/Back" to="." method="_on_back_pressed"]

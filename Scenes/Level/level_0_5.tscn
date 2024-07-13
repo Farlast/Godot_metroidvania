@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dudxu8bveokls"]
+[gd_scene load_steps=25 format=3 uid="uid://dudxu8bveokls"]
 
 [ext_resource type="TileSet" uid="uid://dfn081kuhi648" path="res://ResourceData/base_tileset.tres" id="1_ep5y4"]
 [ext_resource type="PackedScene" uid="uid://c62j7aiwvcjda" path="res://Scenes/Menu/hud.tscn" id="1_n6fc1"]
@@ -14,9 +14,7 @@
 [ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="13_sgwtw"]
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="14_55clw"]
 [ext_resource type="Texture2D" uid="uid://d2mosp34qr7db" path="res://Art/Environment/Thorns/thorns.png" id="15_ur4b4"]
-[ext_resource type="PackedScene" uid="uid://cqow16cipyw6e" path="res://Scenes/Player/pickup_upgrade.tscn" id="16_hjjre"]
 [ext_resource type="AudioStream" uid="uid://jbvp240wbo24" path="res://Audio/Ambient/Ambiance_Sea_Loop_Stereo.wav" id="16_vj2ql"]
-[ext_resource type="Script" path="res://Script/Player/Item/Unlockable/unlockable.gd" id="17_xgn6t"]
 [ext_resource type="Texture2D" uid="uid://djhgo1gnoqtqg" path="res://Art/BG/Cove/coast_rock_1.png" id="18_75863"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ihfjf"]
@@ -32,11 +30,10 @@ size = Vector2(64, 192)
 script = ExtResource("14_55clw")
 damage = 1.0
 impact = 0.0
-knockback = 300.0
-sender_position = Vector2(0, 0)
+knockback_force = 0
+element = 0
 take_damage_rule = 1
 take_damage_mask = 0
-element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mn188"]
 size = Vector2(192, 56)
@@ -44,10 +41,6 @@ size = Vector2(192, 56)
 [sub_resource type="AtlasTexture" id="AtlasTexture_pgw4y"]
 atlas = ExtResource("15_ur4b4")
 region = Rect2(5.77194, 319.888, 503.118, 195.657)
-
-[sub_resource type="Resource" id="Resource_3sv1h"]
-script = ExtResource("17_xgn6t")
-unlock_type = 0
 
 [sub_resource type="Gradient" id="Gradient_tljua"]
 offsets = PackedFloat32Array(0, 0.555556, 1)
@@ -187,13 +180,6 @@ position = Vector2(0, -8)
 scale = Vector2(0.681128, 0.635475)
 texture = SubResource("AtlasTexture_pgw4y")
 flip_v = true
-
-[node name="Pickup_upgrade" parent="." instance=ExtResource("16_hjjre")]
-visible = false
-position = Vector2(-576, 1208)
-text_to_display = "Dash unlock!
-press 'C' or 'Right trigger' to dash"
-unlock_type = SubResource("Resource_3sv1h")
 
 [node name="Parallax" type="Node2D" parent="."]
 

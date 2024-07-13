@@ -1,0 +1,105 @@
+[gd_scene load_steps=12 format=3 uid="uid://dgt5s3n82d655"]
+
+[ext_resource type="Script" path="res://Script/Player/Familiar/familiar.gd" id="1_ao81i"]
+[ext_resource type="Texture2D" uid="uid://benx4a31asuwl" path="res://Art/Player/Skill/lantern.png" id="2_dpi8l"]
+[ext_resource type="Texture2D" uid="uid://b8tgwsqq1ttw5" path="res://Art/Interact/FirePlant/fire_plant_flower.png" id="3_bt6eg"]
+[ext_resource type="Texture2D" uid="uid://byku3155bejsl" path="res://Art/Effect/hollow fade circle.png" id="4_knr70"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v1by3"]
+radius = 32.0
+
+[sub_resource type="Gradient" id="Gradient_2vpay"]
+offsets = PackedFloat32Array(0, 0.780992)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ps52b"]
+gradient = SubResource("Gradient_2vpay")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Animation" id="Animation_7yyis"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Directions/ThrowObject:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_rqptu"]
+resource_name = "handle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Directions/ThrowObject:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_omj7c"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Directions/ThrowObject:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1w2hm"]
+_data = {
+"RESET": SubResource("Animation_7yyis"),
+"handle": SubResource("Animation_rqptu"),
+"idle": SubResource("Animation_omj7c")
+}
+
+[node name="Familiar" type="Area2D"]
+collision_layer = 0
+collision_mask = 256
+script = ExtResource("1_ao81i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_v1by3")
+
+[node name="Directions" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Directions"]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_dpi8l")
+
+[node name="ThrowObject" type="Sprite2D" parent="Directions"]
+visible = false
+position = Vector2(0, -56)
+texture = ExtResource("3_bt6eg")
+
+[node name="PointLight2D" type="PointLight2D" parent="Directions"]
+visible = false
+scale = Vector2(2, 2)
+texture = SubResource("GradientTexture2D_ps52b")
+
+[node name="PointLight2D2" type="PointLight2D" parent="Directions"]
+scale = Vector2(0.5, 0.5)
+color = Color(0.329, 0.621, 1.5, 1)
+texture = ExtResource("4_knr70")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1w2hm")
+}

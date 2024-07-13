@@ -9,10 +9,12 @@ func on_enter():
 	player.velocity.y = player.jump_velocity
 	player.velocity.x += 200 * player.direction_holder.scale.x
 	off_ground = false
-	animator.play("Jump")
+	animator.play("wall_jump")
 	active_input = true
 	if player.is_on_floor():
 		player.set_last_ground_position()
+	await get_tree().create_timer(shooting_time).timeout
+	transition.emit(self,"fall")
 
 func on_physics_update(_delta : float):
 	super.on_physics_update(_delta)

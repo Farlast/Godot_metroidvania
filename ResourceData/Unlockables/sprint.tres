@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UnlockableData" load_steps=2 format=3 uid="uid://ci5dc8tv84s57"]
+
+[ext_resource type="Script" path="res://ResourceData/Unlockables/unlockable_data.gd" id="1_lbu4s"]
+
+[resource]
+resource_name = "sprint"
+script = ExtResource("1_lbu4s")
+unlocked = false

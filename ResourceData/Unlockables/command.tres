@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UnlockableData" load_steps=2 format=3 uid="uid://6ogksv1mw8d4"]
+
+[ext_resource type="Script" path="res://ResourceData/Unlockables/unlockable_data.gd" id="1_cqjw6"]
+
+[resource]
+resource_name = "command"
+script = ExtResource("1_cqjw6")
+unlocked = false

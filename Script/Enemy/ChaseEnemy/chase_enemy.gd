@@ -3,7 +3,6 @@ class_name ChaseEnemy
 
 @onready var front_ray : RayCast2D = $Direction/FrontRay
 @onready var down_ray : RayCast2D = $Direction/DownRay
-@onready var soul := preload("res://Scenes/Interactable/skill_memo.tscn")
 
 @export_category("Movement")
 @export var move_speed : float = 200
@@ -37,8 +36,10 @@ func take_damage(damage_data : DamageData)->bool:
 			direction_holder.scale.x = abs(direction_holder.scale.x)
 	return true
 
-func on_idle(state : EnemyState):
+func on_idle(state : EnemyState,_delta:float):
 	if not is_on_floor():return
+	else:add_drag(_delta)
+	
 	if front_ray.is_colliding():
 		target = front_ray.get_collider() as Node2D
 		state.transition.emit(state,"chase")
@@ -67,9 +68,6 @@ func on_stance_break():
 
 func dead():
 	state_machine.current_state.transition.emit(state_machine.current_state,"empty")
-	var scene :SkillMemo= soul.instantiate()
-	scene.position = front_ray.global_position
-	add_sibling.call_deferred(scene)
 	if is_on_screen:
 		var camera = GameManager.main_camera
 		camera.add_trauma(0.5)

@@ -1,0 +1,99 @@
+[gd_scene load_steps=11 format=3 uid="uid://dgy2s4n58d08j"]
+
+[ext_resource type="Script" path="res://Script/Interact/grabbable_host.gd" id="1_stpwx"]
+[ext_resource type="Resource" uid="uid://cqq1gvmr1lfdp" path="res://ResourceData/Skill/Throwable/fire_orb.tres" id="2_lpolp"]
+[ext_resource type="Texture2D" uid="uid://bin4ar2brjkv5" path="res://Art/Interact/FirePlant/fire_plant.png" id="2_rfgll"]
+[ext_resource type="Texture2D" uid="uid://bxlbxrerrm4g5" path="res://Art/Interact/FirePlant/fire_plant_havested.png" id="3_h3gdr"]
+[ext_resource type="Texture2D" uid="uid://c1qhwi8ewswm4" path="res://Art/Effect/Tex_circle_small.png" id="5_jxy5o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s8f4d"]
+size = Vector2(128, 128)
+
+[sub_resource type="Animation" id="Animation_6dw74"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_rfgll")]
+}
+
+[sub_resource type="Animation" id="Animation_k63vp"]
+resource_name = "havest"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_h3gdr")]
+}
+
+[sub_resource type="Animation" id="Animation_cmdyl"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_rfgll")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6tket"]
+_data = {
+"RESET": SubResource("Animation_6dw74"),
+"havest": SubResource("Animation_k63vp"),
+"idle": SubResource("Animation_cmdyl")
+}
+
+[node name="fire_plant" type="Area2D"]
+collision_layer = 256
+collision_mask = 256
+script = ExtResource("1_stpwx")
+grabbable = ExtResource("2_lpolp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -64)
+shape = SubResource("RectangleShape2D_s8f4d")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -64)
+texture = ExtResource("2_rfgll")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6tket")
+}
+autoplay = "idle"
+
+[node name="Ember" type="CPUParticles2D" parent="."]
+self_modulate = Color(3, 1, 1, 1)
+position = Vector2(0, -64)
+texture = ExtResource("5_jxy5o")
+emission_shape = 1
+emission_sphere_radius = 111.31
+direction = Vector2(0, -1)
+spread = 23.68
+gravity = Vector2(0, 0)
+initial_velocity_min = 13.15
+initial_velocity_max = 157.89
+tangential_accel_min = -100.0
+tangential_accel_max = 100.0
+scale_amount_min = 0.1
+color = Color(0.67451, 0.309804, 0.133333, 1)

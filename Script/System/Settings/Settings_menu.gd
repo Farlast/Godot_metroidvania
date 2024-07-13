@@ -1,17 +1,19 @@
-extends CanvasLayer
+extends CanvasUI
 
 ##############
 # Autoload
 ##############
+
 signal saveSetting
-### Display
-@onready var fullscreen_btt : CheckButton = $Margin/VBoxContainer/TabContainer/Display/Fullscreen
-@onready var resolution_option : OptionButton = $Margin/VBoxContainer/TabContainer/Display/Resolution
-@onready var fps_option : OptionButton = $"Margin/VBoxContainer/TabContainer/Display/Max FPS"
-### Audio
-@onready var master_volume : HSlider = $Margin/VBoxContainer/TabContainer/Audio/Master/HBox/MarginValue/Master
-@onready var music_volume : HSlider = $Margin/VBoxContainer/TabContainer/Audio/Music/HBoxContainer/Margin/Music
-@onready var effect_volume : HSlider = $Margin/VBoxContainer/TabContainer/Audio/Effect/HBoxContainer/Margin/Effect
+
+@export_group("Display")
+@export var fullscreen_btt : CheckButton
+@export var resolution_option : OptionButton
+@export var fps_option : OptionButton
+@export_group("Audio")
+@export var master_volume : HSlider
+@export var music_volume : HSlider
+@export var effect_volume : HSlider
 
 const RESOLUTION_DICTIONARY : Dictionary = {
 	"1152 x 648" : Vector2(1152,648),
@@ -24,24 +26,23 @@ const FPS_OPTIONS : Dictionary = {
 	"30": 30,
 	"60": 60,
 	"75": 75,
-	"120": 120
+	"120": 120,
+	"165": 140,
+	"180": 180,
+	"200": 200
 }
+
 func _ready():
 	hide()
-	GameManager.setup_settings.connect(set_default)
 	setup_resolution_selecter()
 	setup_fps_select()
+	set_default()
 
 func set_default():
 	fullscreen_btt.set_pressed_no_signal(GameManager.setting_data.fullscreen)
 	_on_fullscreen_toggled(GameManager.setting_data.fullscreen)
 	resolution_option.select(GameManager.setting_data.screen_resolution_index)
 	on_resolution_select(GameManager.setting_data.screen_resolution_index)
-
-func  show_Settings():
-	fullscreen_btt.grab_focus()
-	GameManager.time_manager.freeze()
-	show()
 
 #region Display
 func _on_fullscreen_toggled(button_pressed):
@@ -72,6 +73,5 @@ func on_fps_select(index:int):
 
 #endregion
 func _on_back_pressed():
-	GameManager.save_system.save_setting(GameManager.setting_data)	
-	GameManager.time_manager.unfreeze()
-	hide()
+	GameManager.save_system.save_setting(GameManager.setting_data)
+	back_to_previous()

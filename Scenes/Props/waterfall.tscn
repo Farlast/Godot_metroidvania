@@ -19,7 +19,7 @@ collision_layer = 256
 collision_mask = 256
 script = ExtResource("2_amufq")
 element_data = SubResource("Resource_crtcx")
-skill_bundle = ExtResource("3_ayn6e")
+grabbable = ExtResource("3_ayn6e")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ElementBox"]
 position = Vector2(8, 183)

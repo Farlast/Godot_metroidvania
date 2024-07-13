@@ -9,8 +9,8 @@ signal dead
 
 func setup():
 	health.setup()
-	stance.setup()
 	health.ReachZero.connect(func():dead.emit())
+	stance.setup()
 	stance.ReachZero.connect(func():stance_break.emit())
 
 func calculate_damage(damage_data:DamageData):
