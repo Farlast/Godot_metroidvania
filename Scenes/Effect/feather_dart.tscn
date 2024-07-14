@@ -1,0 +1,168 @@
+[gd_scene load_steps=18 format=3 uid="uid://b1rwgq5tuaed2"]
+
+[ext_resource type="Script" path="res://Script/Bullets/bullet.gd" id="1_2lt80"]
+[ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="1_xlyp3"]
+[ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="2_2nrjp"]
+[ext_resource type="Texture2D" uid="uid://c1qhwi8ewswm4" path="res://Art/Effect/Tex_circle_small.png" id="2_drrw3"]
+[ext_resource type="Texture2D" uid="uid://cxogbu8mbhs6o" path="res://Art/Player/Skill/kunai.png" id="3_i8wpl"]
+
+[sub_resource type="Resource" id="Resource_wrcv3"]
+script = ExtResource("2_2nrjp")
+damage = 5.0
+impact = 0.0
+knockback_force = 0
+element = 0
+take_damage_rule = 0
+take_damage_mask = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uduxf"]
+size = Vector2(16, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6814y"]
+size = Vector2(48, 64)
+
+[sub_resource type="Gradient" id="Gradient_ukr8a"]
+colors = PackedColorArray(0, 0, 0, 1, 0.378129, 0.448929, 0.904933, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_uwgbu"]
+gradient = SubResource("Gradient_ukr8a")
+use_hdr = true
+
+[sub_resource type="Curve" id="Curve_7vkbw"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_bsf8v"]
+curve = SubResource("Curve_7vkbw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dhf1f"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 27.11
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_bsf8v")
+color_ramp = SubResource("GradientTexture1D_uwgbu")
+
+[sub_resource type="Animation" id="Animation_ek8fo"]
+resource_name = "start"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Ember:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_t4aqj"]
+resource_name = "destory"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ember:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_1857x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ember:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q1jew"]
+_data = {
+"RESET": SubResource("Animation_1857x"),
+"destory": SubResource("Animation_t4aqj"),
+"start": SubResource("Animation_ek8fo")
+}
+
+[node name="FeatherDart" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_2lt80")
+damage_data = SubResource("Resource_wrcv3")
+
+[node name="DroundCollision" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_uduxf")
+
+[node name="AttackBox" type="Area2D" parent="."]
+visible = false
+collision_layer = 10
+collision_mask = 32
+script = ExtResource("1_xlyp3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
+shape = SubResource("RectangleShape2D_6814y")
+debug_color = Color(0.968627, 0, 0.47451, 0.419608)
+
+[node name="Ember" type="GPUParticles2D" parent="."]
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_dhf1f")
+texture = ExtResource("2_drrw3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_i8wpl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_q1jew")
+}
+autoplay = "start"

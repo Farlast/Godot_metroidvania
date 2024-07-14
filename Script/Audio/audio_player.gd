@@ -14,25 +14,25 @@ extends Node
 @export var select : AudioStream
 @export var press : AudioStream
 
-func _ready():
+func _ready()->void:
 	var new_player : AudioStreamPlayer2D = AudioStreamPlayer2D.new()
 	audio_pool_2d.append(new_player)
 	add_child(new_player)
 
 #region UI
 ### ============ UI ===============
-func play_ui_select():
+func play_ui_select()->void:
 	audio_player.stream = select
 	audio_player.play()
 
-func play_ui_pressed():
+func play_ui_pressed()->void:
 	audio_player.stream = press
 	audio_player.play()
 #endregion
 
 #region Custom pooling
 ### ============ Custom pooling ===============
-func play(audio_stream:AudioStream, position : Vector2, volume_db : float = 0):
+func play(audio_stream:AudioStream, position : Vector2, volume_db : float = 0)->void:
 	var avalible_player: AudioStreamPlayer2D = null
 	for player in audio_pool_2d:
 		if not player.playing:
@@ -54,7 +54,7 @@ func play(audio_stream:AudioStream, position : Vector2, volume_db : float = 0):
 		avalible_player.play()
 	clear_oversize_pool()
 
-func clear_oversize_pool():
+func clear_oversize_pool()->void:
 	if audio_pool_2d.size() > max_pool:
 		for i in max_pool - audio_pool_2d.size():
 			for player in audio_pool_2d:
@@ -64,19 +64,19 @@ func clear_oversize_pool():
 
 #region New Code Region
 ### ============ BGM and Ambient ===============
-func change_bgm(audio_stream: AudioStream):
+func change_bgm(audio_stream: AudioStream)->void:
 	crossfade_to(bgm_player,audio_stream)
 
-func change_ambient(audio_stream: AudioStream):
+func change_ambient(audio_stream: AudioStream)->void:
 	crossfade_to(ambient_player,audio_stream)
 
-func fade_bgm():
+func fade_bgm()->void:
 	fade_to_none(bgm_player)
 
-func fade_ambient():
+func fade_ambient()->void:
 	fade_to_none(ambient_player)
 
-func crossfade_to(player: AudioStreamPlayer, audio_stream: AudioStream):
+func crossfade_to(player: AudioStreamPlayer, audio_stream: AudioStream)->void:
 	if player.stream == audio_stream: return
 	if player.playing:
 		var volume : float = 1
@@ -90,7 +90,7 @@ func crossfade_to(player: AudioStreamPlayer, audio_stream: AudioStream):
 	player.stream = audio_stream
 	player.play()
 
-func fade_to_none(player: AudioStreamPlayer):
+func fade_to_none(player: AudioStreamPlayer)->void:
 	if player.playing:
 		var volume : float = 1
 		while volume > 0:

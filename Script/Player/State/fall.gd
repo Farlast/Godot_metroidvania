@@ -7,7 +7,7 @@ var v_direction : float
 var timer : float
 var doublejump_timewindow : float = 0.5
 
-func on_enter():
+func on_enter()->void:
 	super.on_enter()
 	animator.play("fall")
 	active_input = true
@@ -15,18 +15,18 @@ func on_enter():
 	if player.is_on_floor():
 		player.set_last_ground_position()
 
-func on_exit():
+func on_exit()->void:
 	super.on_exit()
 	active_input = false
 
-func on_update(_delta : float):
+func on_update(_delta : float)->void:
 	super.on_update(_delta)
 	timer += _delta
 	v_direction = Input.get_axis("move_down", "move_up")
 
-func on_physics_update(_delta : float):
+func on_physics_update(_delta : float)->void:
 	super.on_physics_update(_delta)
-	var direction = Input.get_axis("move_left", "move_right")
+	var direction :float= Input.get_axis("move_left", "move_right")
 	if player.is_can_wall_grip() and direction != 0:
 		transition.emit(self,"wallgrip")
 	elif player.is_on_floor():
@@ -41,7 +41,7 @@ func on_physics_update(_delta : float):
 	player.move_and_slide()
 
 
-func _unhandled_input(event):
+func _unhandled_input(event:InputEvent)->void:
 	if not is_controllable(): return
 	if not active_input : return
 	if event.is_action_pressed("jump"):
@@ -55,11 +55,13 @@ func _unhandled_input(event):
 		transition.emit(self,"air_attack_combo")
 	elif event.is_action_pressed("dash") && player.is_can_dash():
 		transition.emit(self,"dash")
-	elif player.is_can_cast_skill(event):
+	elif player.skill_system.is_can_use_skill(event):
+		transition.emit(self,"projectile")
+	elif player.skill_system.is_familiar_ready(event):
 		transition.emit(self,"performskill")
 	glide_or_doublejump(event)
 
-func glide_or_doublejump(event):
+func glide_or_doublejump(event:InputEvent)->void:
 	if event.is_action_pressed("jump") and player.check_double_jump():
 		player.Is_doublejump_used = true
 		transition.emit(self,"jump")

@@ -1,9 +1,9 @@
 class_name SingleBullet
 extends SkillContainer
 
-@export var direction : Vector2
 @export var speed : float = 800
 @export var damage_data : DamageData
+var direction : Vector2
 
 func active_skill(skill_system : SkillSystem):
 	direction = skill_system.player.direction_holder.scale

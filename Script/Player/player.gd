@@ -230,18 +230,6 @@ func is_can_wall_grip()->bool:
 	if not player_data.is_abilitie_unlock("wall_grip"): return false
 	return wall_ray.is_colliding() and is_on_wall()
 
-### Ghost call
-func  is_can_use_skill(event : InputEvent) -> bool:
-	if not event.is_action_pressed("action_2"): return false
-	if not player_data.is_abilitie_unlock("command"): return false
-	return true
-
-### Skill
-func is_can_cast_skill(event : InputEvent)->bool:
-	if not event.is_action_pressed("skill"): return false
-	if not player_data.is_abilitie_unlock("command"): return false
-	return skill_system.is_can_used_skill()
-
 #endregion
 #region heal
 func is_can_heal(event : InputEvent)-> bool:

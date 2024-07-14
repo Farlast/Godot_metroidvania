@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="SingleBullet" load_steps=6 format=3 uid="uid://vmolyouohdti"]
+
+[ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="1_752da"]
+[ext_resource type="Script" path="res://Script/Player/Skill/container/SingleBullet.gd" id="1_hg4f6"]
+[ext_resource type="Texture2D" uid="uid://cxogbu8mbhs6o" path="res://Art/Player/Skill/kunai.png" id="2_6h7ur"]
+[ext_resource type="PackedScene" uid="uid://b1rwgq5tuaed2" path="res://Scenes/Effect/feather_dart.tscn" id="4_kecee"]
+
+[sub_resource type="Resource" id="Resource_gmstr"]
+script = ExtResource("1_752da")
+damage = 0.5
+impact = 0.0
+knockback_force = 0
+element = 0
+take_damage_rule = 0
+take_damage_mask = 0
+
+[resource]
+script = ExtResource("1_hg4f6")
+speed = 1500.0
+damage_data = SubResource("Resource_gmstr")
+path_dir = ""
+cooldown = 0.3
+cost = 0.2
+cast_time = 0.3
+animation_name = "sample"
+icon = ExtResource("2_6h7ur")
+skill_scene = ExtResource("4_kecee")

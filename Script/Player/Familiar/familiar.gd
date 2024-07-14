@@ -18,11 +18,11 @@ var lerp_target : Node2D
 var current_throw_skill : SkillContainer
 var object_sprite : Texture2D
 
-func _ready():
+func _ready()->void:
 	body_entered.connect(on_get_object)
 	current_mode = Mode.FOLLOW
 
-func _process(delta):
+func _process(delta:float)->void:
 	match current_mode:
 		Mode.FOLLOW:
 			lerp_to_position(delta)
@@ -30,17 +30,17 @@ func _process(delta):
 		Mode.TO_POSITION:
 			lerp_to_position(delta)
 
-func lerp_to_position(delta):
+func lerp_to_position(delta:float)->void:
 	if is_instance_valid(lerp_target):
 		global_position = lerp(global_position,lerp_target.global_position, lerp_speed * delta)
 
-func flip_direction():
+func flip_direction()->void:
 	if lerp_target.global_position.x - global_position.x > 0:
 		direction.scale.x = abs(direction.scale.x)
 	else:
 		direction.scale.x = -abs(direction.scale.x) 
 
-func command(node : Node2D):
+func command(node : Node2D)->void:
 	match current_mode:
 		Mode.FOLLOW:
 			current_mode = Mode.TO_POSITION
@@ -52,7 +52,7 @@ func command(node : Node2D):
 			pass
 
 ### Move to position and grab object
-func on_get_object(body : GrabbableHost):
+func on_get_object(body : GrabbableHost)->void:
 	current_mode = Mode.FOLLOW
 	hand_status = Hand.CARRIED
 	current_throw_skill = body.get_object().element_object
@@ -61,7 +61,7 @@ func on_get_object(body : GrabbableHost):
 	object_in_hand.show()
 	animaotr.play("handle")
 
-func throw(system : SkillSystem):
+func throw(system : SkillSystem)->void:
 	##Animation move
 	current_mode = Mode.TO_POSITION
 	lerp_target = system.player.front_point

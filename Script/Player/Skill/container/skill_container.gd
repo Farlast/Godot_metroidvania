@@ -6,9 +6,9 @@ class_name SkillContainer extends Resource
 @export var cast_time : float
 @export var animation_name : String = "sample"
 @export var icon : Texture2D
-var skill_scene : PackedScene
+@export var skill_scene : PackedScene
 
-func request_load_scene():
+func request_load_scene()->void:
 	if not is_instance_valid(skill_scene):
 		ResourceLoader.load_threaded_request(path_dir)
 
@@ -19,5 +19,5 @@ func get_scene_async() -> PackedScene:
 		skill_scene = ResourceLoader.load_threaded_get(path_dir)
 		return skill_scene
 
-func active_skill(_skill_system : SkillSystem):
+func active_skill(_skill_system : SkillSystem)->void:
 	pass

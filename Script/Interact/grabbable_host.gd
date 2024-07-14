@@ -15,6 +15,6 @@ func get_object()-> Grabbable:
 		animator.play("havest")
 	return grabbable
 
-func refill():
+func refill()->void:
 	animator.play("idle")
 	havested = false

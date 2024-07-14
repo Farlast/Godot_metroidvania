@@ -11,11 +11,11 @@ enum GroundType {GRASS,ROCK,GRAVLE,SAND,WATER}
 @export var land_sound : AudioStream
 
 func get_run_audio() -> AudioStream:
-	var index = randi_range(0,run_audios.size()-1)
+	var index :int= randi_range(0,run_audios.size()-1)
 	return run_audios[index]
 
 func get_jump_audio() -> AudioStream:
-	var index = randi_range(0,jump_audios.size()-1)
+	var index :int= randi_range(0,jump_audios.size()-1)
 	return jump_audios[index]
 
 func get_land_audio() -> AudioStream:

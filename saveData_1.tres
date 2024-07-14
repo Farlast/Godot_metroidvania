@@ -4,14 +4,14 @@
 [ext_resource type="Script" path="res://Script/System/SaveSystem/object_save_data.gd" id="2_4svki"]
 [ext_resource type="Script" path="res://Script/System/SaveSystem/save_data.gd" id="2_origc"]
 
-[sub_resource type="Resource" id="Resource_opicg"]
+[sub_resource type="Resource" id="Resource_gklwr"]
 script = ExtResource("1_rj8h7")
 max_health = 3.0
 max_health_extend = 0.0
 current_health = 3.0
 max_mana = 6.0
 max_mana_extend = 0.0
-current_mana = 6.0
+current_mana = 4.0
 unlock_dict = {
 "air_dash": false,
 "command": false,
@@ -33,7 +33,7 @@ position = Vector2(0, 0)
 
 [resource]
 script = ExtResource("2_origc")
-player_data = SubResource("Resource_opicg")
+player_data = SubResource("Resource_gklwr")
 save_dict = {
 "level_0_1/SaveStateObject/OneWay Destoryable wall": SubResource("Resource_fvshg")
 }

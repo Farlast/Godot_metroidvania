@@ -51,7 +51,7 @@ extends NodeSaveData
 @export_group("start position")
 @export var last_scene_visit_path : String
 
-func unlock_abilities(name : String):
+func unlock_abilities(name : String)->void:
 	if unlock_dict.has(name):
 		unlock_dict[name] = true
 
@@ -59,12 +59,12 @@ func is_abilitie_unlock(key : String)->bool:
 	if not unlock_dict.has(key): return false
 	return unlock_dict[key]
 
-func clear_all_unlock():
-	for key in unlock_dict:
+func clear_all_unlock()->void:
+	for key:String in unlock_dict:
 		unlock_dict[key] = false
 #endregion
 
-func replace_data(data : PlayerData):
+func replace_data(data : PlayerData)->void:
 	current_health = data.current_health
 	max_health = data.max_health
 	max_health_extend = data.max_health_extend

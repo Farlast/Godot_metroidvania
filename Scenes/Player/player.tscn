@@ -1,4 +1,4 @@
-[gd_scene load_steps=139 format=3 uid="uid://b0byka5d5aixx"]
+[gd_scene load_steps=140 format=3 uid="uid://b0byka5d5aixx"]
 
 [ext_resource type="Script" path="res://Script/Player/player.gd" id="1_clpn5"]
 [ext_resource type="Resource" uid="uid://dot44gd0wwyic" path="res://Script/Player/Event/HP_Event.tres" id="2_xwgl7"]
@@ -35,7 +35,6 @@
 [ext_resource type="Script" path="res://Script/Player/State/attack.gd" id="19_ly7k1"]
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="19_v6ssd"]
 [ext_resource type="Texture2D" uid="uid://b48s7uf7u8f62" path="res://Art/Player/charge.png" id="20_12u2n"]
-[ext_resource type="Script" path="res://Script/Player/State/absorb.gd" id="20_n6gdi"]
 [ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="20_ugjey"]
 [ext_resource type="Texture2D" uid="uid://cfyt0ioq7vljh" path="res://Art/Player/heal.png" id="20_vheql"]
 [ext_resource type="Script" path="res://Script/Player/State/knockback.gd" id="21_63e6s"]
@@ -58,12 +57,14 @@
 [ext_resource type="Script" path="res://Script/Player/State/sprint.gd" id="43_d5qd6"]
 [ext_resource type="Script" path="res://Script/Player/State/bullet_jump.gd" id="44_3wjfr"]
 [ext_resource type="Script" path="res://Script/Player/State/wall_grip.gd" id="45_avj5b"]
+[ext_resource type="Script" path="res://Script/Player/State/cast_projectile.gd" id="45_axsng"]
 [ext_resource type="Script" path="res://Script/Audio/footstep_player.gd" id="45_dg32l"]
 [ext_resource type="Resource" uid="uid://d1ixtvfsq6u2u" path="res://ResourceData/Audio/footsteps_rock.tres" id="46_mwsma"]
 [ext_resource type="Resource" uid="uid://cffogaestjnl5" path="res://ResourceData/Audio/footsteps_sand.tres" id="47_ncase"]
 [ext_resource type="Script" path="res://Script/Player/attack_system.gd" id="47_nus0m"]
 [ext_resource type="Resource" uid="uid://t3hmdbc8tu21" path="res://ResourceData/Event/active_skill_status.tres" id="50_afdg2"]
 [ext_resource type="Script" path="res://Script/Player/State/gliding.gd" id="55_x2dg7"]
+[ext_resource type="Resource" uid="uid://vmolyouohdti" path="res://ResourceData/Skill/Container/feather_dart.tres" id="64_fr6di"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_og76b"]
 radius = 13.0
@@ -2165,7 +2166,7 @@ debug_color = Color(0.901961, 0.243137, 0.498039, 0.419608)
 position = Vector2(-67, -72)
 
 [node name="FrontPoint" type="Node2D" parent="Directions"]
-position = Vector2(88, -43)
+position = Vector2(64, -35)
 
 [node name="Element_ray" type="RayCast2D" parent="Directions"]
 visible = false
@@ -2300,8 +2301,8 @@ velocity_move = Vector2(100, 0)
 air_fix_movement = true
 fall_gravity = false
 
-[node name="Absorb" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_normal_sate", "next_chrage_sate")]
-script = ExtResource("20_n6gdi")
+[node name="Projectile" type="Node" parent="StateMachine" node_paths=PackedStringArray("next_normal_sate", "next_chrage_sate")]
+script = ExtResource("45_axsng")
 next_normal_sate = NodePath("../performskill")
 next_chrage_sate = NodePath("../Busy")
 
@@ -2389,6 +2390,7 @@ target_position = Vector2(0, 10)
 [node name="SkillSystem" type="Node" parent="."]
 script = ExtResource("37_2ex0y")
 ui_event = ExtResource("50_afdg2")
+current_skill = ExtResource("64_fr6di")
 
 [node name="AttackSystem" type="Node" parent="."]
 script = ExtResource("47_nus0m")

@@ -2,38 +2,38 @@ class_name SkillSystem
 extends Node
 
 ### ============
-### Manage absorb and infuse.
-### send absorb command and get object
-### press absorb again will throw and lose object
-### press infuse will get skill for later use
+### Lantern and skill manager
 ### ============
-signal got_element(element)
 
 @onready var grab_ray : RayCast2D = $"../Directions/Element_ray"
 @onready var familiar_scene : PackedScene = preload("res://Scenes/Player/familiar.tscn")
-var pickup_area : Area2D
+
+@export_group("Projectile skill")
 @export var ui_event : CustomEventChannel
+@export var current_skill : SkillContainer
 
 var player : Player
+var familiar : Familiar
 var is_cooldown : bool = false
 
-var familiar : Familiar
-var current_skill : SkillContainer
-
-func setup(ref_player : Player):
+func setup(ref_player : Player)->void:
 	player = ref_player
 	familiar = familiar_scene.instantiate() as Familiar
 	familiar.defualt_target = player.orb_anchor
 	familiar.lerp_target = player.orb_anchor
 	player.add_sibling.call_deferred(familiar)
 
-#region Familiar
-func command_familiar():
+#region Familiar skill
+func is_familiar_ready(event:InputEvent)->bool:
+	if not event.is_action_pressed("skill"): return false
+	return false
+
+func command_familiar()->void:
 	### grab object or throw it if object in hand
 	match familiar.hand_status:
 		familiar.Hand.EMPTY:
 			if grab_ray.is_colliding():
-				var coll = grab_ray.get_collider()
+				var coll:= grab_ray.get_collider()
 				if coll is GrabbableHost:
 					if coll.can_havest():
 						familiar.on_get_object(coll)
@@ -43,15 +43,15 @@ func command_familiar():
 
 #endregion
 #region skill
-func is_can_used_skill() -> bool:
+func is_can_use_skill(event : InputEvent) -> bool:
+	if not event.is_action_pressed("action_2"): return false
+	#if not player.player_data.is_abilitie_unlock("command"): return false
 	if is_cooldown: return false
 	if not is_instance_valid(current_skill) : return false
-	return is_have_mana_for_skill(current_skill.cost)
+	#is have mana for skill
+	return player.player_data.current_mana - current_skill.cost>= 0
 
-func is_have_mana_for_skill(_cost : float) -> bool:
-	return player.player_data.current_mana - _cost >= 0
-
-func activate_skill():
+func activate_skill()->void:
 	#if have infuse skill
 	if is_instance_valid(current_skill):
 		if player.player_data.current_mana - current_skill.cost < 0: return
@@ -61,7 +61,7 @@ func activate_skill():
 		current_skill.active_skill(self)
 		
 		is_cooldown = true
-		var timer = 0
+		var timer:float = 0
 		while timer < current_skill.cooldown:
 			await get_tree().create_timer(0.05).timeout
 			timer += 0.05

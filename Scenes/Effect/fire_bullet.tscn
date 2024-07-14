@@ -42,7 +42,7 @@ size = Vector2(128, 128)
 [sub_resource type="Gradient" id="Gradient_15ebn"]
 colors = PackedColorArray(0, 0, 0, 1, 0.90732, 0.16711, 0.0598378, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_uwgbu"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3yrh4"]
 gradient = SubResource("Gradient_15ebn")
 use_hdr = true
 
@@ -50,7 +50,7 @@ use_hdr = true
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_bsf8v"]
+[sub_resource type="CurveTexture" id="CurveTexture_2v6wp"]
 curve = SubResource("Curve_allf3")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dwxjw"]
@@ -60,8 +60,8 @@ emission_sphere_radius = 55.03
 gravity = Vector3(0, 0, 0)
 scale_min = 0.5
 scale_max = 1.5
-scale_curve = SubResource("CurveTexture_bsf8v")
-color_ramp = SubResource("GradientTexture1D_uwgbu")
+scale_curve = SubResource("CurveTexture_2v6wp")
+color_ramp = SubResource("GradientTexture1D_3yrh4")
 
 [sub_resource type="Gradient" id="Gradient_8g6xq"]
 colors = PackedColorArray(0, 0, 0, 1, 0.90732, 0.16711, 0.0598378, 1)
@@ -399,18 +399,15 @@ damage_data = SubResource("Resource_k225u")
 shape = SubResource("RectangleShape2D_s7mtm")
 
 [node name="HurtBox" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 6
 script = ExtResource("3_mqiqy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-visible = false
 shape = SubResource("RectangleShape2D_131gw")
 debug_color = Color(0, 0.647059, 0.180392, 0.419608)
 
 [node name="AttackBox" type="Area2D" parent="."]
-visible = false
 collision_layer = 8
 collision_mask = 8
 script = ExtResource("6_uttks")
@@ -446,7 +443,6 @@ one_shot = true
 position = Vector2(9.53674e-07, 0)
 rotation = 3.14159
 texture = ExtResource("4_33lor")
-vframes = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

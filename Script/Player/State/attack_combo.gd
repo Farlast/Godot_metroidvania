@@ -23,7 +23,7 @@ var listen_input_window : bool
 var direction : float
 var attack_system : AttackSystem
 
-func _ready():
+func _ready()->void:
 	super._ready()
 	animator.animation_finished.connect(on_animation_finish)
 	player.attack_success.connect(on_attack_success)
@@ -33,7 +33,7 @@ func _ready():
 ############
 ## Custom
 ############
-func on_enter():
+func on_enter()->void:
 	attack_box.get_damage_data().add(damage_data)
 	super.on_enter()
 	if air_fix_movement:
@@ -48,24 +48,24 @@ func on_enter():
 	attack_system.disable_hitbox.connect(disable_hitbox)
 	attack_system.allow_skip_animation.connect(allow_next_animation)
 
-func on_attack_success():
+func on_attack_success()->void:
 	if not active_input: return
 	if not knockback_from_attack: return
 	if player.get_hit_direction != Vector2.ZERO:
 		player.velocity.x += (-player.get_hit_direction.x * velocity_move.x)
 
-func on_animation_finish(_animation_name : String):
+func on_animation_finish(_animation_name : String)->void:
 	disable_hitbox()
 	if not active_input: return
 	end_state()
 
-func end_state():
+func end_state()->void:
 	if player.is_on_floor() : 
 		transition.emit(self,"Idle")
 	else :
 		transition.emit(self,"fall")
 
-func on_exit():
+func on_exit()->void:
 	super.on_exit()
 	disable_hitbox()
 	active_input = false
@@ -75,7 +75,7 @@ func on_exit():
 	attack_system.disable_hitbox.disconnect(disable_hitbox)
 	attack_system.allow_skip_animation.disconnect(allow_next_animation)
 
-func on_physics_update(_delta : float):
+func on_physics_update(_delta : float)->void:
 	super.on_physics_update(_delta)
 	if air_fix_movement:
 		player.velocity.y = 0
@@ -84,7 +84,7 @@ func on_physics_update(_delta : float):
 	player.add_drag(_delta)
 	player.move_and_slide()
 
-func  _unhandled_input(event):
+func  _unhandled_input(event:InputEvent)->void:
 	if not is_controllable(): return
 	if not active_input: return
 	if air_fix_movement and event.is_action_released("move_left") || event.is_action_released("move_right"):
@@ -98,17 +98,17 @@ func  _unhandled_input(event):
 		if listen_input_window:
 			allow_next_animation()
 
-func play_animation():
+func play_animation()->void:
 	animator.play(animation_name)
 
 ### call by animation
-func enable_hitbox():
+func enable_hitbox()->void:
 	attack_box_col.set_deferred("disabled",false)
 
-func disable_hitbox():
+func disable_hitbox()->void:
 	attack_box_col.set_deferred("disabled",true)
 
-func allow_next_animation():
+func allow_next_animation()->void:
 	### allow exit state before animation finish
 	listen_input_window = true
 	if not active_input: return
@@ -116,6 +116,6 @@ func allow_next_animation():
 		listen_input_window = false
 		next_combo_state()
 
-func next_combo_state():
+func next_combo_state()->void:
 	if next_attack_sate:
 		transition.emit(self,next_attack_sate.name.to_lower())

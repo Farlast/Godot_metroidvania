@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="SingleBullet" load_steps=5 format=3 uid="uid://b7gayra12dcja"]
+[gd_resource type="Resource" script_class="SingleBullet" load_steps=6 format=3 uid="uid://b7gayra12dcja"]
 
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="1_c3ava"]
 [ext_resource type="Script" path="res://Script/Player/Skill/container/SingleBullet.gd" id="1_twrlu"]
 [ext_resource type="Texture2D" uid="uid://b8tgwsqq1ttw5" path="res://Art/Interact/FirePlant/fire_plant_flower.png" id="2_hev5n"]
+[ext_resource type="PackedScene" uid="uid://b7fuywns7uaeq" path="res://Scenes/Effect/fire_bullet.tscn" id="4_du8bv"]
 
 [sub_resource type="Resource" id="Resource_nsi7y"]
 script = ExtResource("1_c3ava")
@@ -15,12 +16,12 @@ take_damage_mask = 0
 
 [resource]
 script = ExtResource("1_twrlu")
-direction = Vector2(0, 0)
 speed = 1000.0
 damage_data = SubResource("Resource_nsi7y")
-path_dir = "res://Scenes/Effect/fire_bullet.tscn"
-cooldown = 1.5
-cost = 2.5
+path_dir = ""
+cooldown = 0.3
+cost = 1.0
 cast_time = 0.3
 animation_name = "sample"
 icon = ExtResource("2_hev5n")
+skill_scene = ExtResource("4_du8bv")
