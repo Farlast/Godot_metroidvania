@@ -21,14 +21,14 @@ var flashing : bool = false
 var flashing_duration : float = 0.2
 var flashing_timer : float
 
-func _ready():
+func _ready()->void:
 	hp = max_hp
 	shader = sprite.material as ShaderMaterial
 
-func _process(delta):
+func _process(delta:float)->void:
 	flash_on_hit(delta)
 
-func flash_on_hit(delta):
+func flash_on_hit(delta:float)->void:
 	if flashing:
 		flashing_timer += delta
 		if flashing_timer >= flashing_duration:
@@ -54,7 +54,7 @@ func calculate_damage(damage_data: DamageData)->bool:
 		dead()
 	return true
 
-func dead():
+func dead()->void:
 	set_process(false)
 	set_physics_process(false)
 	dead_sound.play()
@@ -64,7 +64,7 @@ func dead():
 	await get_tree().create_timer(1.5).timeout
 	queue_free()
 
-func flip_direction(target_pos : Vector2):
+func flip_direction(target_pos : Vector2)->void:
 	if target_pos > global_position:
 		direction_holder.scale.x = abs(direction_holder.scale.x)
 	else:

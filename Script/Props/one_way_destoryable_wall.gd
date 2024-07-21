@@ -22,14 +22,14 @@ var block_effect : CPUParticles2D
 var hp : float = 1
 var data : NodeSaveData
 
-func _ready():
+func _ready()->void:
 	hp = max_hp
 	if faceing_side == 0:
 		scale.x = abs(scale.x)
 	else :
 		scale.x = -abs(scale.x)
 	
-	var id = GameManager.get_object_id(self)
+	var id := GameManager.get_object_id(self)
 	data = NodeSaveData.new()
 	data.id = id
 	data.status = false
@@ -38,8 +38,7 @@ func _ready():
 		queue_free()
 	
 
-func take_damage(damage_data : DamageData):
-	
+func take_damage(damage_data : DamageData)->bool:
 	if faceing_side == 0: #left
 		if damage_data.sender_position.x > global_position.x: # from the right
 			hited(damage_data)
@@ -53,19 +52,20 @@ func take_damage(damage_data : DamageData):
 			
 	if hp<= 0:
 		dead()
-		
-func blocked():
+	return true
+	
+func blocked()->void:
 	audio_player.stream = audio_block
 	audio_player.play()
 	
-func hited(damage_data):
+func hited(damage_data:DamageData)->void:
 	hit_effect.restart()
 	slash_effect.restart()
 	hp -= damage_data.damage
 	audio_player.stream = audio_hit
 	audio_player.play()
 	
-func dead():
+func dead()->void:
 	hurt_box.set_deferred("disabled",true)
 	collition.set_deferred("disabled",true)
 	audio_player.stream = audio_destory

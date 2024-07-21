@@ -3,7 +3,7 @@ class_name EffectEmiter extends Node2D
 var gpu_effects : Array[GPUParticles2D]
 var cpu_effects : Array[CPUParticles2D]
 
-func _ready():
+func _ready()->void:
 	gpu_effects.clear()
 	cpu_effects.clear()
 	for child in get_children():
@@ -12,7 +12,7 @@ func _ready():
 		if child is CPUParticles2D:
 			cpu_effects.append(child)
 
-func restart_all():
+func restart_all()->void:
 	if gpu_effects.size() > 0:
 		for effect in gpu_effects:
 			effect.restart()

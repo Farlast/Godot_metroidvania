@@ -22,11 +22,11 @@ var listen_input_window : bool
 var attacked : bool
 var skill : PackedScene
 
-func _ready():
+func _ready()->void:
 	super._ready()
 	animator.animation_finished.connect(on_animation_finish)
 
-func on_enter():
+func on_enter()->void:
 	super.on_enter()
 	active_input = true
 	charge_timer = 0
@@ -36,14 +36,14 @@ func on_enter():
 	animator.play(animation_name)
 	player.velocity = Vector2.ZERO
 
-func on_exit():
+func on_exit()->void:
 	super.on_exit()
 	active_input = false
 	charge_timer = 0
 	charging = false
 	listen_input_window = false
 
-func on_update(_delta : float):
+func on_update(_delta : float)->void:
 	super.on_update(_delta)
 	if charging and charge_timer < charge_time:
 		charge_timer += _delta
@@ -53,12 +53,12 @@ func on_update(_delta : float):
 		if auto_release:
 			transition.emit(self,next_chrage_sate.name.to_lower())
 
-func on_physics_update(_delta : float):
+func on_physics_update(_delta : float)->void:
 	super.on_physics_update(_delta)
 	player.add_drag(_delta,false,5)
 	player.move_and_slide()
 
-func  _unhandled_input(event):
+func  _unhandled_input(event:InputEvent)->void:
 	if not is_controllable(): return
 	if not active_input: return
 	if event.is_action_released(input_action_name) and not attacked:
@@ -71,11 +71,11 @@ func  _unhandled_input(event):
 			# charge version
 			transition.emit(self,next_chrage_sate.name.to_lower())
 
-func on_animation_finish(_animation_name : String):
+func on_animation_finish(_animation_name : String)->void:
 	if _animation_name != "charge_attack_start" and active_input:
 		next_state()
 
-func next_state():
+func next_state()->void:
 	if player.is_on_floor():
 		transition.emit(self,"Idle")
 	else :

@@ -2,8 +2,8 @@ extends Node2D
 
 const WATER_SPRING = preload("res://Scenes/Water/water_spring.tscn")
 @onready var water_polygon :Polygon2D= $Polygon2D
-@onready var water_body_area = $Area2D
-@onready var collision_shape_2d = $Area2D/CollisionShape2D
+@onready var water_body_area :Area2D= $Area2D
+@onready var collision_shape_2d :CollisionShape2D= $Area2D/CollisionShape2D
 
 @export var distance_between_spring : float = 35
 @export var spring_amount : int = 3
@@ -22,15 +22,15 @@ var right_deltas : Array = []
 
 var first_index :int = 0
 var last_index :int
-var water_polygon_points
+var water_polygon_points:PackedVector2Array
 var surface_point: Array = []
 
-func _ready():
+func _ready()->void:
 	target_height = 0
 	bottom = target_height + depth
 	for i in range(spring_amount):
-		var x_position = distance_between_spring * i
-		var water_ins = WATER_SPRING.instantiate()
+		var x_position :float= distance_between_spring * i
+		var water_ins := WATER_SPRING.instantiate()
 		add_child(water_ins)
 		spring_array.append(water_ins)
 		water_ins.initalize(x_position,i)
@@ -53,14 +53,14 @@ func _ready():
 	water_polygon_points = PackedVector2Array(water_polygon_points)
 	water_polygon.set_polygon(water_polygon_points)
 	
-	var total_length = distance_between_spring * (spring_amount-1)
-	var rect_position = Vector2(total_length/2,depth/2)
-	var rect_size = Vector2(total_length,depth)
+	var total_length := distance_between_spring * (spring_amount-1)
+	var rect_position :Vector2= Vector2(total_length/2,depth/2)
+	var rect_size :Vector2= Vector2(total_length,depth)
 	collision_shape_2d.shape.size = rect_size
 	water_body_area.position = rect_position
 
-func _physics_process(_delta):
-	for i in spring_array:
+func _physics_process(_delta:float)->void:
+	for i:WaterSpring in spring_array:
 		i.wave_update(stiffness,damping)
 	for i in range(spring_array.size()):
 		if i > 0:
@@ -71,11 +71,11 @@ func _physics_process(_delta):
 			spring_array[i+1].velocity += right_deltas[i]
 	drawn_water_body()
 
-func splash(index,speed):
+func splash(index:int,speed:float)->void:
 	if index > 0 and index < spring_array.size():
 		spring_array[index].velocity += speed
 
-func drawn_water_body():
+func drawn_water_body()->void:
 	water_polygon_points = water_polygon.polygon
 	for i in range(spring_array.size()):
 		water_polygon_points.set(i,spring_array[i].position)

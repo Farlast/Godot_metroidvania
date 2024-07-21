@@ -541,7 +541,7 @@ player = NodePath("../Player")
 z_index = 1
 position = Vector2(15608, 1032)
 distance_between_spring = 50.0
-spring_amount = 30
+spring_amount = 100
 stiffness = 0.05
 depth = 500.0
 

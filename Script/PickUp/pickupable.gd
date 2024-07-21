@@ -10,11 +10,11 @@ extends Area2D
 
 var data : NodeSaveData
 
-func _ready():
+func _ready()->void:
 	stay_effect.emitting = true
 	connect("body_entered",pickup)
 	
-	var id = GameManager.get_object_id(self)
+	var id := GameManager.get_object_id(self)
 	data = NodeSaveData.new()
 	data.id = id
 	data.status = false
@@ -22,7 +22,7 @@ func _ready():
 	if GameManager.is_object_stored(id):
 		queue_free()
 
-func pickup(_body):
+func pickup(_body:Node2D)->void:
 	if not _body is Player: return
 	var player : Player = _body as Player
 	set_deferred("monitoring",false)

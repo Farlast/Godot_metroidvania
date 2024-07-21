@@ -28,15 +28,15 @@ var next_passage_target : int
 
 #region Tools
 
-func _get_property_list():
-	var property_usage = PROPERTY_USAGE_DEFAULT
+func _get_property_list()->Array:
+	var property_usage := PROPERTY_USAGE_DEFAULT
 	
 	if this_scene_passage_handle == null:
 		property_usage = PROPERTY_USAGE_NO_EDITOR
 	else:
 		property_usage = PROPERTY_USAGE_DEFAULT
 	
-	var properties = []
+	var properties :Array= []
 	properties.append({
 		"name": "this_passage_index",
 		"type": TYPE_INT,
@@ -59,7 +59,7 @@ func _get_property_list():
 	})
 	return properties
 
-func array_to_string(arr : SceneHandle, separater = ",")->String:
+func array_to_string(arr : SceneHandle, separater :String= ",")->String:
 	var string : String = ""
 	if arr == null:
 		return string
@@ -71,7 +71,7 @@ func array_to_string(arr : SceneHandle, separater = ",")->String:
 #endregion
 #region Main
 
-func _ready():
+func _ready()->void:
 	if not Engine.is_editor_hint():
 		connect("body_entered",_on_player_enter)
 		var this_passage : PassageHandle
@@ -87,7 +87,7 @@ func _ready():
 			SceneManager.set_player_position.emit(exit_position.global_position)
 			SceneManager.animation_player.play("dissolve")
 
-func _on_player_enter(body : Node2D):
+func _on_player_enter(body : Node2D)->void:
 	if body is Player and next_scene_passage_handle != null:
 		var passage : PassageHandle = next_scene_passage_handle.passage_list[next_passage_target]
 		SceneManager.change_scene_by_name_no_fadeout(passage.target_scene_path,passage)

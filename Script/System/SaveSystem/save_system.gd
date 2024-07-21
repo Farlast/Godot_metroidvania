@@ -2,13 +2,13 @@ class_name SaveSystem
 extends RefCounted
 
 #const  SavePath :String = "res://saveData.tres"
-const  SavePath1 :String = "res://saveData_1.tres"
+#const  SavePath1 :String = "res://saveData_1.tres"
 #const  SavePath2 :String = "res://saveData_2.tres"
 #const  SavePath3 :String = "res://saveData_3.tres"
 #const  SavePath4 :String = "res://saveData_4.tres"
 
 ###prod
-#const  SavePath1 :String = "user://saveData_1.tres"
+const  SavePath1 :String = "user://saveData_1.tres"
 const  SavePath2 :String = "user://saveData_2.tres"
 const  SavePath3 :String = "user://saveData_3.tres"
 const  SavePath4 :String = "user://saveData_4.tres"
@@ -17,7 +17,7 @@ const  SettingSavePath :String = "user://settingData.tres"
 var stored_objects: Dictionary #[String, NodeSaveData]
 var current_save_index : int = 1
 
-func save_game():
+func save_game()->void:
 	var save_path : String = get_save_path_by_index(current_save_index)
 	GameManager.player_data.last_scene_visit_path = SceneManager.last_savepoint_visit.target_scene_path
 	var save_game_file : SaveData = SaveData.new()
@@ -30,7 +30,7 @@ func save_game():
 	
 	ResourceSaver.save(save_game_file,save_path)
 
-func load_game(save_index:int):
+func load_game(save_index:int)->void:
 	current_save_index = save_index
 	var save_path :String = get_save_path_by_index(save_index)
 	var save_game_file : SaveData = load(save_path) as SaveData
@@ -50,12 +50,12 @@ func get_save_data(save_index:int) -> SaveData:
 	else:
 		return null
 	
-func delete_save(save_index:int):
+func delete_save(save_index:int)->void:
 	var save_path :String = get_save_path_by_index(save_index)
 	if FileAccess.file_exists(save_path):
 		DirAccess.remove_absolute(save_path)
 
-func save_setting(setting : SettingData):
+func save_setting(setting : SettingData)->void:
 	ResourceSaver.save(setting,SettingSavePath)
 
 func load_setting() -> SettingData:

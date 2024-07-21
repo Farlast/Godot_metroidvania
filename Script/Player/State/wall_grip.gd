@@ -5,7 +5,7 @@ class_name WallGrip extends State
 @export var slide_rate : float = 10
 var active_input : bool
 
-func on_enter():
+func on_enter()->void:
 	super.on_enter()
 	player.velocity = Vector2(0,250)
 	active_input = true
@@ -13,15 +13,15 @@ func on_enter():
 	animator.play("wall_slide")
 	effect.emitting = true
 
-func on_exit():
+func on_exit()->void:
 	super.on_exit()
 	active_input = false
 	effect.emitting = false
 
-func on_update(_delta : float):
+func on_update(_delta : float)->void:
 	super.on_update(_delta)
 
-func on_physics_update(_delta : float):
+func on_physics_update(_delta : float)->void:
 	super.on_physics_update(_delta)
 	if player.is_on_floor():
 		transition.emit(self,"idle")
@@ -29,10 +29,10 @@ func on_physics_update(_delta : float):
 		transition.emit(self,"fall")
 	player.move_and_slide()
 
-func _unhandled_input(event):
+func _unhandled_input(event:InputEvent)->void:
 	if not is_controllable(): return
 	if not active_input: return
-	var h_direction = Input.get_axis("move_left", "move_right")
+	var h_direction :float= Input.get_axis("move_left", "move_right")
 	if h_direction == 0:
 		transition.emit(self,"fall")
 	if event.is_action_pressed("jump"):

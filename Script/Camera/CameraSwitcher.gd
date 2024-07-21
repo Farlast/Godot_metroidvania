@@ -8,11 +8,11 @@ enum PathMode {HORIZONTAL,VERTICAL}
 @export var virtual_camera_2: VirtualCamera2D
 @export var transition_speed : float = 0.5
 
-func _ready():
+func _ready()->void:
 	connect("body_entered",_on_enter)
 	connect("body_exited",_on_exit)
 
-func _on_enter(_body : Node2D):
+func _on_enter(_body : Node2D)->void:
 	cinematic_camera.transition_speed = transition_speed
 	cinematic_camera.position_smoothing_enabled = true
 	match mode:
@@ -21,32 +21,32 @@ func _on_enter(_body : Node2D):
 		PathMode.VERTICAL:
 			on_vertical_mode(_body.global_position)
 
-func _on_exit(_body : Node2D):
+func _on_exit(_body : Node2D)->void:
 	match mode:
 		PathMode.HORIZONTAL:
 			on_exit_horizontal_mode(_body.global_position)
 		PathMode.VERTICAL:
 			on_exit_vertical_mode(_body.global_position)
 
-func on_horizontal_mode(body_position : Vector2):
+func on_horizontal_mode(body_position : Vector2)->void:
 	if body_position.x > global_position.x:
 		cinematic_camera.virtual_camera = virtual_camera_1
 	else:
 		cinematic_camera.virtual_camera = virtual_camera_2
 
-func on_vertical_mode(body_position : Vector2):
+func on_vertical_mode(body_position : Vector2)->void:
 	if body_position.y < global_position.y:
 		cinematic_camera.virtual_camera = virtual_camera_1
 	else:
 		cinematic_camera.virtual_camera = virtual_camera_2
 
-func on_exit_horizontal_mode(body_position : Vector2):
+func on_exit_horizontal_mode(body_position : Vector2)->void:
 	if body_position.x < global_position.x:
 		cinematic_camera.virtual_camera = virtual_camera_1
 	else:
 		cinematic_camera.virtual_camera = virtual_camera_2
 	
-func on_exit_vertical_mode(body_position : Vector2):
+func on_exit_vertical_mode(body_position : Vector2)->void:
 	if body_position.y < global_position.y:
 		cinematic_camera.virtual_camera = virtual_camera_1
 	else:

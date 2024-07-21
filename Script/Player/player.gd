@@ -11,7 +11,6 @@ signal take_damage_trigger(damage_data : DamageData)
 @onready var slash_effect : CPUParticles2D = $Directions/Effect/SlashEffect
 @onready var direction_holder : Node2D = $Directions
 @onready var orb_anchor : Node2D = $Directions/OrbAnchor
-@onready var front_point : Node2D = $Directions/FrontPoint
 @onready var animation : AnimationPlayer = $AnimationPlayer
 @onready var skill_system : SkillSystem = $SkillSystem
 @onready var footstep_player : FootstepPlayer = $FootstepPlayer

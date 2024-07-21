@@ -4,7 +4,7 @@ class_name BulletJump extends State
 var off_ground : bool
 var active_input : bool
 
-func on_enter():
+func on_enter()->void:
 	super.on_enter()
 	player.velocity.y = player.jump_velocity
 	player.velocity.x += 200 * player.direction_holder.scale.x
@@ -16,7 +16,7 @@ func on_enter():
 	await get_tree().create_timer(shooting_time).timeout
 	transition.emit(self,"fall")
 
-func on_physics_update(_delta : float):
+func on_physics_update(_delta : float)->void:
 	super.on_physics_update(_delta)
 	if not player.is_on_floor():
 		off_ground = true

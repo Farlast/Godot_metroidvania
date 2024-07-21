@@ -14,7 +14,7 @@ class_name ChaseEnemy
 
 var is_on_screen : bool
 
-func _ready():
+func _ready()->void:
 	super._ready()
 	
 	if direction_holder.scale.x > 0:
@@ -36,7 +36,7 @@ func take_damage(damage_data : DamageData)->bool:
 			direction_holder.scale.x = abs(direction_holder.scale.x)
 	return true
 
-func on_idle(state : EnemyState,_delta:float):
+func on_idle(state : EnemyState,_delta:float)->void:
 	if not is_on_floor():return
 	else:add_drag(_delta)
 	
@@ -47,7 +47,7 @@ func on_idle(state : EnemyState,_delta:float):
 		state.transition.emit(state,"chase")
 		face_to_target(false)
 
-func face_to_target(delay :bool = true):
+func face_to_target(delay :bool = true)->void:
 	if target == null: return
 	if turning : return
 	turning = true
@@ -62,19 +62,19 @@ func face_to_target(delay :bool = true):
 		turn_left = true
 		direction_holder.scale.x = abs(direction_holder.scale.x)
 
-func on_stance_break():
+func on_stance_break()->void:
 	if not health_system.is_dead():
 		state_machine.current_state.transition.emit(state_machine.current_state,"stancebreak")
 
-func dead():
+func dead()->void:
 	state_machine.current_state.transition.emit(state_machine.current_state,"empty")
 	if is_on_screen:
 		var camera = GameManager.main_camera
 		camera.add_trauma(0.5)
 	super.dead()
 
-func on_screen_enter():
+func on_screen_enter()->void:
 	is_on_screen = true
 
-func on_screen_exit():
+func on_screen_exit()->void:
 	is_on_screen = false

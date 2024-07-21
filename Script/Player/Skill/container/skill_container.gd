@@ -8,6 +8,8 @@ class_name SkillContainer extends Resource
 @export var icon : Texture2D
 @export var skill_scene : PackedScene
 
+var is_cooldown : bool
+
 func request_load_scene()->void:
 	if not is_instance_valid(skill_scene):
 		ResourceLoader.load_threaded_request(path_dir)
@@ -21,3 +23,8 @@ func get_scene_async() -> PackedScene:
 
 func active_skill(_skill_system : SkillSystem)->void:
 	pass
+
+func set_cooldown(node:Node)->void:
+	is_cooldown = true
+	await node.get_tree().create_timer(cooldown).timeout
+	is_cooldown = false

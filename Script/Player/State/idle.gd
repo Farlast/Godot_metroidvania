@@ -50,7 +50,7 @@ func _unhandled_input(event:InputEvent)->void:
 		transition.emit(self,"chargeable_attack")
 	elif event.is_action_pressed("dash") && player.is_can_dash():
 		transition.emit(self,"dash")
-	elif player.skill_system.is_can_use_skill(event):
+	elif player.skill_system.is_projectile_ready(event):
 		transition.emit(self,"projectile")
 	elif player.skill_system.is_familiar_ready(event):
 		transition.emit(self,"performskill")

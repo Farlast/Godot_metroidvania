@@ -2168,6 +2168,12 @@ position = Vector2(-67, -72)
 [node name="FrontPoint" type="Node2D" parent="Directions"]
 position = Vector2(64, -35)
 
+[node name="UpPoint" type="Node2D" parent="Directions"]
+position = Vector2(0, -75)
+
+[node name="CrouchPoint" type="Node2D" parent="Directions"]
+position = Vector2(64, 29)
+
 [node name="Element_ray" type="RayCast2D" parent="Directions"]
 visible = false
 position = Vector2(24, -48)
@@ -2387,9 +2393,13 @@ footsteps = Array[Resource("res://Script/Audio/footsteps_container.gd")]([ExtRes
 visible = false
 target_position = Vector2(0, 10)
 
-[node name="SkillSystem" type="Node" parent="."]
+[node name="SkillSystem" type="Node" parent="." node_paths=PackedStringArray("front_point", "crouch_point", "up_point")]
 script = ExtResource("37_2ex0y")
+front_point = NodePath("../Directions/FrontPoint")
+crouch_point = NodePath("../Directions/CrouchPoint")
+up_point = NodePath("../Directions/UpPoint")
 ui_event = ExtResource("50_afdg2")
+feather = ExtResource("64_fr6di")
 current_skill = ExtResource("64_fr6di")
 
 [node name="AttackSystem" type="Node" parent="."]

@@ -9,7 +9,7 @@ class_name EnemyStateMachine
 var current_state : EnemyState
 var states : Dictionary = {}
 
-func _ready():
+func _ready()->void:
 	for child in get_children():
 		if child is EnemyState:
 			states[child.name.to_lower()] = child
@@ -20,14 +20,14 @@ func _ready():
 		InitialState.on_enter()
 		current_state = InitialState
 
-func _process(delta):
+func _process(delta:float)->void:
 	if current_state:
 		current_state.on_update(delta)
-func  _physics_process(delta):
+func  _physics_process(delta:float)->void:
 	if current_state:
 		current_state.on_physics_update(delta)
 		
-func on_child_transition(state : EnemyState , new_state_name : String):
+func on_child_transition(state : EnemyState , new_state_name : String)->void:
 	if state != current_state : return
 	var new_state : EnemyState = states.get(new_state_name.to_lower())
 	if !new_state: return
@@ -37,6 +37,6 @@ func on_child_transition(state : EnemyState , new_state_name : String):
 	current_state = new_state
 	debug_state_display()
 	
-func debug_state_display():
+func debug_state_display()->void:
 	if is_instance_valid(current_state_display):
 		current_state_display.text = current_state.name

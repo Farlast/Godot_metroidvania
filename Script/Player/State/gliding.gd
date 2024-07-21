@@ -3,27 +3,27 @@ class_name Gliding extends State
 var active_input : bool
 var h_direction : float
 
-func on_enter():
+func on_enter()->void:
 	super.on_enter()
 	animator.play("fall")
 	active_input = true
 	player.velocity.y = 100
 
-func on_exit():
+func on_exit()->void:
 	super.on_exit()
 	active_input = false
 
-func _unhandled_input(event):
+func _unhandled_input(event:InputEvent)->void:
 	if not is_controllable(): return
 	if not active_input : return
 	if event.is_action_released("glide"):
 		transition.emit(self,"fall")
 
-func on_update(_delta : float):
+func on_update(_delta : float)->void:
 	super.on_update(_delta)
 	h_direction = Input.get_axis("move_left", "move_right")
 
-func on_physics_update(_delta : float):
+func on_physics_update(_delta : float)->void:
 	super.on_physics_update(_delta)
 	if player.is_can_wall_grip() and h_direction != 0:
 		transition.emit(self,"wallgrip")
@@ -36,7 +36,7 @@ func on_physics_update(_delta : float):
 	fall(_delta)
 	player.move_and_slide()
 
-func fall(delta):
+func fall(delta:float)->void:
 	if player.external_velocity != Vector2.ZERO:
 		player.velocity += player.external_velocity * delta
 	else:

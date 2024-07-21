@@ -20,7 +20,7 @@ var need_respawn : bool = false
 var last_savepoint_visit : PassageHandle
 var savepoint_scene : String
 #reset on player dead
-func respawn_last_savepoint():
+func respawn_last_savepoint()->void:
 	#if in current scene reset position
 	entered_passage = last_savepoint_visit
 	if savepoint_scene == current_scene:
@@ -34,10 +34,10 @@ func respawn_last_savepoint():
 		change_scene_by_name_no_fadeout(savepoint_scene,last_savepoint_visit)
 		need_respawn = true
 #endregion
-func _ready():
+func _ready()->void:
 	animation_player = $AnimationPlayer
 
-func change_scene_by_name(scene : String):
+func change_scene_by_name(scene : String)->void:
 	animation_player.play_backwards("dissolve")
 	await  animation_player.animation_finished
 	get_tree().change_scene_to_file(scene)
@@ -46,7 +46,7 @@ func change_scene_by_name(scene : String):
 	current_scene = scene
 	scene_load_finished.emit()
 
-func change_scene_by_name_no_fadeout(scene : String, entered_path :PassageHandle):
+func change_scene_by_name_no_fadeout(scene : String, entered_path :PassageHandle)->void:
 	animation_player.play_backwards("dissolve")
 	await  animation_player.animation_finished
 	get_tree().change_scene_to_file(scene)
@@ -54,6 +54,6 @@ func change_scene_by_name_no_fadeout(scene : String, entered_path :PassageHandle
 	current_scene = scene
 	scene_load_finished.emit()
 
-func is_exit_path(_passage : PassageHandle):
+func is_exit_path(_passage : PassageHandle)->int:
 	if entered_passage == null: return false
 	return entered_passage.target_passage_id == _passage.target_passage_id

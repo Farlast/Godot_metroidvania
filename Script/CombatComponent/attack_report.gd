@@ -8,7 +8,7 @@ var object_tag :ObjectTag
 var damage_data :DamageData
 var receiver_position : Vector2
 
-func set_data(_success:bool,_object_tag:ObjectTag,_damage_data:DamageData,_receiver_position:Vector2):
+func set_data(_success:bool,_object_tag:ObjectTag,_damage_data:DamageData,_receiver_position:Vector2)->void:
 	success = _success
 	object_tag = _object_tag
 	damage_data = _damage_data

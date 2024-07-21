@@ -8,7 +8,6 @@ func on_enter()->void:
 	active_input = true
 	animator.play("crouch")
 	player.velocity = Vector2.ZERO
-	player.front_point.position.y += 40
 	
 func on_update(_delta : float)->void:
 	super.on_update(_delta)
@@ -26,7 +25,6 @@ func on_exit()->void:
 	super.on_exit()
 	active_input = false
 	player.velocity = Vector2.ZERO
-	player.front_point.position.y -= 40
 
 func _unhandled_input(event:InputEvent)->void:
 	if not is_controllable(): return
@@ -38,6 +36,5 @@ func _unhandled_input(event:InputEvent)->void:
 		transition.emit(self,"crouch_attack")
 	elif event.is_action_pressed("dash") and player.is_can_slide:
 		transition.emit(self,"slide")
-	elif player.skill_system.is_can_use_skill(event):
-		player.skill_system.activate_skill()
-		#transition.emit(self,"projectile")
+	elif player.skill_system.is_projectile_ready(event):
+		player.skill_system.crouch_fire_projectile()

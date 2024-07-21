@@ -8,7 +8,7 @@ func _ready():
 		spawn(self)
 
 func spawn(parent : Node)-> Enemy:
-	var obj = enemy_scene.instantiate()
+	var obj := enemy_scene.instantiate()
 	obj.position = global_position
 	parent.call_deferred("add_child",obj)
 	return obj

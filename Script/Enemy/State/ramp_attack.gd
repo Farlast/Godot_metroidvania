@@ -7,14 +7,14 @@ extends EnemyState
 
 var active_state : bool
 
-func on_enter():
+func on_enter()->void:
 	active_state = true
 	agent.velocity.x = 0
 	animator.animation_finished.connect(on_animation_finish)
 	animator.play("ramp_attack")
 	agent.super_armor = true
 
-func on_exit():
+func on_exit()->void:
 	super.on_exit()
 	## allow interrup by break stance
 	agent.super_armor = false
@@ -22,20 +22,20 @@ func on_exit():
 	attack_box_col.set_deferred("disabled",true)
 	animator.animation_finished.disconnect(on_animation_finish)
 
-func start_attack():
+func start_attack()->void:
 	agent.velocity.x = ramp_speed * -agent.direction_holder.scale.x
 	attack_box_col.set_deferred("disabled",false)
 
-func stop_attack():
+func stop_attack()->void:
 	agent.super_armor = false
 	agent.velocity.x = 0
 	attack_box_col.set_deferred("disabled",true)
 
-func on_animation_finish(_animation_name : String):
+func on_animation_finish(_animation_name : String)->void:
 	if active_state and _animation_name == "ramp_attack":
 		transition.emit(self,"idle")
 
-func on_update(delta):
+func on_update(delta:float)->void:
 	super.on_update(delta)
 	if not cliff_ray.is_colliding() and active_state:
 		stop_attack()

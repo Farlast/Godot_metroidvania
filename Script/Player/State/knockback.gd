@@ -5,7 +5,7 @@ var get_hit_direction : Vector2
 var is_unfreeze : bool
 var temp_damage_data : DamageData
 
-func on_enter():
+func on_enter()->void:
 	super.on_enter()
 	animator.play("hit")
 	player.velocity = Vector2.ZERO
@@ -38,16 +38,16 @@ func on_enter():
 		transition.emit(self,"fall")
 	
 
-func on_exit():
+func on_exit()->void:
 	super.on_exit()
 	player.velocity = Vector2.ZERO
 	player.get_hit_direction = Vector2.ZERO
 
-func on_physics_update(_delta : float):
+func on_physics_update(_delta : float)->void:
 	if is_unfreeze: return
 	player.add_fall_gravity(_delta)
 	player.move_and_slide()
 
 
-func _on_player_take_damage_trigger(damage_data):
+func _on_player_take_damage_trigger(damage_data:DamageData)->void:
 	temp_damage_data = damage_data

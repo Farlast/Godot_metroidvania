@@ -10,10 +10,10 @@ class_name Destroyable
 
 var hp : float
 
-func _ready():
+func _ready()->void:
 	hp = max_hp
 
-func take_damage(damage_data : DamageData):
+func take_damage(damage_data : DamageData)->bool:
 	hp -= damage_data.damage
 	play_effect_on_hit()
 	if hp <= 0:
@@ -21,10 +21,11 @@ func take_damage(damage_data : DamageData):
 		clear_on_dead()
 		await get_tree().create_timer(object_free_time).timeout
 		queue_free()
-		
-func play_effect_on_hit():
+	return true
+	
+func play_effect_on_hit()->void:
 	hit_effect.restart()
 	slash_effect.restart()
 
-func clear_on_dead():
+func clear_on_dead()->void:
 	hurt_box_col.set_deferred("disabled",true)

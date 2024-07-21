@@ -32,20 +32,20 @@ const FPS_OPTIONS : Dictionary = {
 	"200": 200
 }
 
-func _ready():
+func _ready()->void:
 	hide()
 	setup_resolution_selecter()
 	setup_fps_select()
 	set_default()
 
-func set_default():
+func set_default()->void:
 	fullscreen_btt.set_pressed_no_signal(GameManager.setting_data.fullscreen)
 	_on_fullscreen_toggled(GameManager.setting_data.fullscreen)
 	resolution_option.select(GameManager.setting_data.screen_resolution_index)
 	on_resolution_select(GameManager.setting_data.screen_resolution_index)
 
 #region Display
-func _on_fullscreen_toggled(button_pressed):
+func _on_fullscreen_toggled(button_pressed:bool)->void:
 	if button_pressed:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
@@ -54,24 +54,24 @@ func _on_fullscreen_toggled(button_pressed):
 		
 	GameManager.setting_data.fullscreen = button_pressed
 
-func setup_resolution_selecter():
-	for item in RESOLUTION_DICTIONARY:
+func setup_resolution_selecter()->void:
+	for item:String in RESOLUTION_DICTIONARY:
 		resolution_option.add_item(item)
 	resolution_option.item_selected.connect(on_resolution_select)
 
-func on_resolution_select(index:int):
+func on_resolution_select(index:int)->void:
 	DisplayServer.window_set_size(RESOLUTION_DICTIONARY.values()[index])
 	GameManager.setting_data.screen_resolution_index = index
 
-func setup_fps_select():
-	for item in FPS_OPTIONS:
+func setup_fps_select()->void:
+	for item:String in FPS_OPTIONS:
 		fps_option.add_item(item)
 	fps_option.item_selected.connect(on_fps_select)
 
-func on_fps_select(index:int):
+func on_fps_select(index:int)->void:
 	Engine.max_fps = FPS_OPTIONS.values()[index]
 
 #endregion
-func _on_back_pressed():
+func _on_back_pressed()->void:
 	GameManager.save_system.save_setting(GameManager.setting_data)
 	back_to_previous()

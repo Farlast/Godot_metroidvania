@@ -28,14 +28,14 @@ signal take_damage_trigger(damage_data : DamageData)
 @onready var direction_holder : Node2D = $Direction
 @onready var sprite : Sprite2D = $Direction/Sprite2D
 
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity :float= ProjectSettings.get_setting("physics/2d/default_gravity")
 var get_hit_direction : Vector2
 var shader : ShaderMaterial
 var flashing_duration : float = 0.1
 var super_armor : bool
 var target : Node2D
 
-func _ready():
+func _ready()->void:
 	health_system.setup()
 	health_system.dead.connect(dead)
 	health_system.stance_break.connect(on_stance_break)
@@ -60,16 +60,16 @@ func calculate_damage(damage_data : DamageData)-> bool:
 	take_damage_trigger.emit(damage_data)
 	return true
 
-func flash_on_hit():
+func flash_on_hit()->void:
 	shader.set_shader_parameter("active",true)
 	await get_tree().create_timer(flashing_duration).timeout
 	shader.set_shader_parameter("active",false)
 	
-func add_gravity(delta):
+func add_gravity(delta:float)->void:
 	if not is_on_floor() :
 		velocity.y += gravity * gravity_multiply * delta
 
-func dead():
+func dead()->void:
 	animator.play("dead")
 	dead_sound.play()
 	dead_effect.restart_all()
@@ -83,14 +83,14 @@ func dead():
 	await get_tree().create_timer(1.5).timeout
 	queue_free()
 
-func on_stance_break():
+func on_stance_break()->void:
 	pass
 
-func on_idle(_state : EnemyState,_delta:float):
+func on_idle(_state : EnemyState,_delta:float)->void:
 	pass
 
-func flip_direction():
+func flip_direction()->void:
 	direction_holder.scale.x = -direction_holder.scale.x
 
-func add_drag(delta : float, drag : float = 5):
+func add_drag(delta : float, drag : float = 5)->void:
 	velocity.x = move_toward(velocity.x,0,delta * drag)

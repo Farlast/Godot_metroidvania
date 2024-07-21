@@ -17,7 +17,12 @@ func on_enter()->void:
 	super.on_enter()
 	active_input = true
 	animator.play(animation_name)
-	player.skill_system.activate_skill()
+	var h_direction :float = Input.get_axis("move_left", "move_right",)
+	var v_direction :float = Input.get_axis("move_up", "move_down")
+	if player.is_on_floor():
+		player.skill_system.fire_projectile(Vector2(h_direction,v_direction))
+	else:
+		player.skill_system.midair_fire_projectile(Vector2(h_direction,v_direction))
 
 func on_exit()->void:
 	animator.animation_finished.disconnect(on_animation_finish)

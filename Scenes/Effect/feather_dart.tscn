@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_wrcv3"]
 script = ExtResource("2_2nrjp")
-damage = 5.0
+damage = 0.0
 impact = 0.0
 knockback_force = 0
 element = 0
@@ -19,7 +19,7 @@ take_damage_mask = 1
 size = Vector2(16, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6814y"]
-size = Vector2(48, 64)
+size = Vector2(64, 64)
 
 [sub_resource type="Gradient" id="Gradient_ukr8a"]
 colors = PackedColorArray(0, 0, 0, 1, 0.378129, 0.448929, 0.904933, 1)
@@ -45,12 +45,12 @@ scale_max = 0.5
 scale_curve = SubResource("CurveTexture_bsf8v")
 color_ramp = SubResource("GradientTexture1D_uwgbu")
 
-[sub_resource type="Animation" id="Animation_ek8fo"]
-resource_name = "start"
+[sub_resource type="Animation" id="Animation_1857x"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/path = NodePath("Ember:emitting")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -62,7 +62,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Ember:emitting")
+tracks/1/path = NodePath("Sprite2D:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -99,12 +99,12 @@ tracks/1/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_1857x"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_ek8fo"]
+resource_name = "start"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Ember:emitting")
+tracks/0/path = NodePath("Sprite2D:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -116,7 +116,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:visible")
+tracks/1/path = NodePath("Ember:emitting")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -144,7 +144,7 @@ shape = SubResource("RectangleShape2D_uduxf")
 
 [node name="AttackBox" type="Area2D" parent="."]
 visible = false
-collision_layer = 10
+collision_layer = 8
 collision_mask = 32
 script = ExtResource("1_xlyp3")
 

@@ -9,15 +9,15 @@ class_name ChaseState
 
 var attack_range : float
 
-func on_enter():
+func on_enter()->void:
 	animator.play("chase")
 	attack_range = randf_range(min_attack_range,max_attack_range)
 
-func on_update(_delta : float):
+func on_update(_delta : float)->void:
 	if not agent.is_on_floor():return
 	
 	agent.face_to_target()
-	var distance = abs(agent.target.global_position.x - agent.global_position.x)
+	var distance :float = abs(agent.target.global_position.x - agent.global_position.x)
 	if distance > stop_follow_range:
 		agent.target = null
 		transition.emit(self,"idle")
@@ -38,5 +38,5 @@ func on_update(_delta : float):
 	else:
 		agent.velocity.x = 1 * agent.move_speed
 
-func on_physics_update(_delta : float):
+func on_physics_update(_delta : float)->void:
 	super.on_physics_update(_delta)

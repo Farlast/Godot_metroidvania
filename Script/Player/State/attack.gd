@@ -19,7 +19,7 @@ var listen_input_window : bool
 var attack_box_col : CollisionShape2D
 var attack_system : AttackSystem
 
-func _ready():
+func _ready()->void:
 	super._ready()
 	animator.animation_finished.connect(on_animation_finish)
 	player.attack_success.connect(on_attack_success)
@@ -27,7 +27,7 @@ func _ready():
 	attack_system = player.attack_system
 	attack_box.get_damage_data().add(damage_data)
 
-func on_enter():
+func on_enter()->void:
 	super.on_enter()
 	active_input = true
 	listen_input_window = false
@@ -40,32 +40,32 @@ func on_enter():
 		attack_audio.play()
 
 ### call by animation
-func enable_hitbox():
+func enable_hitbox()->void:
 	attack_box_col.set_deferred("disabled",false)
 	
-func disable_hitbox():
+func disable_hitbox()->void:
 	attack_box_col.set_deferred("disabled",true)
 
-func next_state():
+func next_state()->void:
 	if player.is_on_floor() : 
 		transition.emit(self,"Idle")
 	else :
 		transition.emit(self,"fall")
 
-func on_animation_finish(_animation_name : String):
+func on_animation_finish(_animation_name : String)->void:
 	disable_hitbox()
 	if not active_input: return
 	next_state()
 
-func allow_next_animation():
+func allow_next_animation()->void:
 	listen_input_window = true
 
-func on_attack_success():
+func on_attack_success()->void:
 	if not active_input: return
 	if player.get_hit_direction != Vector2.ZERO:
 		player.velocity.x = player.knockback_force/2 * -player.get_hit_direction.x
 
-func on_exit():
+func on_exit()->void:
 	super.on_exit()
 	disable_hitbox()
 	active_input = false
@@ -73,16 +73,16 @@ func on_exit():
 	attack_system.enable_hitbox.disconnect(enable_hitbox)
 	attack_system.disable_hitbox.disconnect(disable_hitbox)
 	
-func on_update(_delta : float):
+func on_update(_delta : float)->void:
 	super.on_update(_delta)
 
-func on_physics_update(_delta : float):
+func on_physics_update(_delta : float)->void:
 	super.on_physics_update(_delta)
 	player.add_drag(_delta)
 	player.add_fall_gravity(_delta)
 	player.move_and_slide()
 	
-func  _unhandled_input(event):
+func  _unhandled_input(event:InputEvent)->void:
 	if not is_controllable(): return
 	if not active_input: return
 	if event.is_action_released("move_left") || event.is_action_released("move_right"):

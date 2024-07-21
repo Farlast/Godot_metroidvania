@@ -7,13 +7,13 @@ signal dead
 @export var health : StatusValue
 @export var stance : StatusValue
 
-func setup():
+func setup()->void:
 	health.setup()
-	health.ReachZero.connect(func():dead.emit())
+	health.ReachZero.connect(func()->void:dead.emit())
 	stance.setup()
-	stance.ReachZero.connect(func():stance_break.emit())
+	stance.ReachZero.connect(func()->void:stance_break.emit())
 
-func calculate_damage(damage_data:DamageData):
+func calculate_damage(damage_data:DamageData)->void:
 	health.substrect(damage_data.damage)
 	stance.substrect(damage_data.impact)
 

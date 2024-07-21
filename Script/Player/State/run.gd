@@ -9,7 +9,7 @@ var active_input : bool
 var position_update_time : float = 0.3
 var position_update_timer : float
 
-func on_enter():
+func on_enter()->void:
 	super.on_enter()
 	animator.play(animation_name)
 	active_input = true
@@ -18,14 +18,14 @@ func on_enter():
 	if effect:
 		effect.emitting = true
 	
-func on_exit():
+func on_exit()->void:
 	super.on_exit()
 	active_input = false
 	player.update_area()
 	if effect:
 		effect.emitting = false
 	
-func on_update(_delta : float):
+func on_update(_delta : float)->void:
 	super.on_update(_delta)
 	if player.Is_can_bufferjump: 
 		transition.emit(self,"Jump")
@@ -35,7 +35,7 @@ func on_update(_delta : float):
 		player.set_last_ground_position()
 		position_update_timer = 0
 
-func on_physics_update(_delta : float):
+func on_physics_update(_delta : float)->void:
 	super.on_physics_update(_delta)
 	if not player.is_on_floor():
 		player.add_fall_gravity(_delta)
@@ -46,10 +46,10 @@ func on_physics_update(_delta : float):
 	player.move_horizontal(run_speed)
 	player.move_and_slide()
 
-func _unhandled_input(event):
+func _unhandled_input(event:InputEvent)->void:
 	if not is_controllable(): return
 	if not active_input: return
-	var h_direction = Input.get_axis("move_left", "move_right")
+	var h_direction :float= Input.get_axis("move_left", "move_right")
 	if h_direction == 0:
 		transition.emit(self,"idle")
 	elif event.is_action_pressed("jump") && player.is_on_floor():
@@ -60,7 +60,7 @@ func _unhandled_input(event):
 		transition.emit(self,"dash")
 	elif player.is_can_heal(event):
 		player.start_heal()
-	elif player.skill_system.is_can_use_skill(event):
+	elif player.skill_system.is_projectile_ready(event):
 		transition.emit(self,"projectile")
 	elif player.skill_system.is_familiar_ready(event):
 		transition.emit(self,"performskill")

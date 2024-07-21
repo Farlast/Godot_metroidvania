@@ -17,33 +17,34 @@ enum STATE{
 }
 var current_state : STATE
 
-func _ready():
+func _ready()->void:
 	super._ready()
 	current_state = STATE.Idle
 
-func _process(delta):
+func _process(delta:float)->void:
 	flash_on_hit(delta)
 	if start_delay > 0:
 		start_delay -= delta
 		return
 	state_calculate(delta)
 
-func take_damage(damage : DamageData):
-	super.take_damage(damage)
+func take_damage(damage : DamageData)->bool:
 	flashing = true
+	super.take_damage(damage)
+	return true
 	
-func dead():
+func dead()->void:
 	attack_box.set_deferred("disabled",true)
 	super.dead()
 
-func state_calculate(delta):
+func state_calculate(delta:float)->void:
 	match current_state:
 		STATE.Idle:
 			on_idle(delta)
 		STATE.Attack:
 			fire_bullet(delta)
 
-func on_idle(delta):
+func on_idle(delta:float)->void:
 	if attack_ready:
 		attack_ready = false
 		fire_timer = 0
@@ -54,7 +55,7 @@ func on_idle(delta):
 	if fire_timer >= fire_rate:
 		attack_ready = true
 
-func fire_bullet(_delta):
+func fire_bullet(_delta:float)->void:
 	current_state = STATE.Idle
 	$AnimationPlayer.play("attack")
 	var bullet_ins := bullet.instantiate() as Bullet
