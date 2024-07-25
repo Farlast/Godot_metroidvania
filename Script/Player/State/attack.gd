@@ -13,6 +13,7 @@ extends State
 @export_group("Move distance")
 @export var freely_move : bool
 @export var velocity_move : Vector2 = Vector2(200,0)
+@export var knockback_force : float = 1000
 
 var active_input : bool
 var listen_input_window : bool 
@@ -61,9 +62,11 @@ func allow_next_animation()->void:
 	listen_input_window = true
 
 func on_attack_success()->void:
-	if not active_input: return
-	if player.get_hit_direction != Vector2.ZERO:
-		player.velocity.x = player.knockback_force/2 * -player.get_hit_direction.x
+	if not active_input: return 
+	if player.is_on_floor():
+		player.velocity.x = knockback_force * -player.get_hit_direction.x
+	else:
+		player.velocity.y = knockback_force * -player.get_hit_direction.y
 
 func on_exit()->void:
 	super.on_exit()

@@ -2,17 +2,21 @@ class_name Familiar extends Area2D
 
 ### ================
 ### follow player by defualt
-### can grab object and display current throwable
+### place at front of player [skillcharge + projectile]
+### have collision can block projectle
+### if got attack will change mode between mode1 : mode2
+### place at dark alta can purifly area
+### summon attack still have 4 no mode effect
 ### ================
 @onready var object_in_hand : Sprite2D = $Directions/ThrowObject
 @onready var animaotr : AnimationPlayer = $AnimationPlayer
 @onready var direction : Node2D = $Directions
 @export var lerp_speed : float = 6
 
-enum Mode {FOLLOW,POSSESSED,TO_POSITION,STAND_BY}
-enum Hand {EMPTY,CARRIED}
-var current_mode : Mode
-var hand_status : Hand
+enum MovementMode {FOLLOW,TO_POSITION}
+enum Infuse {NORMAL,GHOST_FLAME}
+var current_movement_mode : MovementMode
+var infuse_status : Infuse
 var defualt_target : Node2D
 var lerp_target : Node2D
 var current_throw_skill : SkillContainer
@@ -20,14 +24,14 @@ var object_sprite : Texture2D
 
 func _ready()->void:
 	body_entered.connect(on_get_object)
-	current_mode = Mode.FOLLOW
+	current_movement_mode = MovementMode.FOLLOW
 
 func _process(delta:float)->void:
-	match current_mode:
-		Mode.FOLLOW:
+	match current_movement_mode:
+		MovementMode.FOLLOW:
 			lerp_to_position(delta)
 			flip_direction()
-		Mode.TO_POSITION:
+		MovementMode.TO_POSITION:
 			lerp_to_position(delta)
 
 func lerp_to_position(delta:float)->void:
@@ -41,20 +45,18 @@ func flip_direction()->void:
 		direction.scale.x = -abs(direction.scale.x) 
 
 func command(node : Node2D)->void:
-	match current_mode:
-		Mode.FOLLOW:
-			current_mode = Mode.TO_POSITION
+	match current_movement_mode:
+		MovementMode.FOLLOW:
+			current_movement_mode = MovementMode.TO_POSITION
 			lerp_target = node
-		Mode.TO_POSITION:
-			current_mode = Mode.FOLLOW
+		MovementMode.TO_POSITION:
+			current_movement_mode = MovementMode.FOLLOW
 			lerp_target = defualt_target
-		Mode.POSSESSED:
-			pass
 
 ### Move to position and grab object
-func on_get_object(body : GrabbableHost)->void:
-	current_mode = Mode.FOLLOW
-	hand_status = Hand.CARRIED
+func on_get_object(body : Node2D)->void:
+	current_movement_mode = MovementMode.FOLLOW
+	infuse_status = Infuse.NORMAL
 	current_throw_skill = body.get_object().element_object
 	current_throw_skill.request_load_scene()
 	object_in_hand.texture = body.get_object().sprite
@@ -63,15 +65,14 @@ func on_get_object(body : GrabbableHost)->void:
 
 func throw(system : SkillSystem)->void:
 	##Animation move
-	current_mode = Mode.TO_POSITION
+	current_movement_mode = MovementMode.TO_POSITION
 	lerp_target = system.player.front_point
 	global_position = system.player.front_point.global_position
 	direction.scale.x = system.player.direction_holder.scale.x
 	## Active
-	hand_status = Hand.EMPTY
 	current_throw_skill.active_skill(system)
 	object_in_hand.hide()
 	await system.get_tree().create_timer(0.3).timeout
-	current_mode = Mode.FOLLOW
+	current_movement_mode = MovementMode.FOLLOW
 	lerp_target = defualt_target
 	animaotr.play("idle")

@@ -3,7 +3,7 @@ class_name EnemySpawnPoint extends Node2D
 @export var enemy_scene : PackedScene
 @export var auto_spawn : bool
 
-func _ready():
+func _ready()->void:
 	if auto_spawn:
 		spawn(self)
 

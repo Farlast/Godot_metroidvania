@@ -69,7 +69,7 @@ func on_stance_break()->void:
 func dead()->void:
 	state_machine.current_state.transition.emit(state_machine.current_state,"empty")
 	if is_on_screen:
-		var camera = GameManager.main_camera
+		var camera := GameManager.main_camera
 		camera.add_trauma(0.5)
 	super.dead()
 

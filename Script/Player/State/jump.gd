@@ -51,6 +51,8 @@ func _unhandled_input(event:InputEvent)->void:
 			player.velocity.y += abs(player.velocity.y)
 	elif event.is_action_pressed("attack") && v_direction > 0:
 		transition.emit(self,"attack_up")
+	elif event.is_action_pressed("attack") && v_direction < 0:
+		transition.emit(self,"attack_down")
 	elif event.is_action_pressed("attack"):
 		transition.emit(self,"air_attack_combo")
 	elif event.is_action_pressed("dash") && player.is_can_dash():
