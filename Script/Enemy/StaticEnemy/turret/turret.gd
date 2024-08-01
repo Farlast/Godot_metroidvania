@@ -4,6 +4,7 @@ extends StaticEnemy
 @onready var attack_box : CollisionShape2D = $AttackBox/CollisionShape2D
 @onready var attack_point : Node2D = $AttackPoint
 
+@export var bullet_damage : DamageData
 @export var bullet : PackedScene = preload("res://Scenes/Effect/bullet_acid.tscn")
 @export var start_delay : float
 @export var fire_rate : float = 0.5
@@ -59,6 +60,7 @@ func fire_bullet(_delta:float)->void:
 	current_state = STATE.Idle
 	$AnimationPlayer.play("attack")
 	var bullet_ins := bullet.instantiate() as Bullet
+	bullet_ins.damage_data = bullet_damage
 	bullet_ins.direction = Vector2(0,1)
 	bullet_ins.speed = 900
 	add_child(bullet_ins)

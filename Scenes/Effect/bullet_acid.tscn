@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://3pnk4yqouat7"]
+[gd_scene load_steps=15 format=3 uid="uid://3pnk4yqouat7"]
 
 [ext_resource type="Script" path="res://Script/Bullets/bullet.gd" id="1_248ix"]
 [ext_resource type="Texture2D" uid="uid://c3ebu0gxgwpy1" path="res://Art/Effect/Tex_circle_gradient.png" id="1_nwb1c"]
@@ -6,14 +6,6 @@
 [ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="2_srd08"]
 [ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="3_qumw4"]
 [ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="6_o1wfs"]
-
-[sub_resource type="Resource" id="Resource_yipbw"]
-script = ExtResource("3_qumw4")
-damage = 1.0
-impact = 0.0
-take_damage_rule = 0
-take_damage_mask = 0
-element = 3
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s7mtm"]
 size = Vector2(32, 32)
@@ -151,16 +143,17 @@ _data = {
 script = ExtResource("3_qumw4")
 damage = 0.0
 impact = 0.0
+knockback_force = 0
+element = 0
 take_damage_rule = 0
 take_damage_mask = 0
-element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kgh44"]
 size = Vector2(32, 32)
 
 [node name="Bullet Acid" type="Area2D"]
 script = ExtResource("1_248ix")
-damage_data = SubResource("Resource_yipbw")
+life_time = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_s7mtm")
@@ -196,3 +189,6 @@ damage_data = SubResource("Resource_e0ncg")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
 shape = SubResource("RectangleShape2D_kgh44")
 debug_color = Color(0.901961, 0.207843, 0.580392, 0.419608)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+visible = false

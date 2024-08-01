@@ -503,6 +503,7 @@ script = ExtResource("17_bobnu")
 [node name="FlyTo" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("check_area")]
 script = ExtResource("19_la6hv")
 check_area = NodePath("../../PlayerDetect")
+move_speed = 300.0
 
 [node name="Stagger" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("20_7p5iu")

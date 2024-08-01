@@ -1,7 +1,13 @@
 class_name AttackBox
 extends Area2D
 
-@export var damage_data : DamageData
+@export var damage_data : DamageData:
+	set(value): 
+		damage_data = value
+	get:
+		damage_data.sender_position = global_position
+		damage_data.attacker_id = owner.get_instance_id()
+		return damage_data
 
 func set_collition_mask(index : int)->void:
 	# Decimal - Add the results of 2 to the power of (layer to be enabled - 1).

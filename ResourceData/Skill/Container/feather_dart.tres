@@ -7,7 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_gmstr"]
 script = ExtResource("1_752da")
-damage = 1.0
+damage = 2.0
 impact = 0.0
 knockback_force = 0
 element = 0

@@ -15,7 +15,7 @@ func hurt(body : Area2D)->void:
 	
 	var attack_box := body as AttackBox
 	if owner.has_method("take_damage"):
-		var damage_data :DamageData = attack_box.get_damage_data()
+		var damage_data :DamageData = attack_box.damage_data
 		## protect damage self
 		if damage_data.attacker_id == owner.get_instance_id(): return
 		var is_attack_success :bool = await owner.take_damage(damage_data)

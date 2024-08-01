@@ -1,19 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://b1rwgq5tuaed2"]
+[gd_scene load_steps=16 format=3 uid="uid://b1rwgq5tuaed2"]
 
 [ext_resource type="Script" path="res://Script/Bullets/bullet.gd" id="1_2lt80"]
 [ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="1_xlyp3"]
-[ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="2_2nrjp"]
 [ext_resource type="Texture2D" uid="uid://c1qhwi8ewswm4" path="res://Art/Effect/Tex_circle_small.png" id="2_drrw3"]
 [ext_resource type="Texture2D" uid="uid://cxogbu8mbhs6o" path="res://Art/Player/Skill/kunai.png" id="3_i8wpl"]
-
-[sub_resource type="Resource" id="Resource_wrcv3"]
-script = ExtResource("2_2nrjp")
-damage = 0.0
-impact = 0.0
-knockback_force = 0
-element = 0
-take_damage_rule = 0
-take_damage_mask = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uduxf"]
 size = Vector2(16, 64)
@@ -136,7 +126,7 @@ _data = {
 [node name="FeatherDart" type="Area2D"]
 collision_layer = 0
 script = ExtResource("1_2lt80")
-damage_data = SubResource("Resource_wrcv3")
+life_time = 0.8
 
 [node name="DroundCollision" type="CollisionShape2D" parent="."]
 visible = false
@@ -166,3 +156,6 @@ libraries = {
 "": SubResource("AnimationLibrary_q1jew")
 }
 autoplay = "start"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+bus = &"Effect"

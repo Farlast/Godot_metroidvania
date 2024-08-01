@@ -21,8 +21,8 @@ func  _ready()->void:
 		if node is Node2D:
 			spawn_points.append(node)
 
-func spawn_fix_enemy(spawn_node: EnemySpawnPoint)->void:
-	var obj := spawn_node.spawn(enemies_parent)
+func spawn_fix_enemy(spawn_node: EnemySpawnPoint,target:Node2D)->void:
+	var obj := spawn_node.spawn(enemies_parent,target)
 	if obj.has_signal("on_dead"):
 		enemy_count += 1
 		obj.on_dead.connect(enemy_killed)
@@ -31,7 +31,7 @@ func spawn_fix_enemy(spawn_node: EnemySpawnPoint)->void:
 func _on_body_entered(_body:Node2D)->void:
 	if actived: return
 	for spawn_node:EnemySpawnPoint in spawn_points:
-		spawn_fix_enemy(spawn_node)
+		spawn_fix_enemy(spawn_node,_body)
 	actived = true
 	trigger_door.emit()
 

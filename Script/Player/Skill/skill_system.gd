@@ -15,7 +15,10 @@ extends Node
 @export_group("Projectile skill")
 @export var ui_event : CustomEventChannel
 @export var feather : SingleBullet
-@export var ghostflamefeather : SingleBullet
+#@export var ghostflamefeather : SingleBullet
+@onready var laser_scene : PackedScene = preload("res://Scenes/Effect/laser.tscn")
+@export var laser_audio : AudioStream
+
 
 @export_group("Lantern skill")
 @export var current_skill : SkillContainer
@@ -93,4 +96,17 @@ func midair_fire_projectile(direction : Vector2)->void:
 	else:
 		feather.fire_bullet(front_point,direction,player)
 	feather.set_cooldown(player)
+
+func fire_laser()->void:
+	var au_player :AudioPlayer = GameManager.audio_player
+	au_player.play(laser_audio,player.position)
+	var laser :Laser = laser_scene.instantiate() as Laser
+	laser.global_position = front_point.global_position
+	laser.scale = player.direction_holder.scale
+	add_child(laser)
+	laser.is_casting = true
+	await get_tree().create_timer(0.3).timeout
+	laser.is_casting = false
+	await get_tree().create_timer(0.3).timeout
+	laser.queue_free()
 #endregion

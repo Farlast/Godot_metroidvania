@@ -8,7 +8,6 @@ class_name Familiar extends Area2D
 ### place at dark alta can purifly area
 ### summon attack still have 4 no mode effect
 ### ================
-@onready var object_in_hand : Sprite2D = $Directions/ThrowObject
 @onready var animaotr : AnimationPlayer = $AnimationPlayer
 @onready var direction : Node2D = $Directions
 @export var lerp_speed : float = 6
@@ -59,8 +58,6 @@ func on_get_object(body : Node2D)->void:
 	infuse_status = Infuse.NORMAL
 	current_throw_skill = body.get_object().element_object
 	current_throw_skill.request_load_scene()
-	object_in_hand.texture = body.get_object().sprite
-	object_in_hand.show()
 	animaotr.play("handle")
 
 func throw(system : SkillSystem)->void:
@@ -71,7 +68,6 @@ func throw(system : SkillSystem)->void:
 	direction.scale.x = system.player.direction_holder.scale.x
 	## Active
 	current_throw_skill.active_skill(system)
-	object_in_hand.hide()
 	await system.get_tree().create_timer(0.3).timeout
 	current_movement_mode = MovementMode.FOLLOW
 	lerp_target = defualt_target

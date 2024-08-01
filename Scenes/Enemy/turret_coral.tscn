@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://5su73c7q4ter"]
+[gd_scene load_steps=24 format=3 uid="uid://5su73c7q4ter"]
 
 [ext_resource type="Script" path="res://Script/Enemy/StaticEnemy/turret/turret.gd" id="1_tmegy"]
 [ext_resource type="Texture2D" uid="uid://br1k4qwaxu20a" path="res://Art/Enemy/Turret_coral/Turret_coral.png" id="2_i1h70"]
@@ -12,6 +12,15 @@
 [ext_resource type="AudioStream" uid="uid://cg34kv7j6hqy5" path="res://Audio/Effect/HitSound/face_hit_small_78.wav" id="9_n0k20"]
 [ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/Effect/HitSound/body_hit_finisher_23.wav" id="10_ycofd"]
 
+[sub_resource type="Resource" id="Resource_vpyxm"]
+script = ExtResource("4_int1g")
+damage = 1.0
+impact = 0.0
+knockback_force = 0
+element = 0
+take_damage_rule = 0
+take_damage_mask = 0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mpf70"]
 size = Vector2(64, 10)
 
@@ -19,9 +28,10 @@ size = Vector2(64, 10)
 script = ExtResource("4_int1g")
 damage = 1.0
 impact = 0.0
+knockback_force = 0
+element = 0
 take_damage_rule = 0
 take_damage_mask = 0
-element = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yqbqp"]
 size = Vector2(64, 48)
@@ -136,6 +146,7 @@ region = Rect2(40.1037, 196.189, 117.956, 113.449)
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_tmegy")
+bullet_damage = SubResource("Resource_vpyxm")
 fire_rate = 1.0
 max_hp = 2.0
 

@@ -1,0 +1,110 @@
+[gd_scene load_steps=15 format=3 uid="uid://bibu6po5g2cas"]
+
+[ext_resource type="Script" path="res://Script/Bullets/laser.gd" id="1_5v4ci"]
+[ext_resource type="Texture2D" uid="uid://c1qhwi8ewswm4" path="res://Art/Effect/Tex_circle_small.png" id="2_is6y5"]
+[ext_resource type="Texture2D" uid="uid://bkxikryne1772" path="res://Art/Effect/star.png" id="3_tx7c6"]
+[ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="4_8vn5r"]
+[ext_resource type="Script" path="res://Script/CombatComponent/damage_data.gd" id="5_jiifm"]
+
+[sub_resource type="Curve" id="Curve_3gcie"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_1x0ft"]
+curve = SubResource("Curve_3gcie")
+
+[sub_resource type="Curve" id="Curve_e2ojx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_b87xy"]
+curve = SubResource("Curve_e2ojx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_20y8d"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 35, 1)
+spread = 61.241
+initial_velocity_min = 45.11
+initial_velocity_max = 52.63
+gravity = Vector3(0, 0, 0)
+scale_max = 1.3
+scale_curve = SubResource("CurveTexture_b87xy")
+color = Color(0.294118, 0.113725, 0.776471, 1)
+alpha_curve = SubResource("CurveTexture_1x0ft")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_w1yak"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 35, 1)
+initial_velocity_min = 60.15
+initial_velocity_max = 82.71
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_b87xy")
+color = Color(0.294118, 0.113725, 0.776471, 1)
+alpha_curve = SubResource("CurveTexture_1x0ft")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_o1bwc"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+spread = 180.0
+initial_velocity_min = 10.0
+initial_velocity_max = 37.59
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.5
+color = Color(0.294118, 0.113725, 0.776471, 1)
+
+[sub_resource type="Resource" id="Resource_tdu1x"]
+script = ExtResource("5_jiifm")
+damage = 3.0
+impact = 0.0
+knockback_force = 3
+element = 0
+take_damage_rule = 0
+take_damage_mask = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tkiwv"]
+size = Vector2(1080, 50)
+
+[node name="LaserRaycast" type="RayCast2D"]
+target_position = Vector2(1080, 0)
+script = ExtResource("1_5v4ci")
+
+[node name="Line2D" type="Line2D" parent="."]
+z_index = -1
+points = PackedVector2Array(0, 0, 88, 0)
+width = 50.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="CastingParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 35
+process_material = SubResource("ParticleProcessMaterial_20y8d")
+texture = ExtResource("2_is6y5")
+lifetime = 0.5
+
+[node name="CollisionParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_w1yak")
+texture = ExtResource("2_is6y5")
+lifetime = 0.5
+
+[node name="BeamParticle2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 15
+process_material = SubResource("ParticleProcessMaterial_o1bwc")
+texture = ExtResource("3_tx7c6")
+lifetime = 0.3
+
+[node name="AttackBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 32
+script = ExtResource("4_8vn5r")
+damage_data = SubResource("Resource_tdu1x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
+position = Vector2(536, 0)
+shape = SubResource("RectangleShape2D_tkiwv")

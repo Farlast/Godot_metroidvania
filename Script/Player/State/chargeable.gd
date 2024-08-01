@@ -12,7 +12,7 @@ extends State
 @export var charge_finish_audio : AudioStreamPlayer2D
 @export var attack_audio_player : AudioStreamPlayer2D
 @export_group("Move distance")
-@export var velocity_move : Vector2 = Vector2(200,0)
+@export var velocity_move : Vector2 = Vector2.ZERO
 
 var attack_box_col : CollisionShape2D
 var active_input : bool
