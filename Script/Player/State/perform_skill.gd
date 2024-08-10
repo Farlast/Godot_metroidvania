@@ -21,12 +21,6 @@ func _unhandled_input(event:InputEvent)->void:
 	input_vector = input_handle()
 	if event.is_action_released("skill"):
 		next_state()
-	elif input_vector == Vector2.RIGHT or input_vector == Vector2.LEFT:
-		action_1()
-	elif input_vector == Vector2.UP:
-		action_2()
-	elif input_vector == Vector2.DOWN:
-		action_3()
 
 func input_handle()->Vector2:
 	var h_direction :float = Input.get_axis("move_left", "move_right",)
@@ -34,25 +28,6 @@ func input_handle()->Vector2:
 	if v_direction != 0 and h_direction != 0:
 		v_direction = 0
 	return Vector2(h_direction,v_direction)
-
-func action_1()->void:
-	active_input = false
-	player.flip_sprite(input_vector.x)
-	animator.play("sample")
-	await player.get_tree().create_timer(cast_time).timeout
-	next_state()
-
-func action_2()->void:
-	active_input = false
-	animator.play("attack_up")
-	await player.get_tree().create_timer(cast_time).timeout
-	next_state()
-
-func action_3()->void:
-	active_input = false
-	animator.play("attack_down")
-	await player.get_tree().create_timer(cast_time).timeout
-	next_state()
 
 func next_state()->void:
 	active_input = false

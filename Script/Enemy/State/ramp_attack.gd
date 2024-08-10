@@ -28,7 +28,6 @@ func start_attack()->void:
 
 func stop_attack()->void:
 	agent.super_armor = false
-	agent.velocity.x = 0
 	attack_box_col.set_deferred("disabled",true)
 
 func on_animation_finish(_animation_name : String)->void:
@@ -40,3 +39,7 @@ func on_update(delta:float)->void:
 	if not cliff_ray.is_colliding() and active_state:
 		stop_attack()
 		transition.emit(self,"idle")
+
+func on_physics_update(delta : float)->void:
+	super.on_physics_update(delta)
+	agent.velocity.x = move_toward(agent.velocity.x,0,30)

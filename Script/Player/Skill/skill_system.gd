@@ -98,6 +98,7 @@ func midair_fire_projectile(direction : Vector2)->void:
 	feather.set_cooldown(player)
 
 func fire_laser()->void:
+	GameManager.main_camera.add_trauma(0.5)
 	var au_player :AudioPlayer = GameManager.audio_player
 	au_player.play(laser_audio,player.position)
 	var laser :Laser = laser_scene.instantiate() as Laser

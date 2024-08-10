@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://cwtxhoydrofhh"]
+[gd_scene load_steps=64 format=3 uid="uid://cwtxhoydrofhh"]
 
 [ext_resource type="Script" path="res://Script/Enemy/ChaseEnemy/chase_enemy.gd" id="1_aur87"]
 [ext_resource type="Material" uid="uid://cmv24i1lrmfiw" path="res://Shader/enemy.tres" id="2_pg0cq"]
@@ -19,7 +19,6 @@
 [ext_resource type="Texture2D" uid="uid://mrdy362tqpjr" path="res://Art/Effect/slash_1.png" id="12_gtaqg"]
 [ext_resource type="Texture2D" uid="uid://dtytbqyts58yo" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0003.png" id="12_q0lwj"]
 [ext_resource type="Script" path="res://Script/Enemy/State/ramp_attack.gd" id="12_qx0l6"]
-[ext_resource type="Script" path="res://Script/Enemy/State/stance_break.gd" id="12_wb7s4"]
 [ext_resource type="Texture2D" uid="uid://nwb4oqf22xe4" path="res://Art/Enemy/ChaseEnemy/FireSalamander_Run_0005.png" id="13_2boxu"]
 [ext_resource type="PackedScene" uid="uid://bkijr6cnrf2dy" path="res://Scenes/Effect/dead_particle.tscn" id="13_c4nw1"]
 [ext_resource type="Texture2D" uid="uid://byku3155bejsl" path="res://Art/Effect/hollow fade circle.png" id="14_1lm6k"]
@@ -27,7 +26,6 @@
 [ext_resource type="AudioStream" uid="uid://qfhojxuubk3m" path="res://Audio/Effect/HitSound/blade_hit_08.wav" id="15_l0x6e"]
 [ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/Effect/HitSound/body_hit_finisher_23.wav" id="16_n1t41"]
 [ext_resource type="Texture2D" uid="uid://dn04fmj7at105" path="res://Art/Effect/Tex_Gilnt.png" id="18_3p1lc"]
-[ext_resource type="Texture2D" uid="uid://bdk6t6ouad607" path="res://Art/UI/ui_hp_bar_fill.png" id="26_f07bo"]
 [ext_resource type="Script" path="res://Script/UI/HUD/status_bar.gd" id="27_clcth"]
 [ext_resource type="Script" path="res://Script/Player/Event/Health_Event.gd" id="28_lqfom"]
 [ext_resource type="Script" path="res://Script/Enemy/State/fall.gd" id="30_17dfd"]
@@ -35,24 +33,19 @@
 [sub_resource type="Resource" id="Resource_hv358"]
 resource_local_to_scene = true
 script = ExtResource("2_pipmt")
-max_value = 6.0
-
-[sub_resource type="Resource" id="Resource_00whe"]
-resource_local_to_scene = true
-script = ExtResource("2_pipmt")
-max_value = 3.0
+max_value = 12.0
 
 [sub_resource type="Resource" id="Resource_kcrr3"]
 resource_local_to_scene = true
 script = ExtResource("3_m7twa")
 health = SubResource("Resource_hv358")
-stance = SubResource("Resource_00whe")
+status_list = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_remti"]
 size = Vector2(112, 97)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ricfg"]
-size = Vector2(80.9999, 153)
+size = Vector2(106, 216)
 
 [sub_resource type="Animation" id="Animation_51hf3"]
 length = 0.001
@@ -207,6 +200,7 @@ resource_name = "melee_attack"
 
 [sub_resource type="Animation" id="Animation_l2l8v"]
 resource_name = "melee_attack"
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -392,32 +386,21 @@ bg_color = Color(0.827451, 0.168627, 0.168627, 1)
 [sub_resource type="Resource" id="Resource_1rth7"]
 script = ExtResource("28_lqfom")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sn2yh"]
-texture = ExtResource("26_f07bo")
-modulate_color = Color(0.980392, 0.701961, 0.286275, 1)
-
-[sub_resource type="Resource" id="Resource_gk8w1"]
-script = ExtResource("28_lqfom")
-
-[node name="ChaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("onscreen_noti", "hp_bar", "stagger_bar") groups=["enemy"]]
+[node name="ChaseEnemy" type="CharacterBody2D" node_paths=PackedStringArray("onscreen_noti", "hp_bar") groups=["enemy"]]
 collision_layer = 0
+floor_constant_speed = true
 script = ExtResource("1_aur87")
 move_speed = 400.0
-turn_left = null
-turning = null
-stunt_time = 2.0
 onscreen_noti = NodePath("VisibleOnScreenNotifier2D")
 health_system = SubResource("Resource_kcrr3")
-gravity_multiply = null
 hp_bar = NodePath("Control/VBoxContainer/HP bar")
-stagger_bar = NodePath("Control/VBoxContainer/Stagger bar")
 
 [node name="GroundCollision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-16, -47.5)
 shape = SubResource("RectangleShape2D_remti")
 
 [node name="HurtBox" type="Area2D" parent="."]
-visible = false
 position = Vector2(-8, -48)
 collision_layer = 8
 collision_mask = 10
@@ -425,7 +408,8 @@ script = ExtResource("4_6vqly")
 object_tag = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(6.49999, 9.50002)
+visible = false
+position = Vector2(28, -2.99994)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_ricfg")
 debug_color = Color(0.384314, 0.603922, 0.309804, 0.419608)
@@ -615,15 +599,6 @@ show_percentage = false
 script = ExtResource("27_clcth")
 hp_event = SubResource("Resource_1rth7")
 
-[node name="Stagger bar" type="ProgressBar" parent="Control/VBoxContainer"]
-custom_minimum_size = Vector2(0, 5)
-layout_mode = 2
-theme_override_styles/fill = SubResource("StyleBoxTexture_sn2yh")
-value = 50.0
-show_percentage = false
-script = ExtResource("27_clcth")
-hp_event = SubResource("Resource_gk8w1")
-
 [node name="EnemyStateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "animation_player", "current_state_display")]
 script = ExtResource("7_7wij7")
 InitialState = NodePath("idle")
@@ -635,12 +610,6 @@ script = ExtResource("8_kk3ql")
 
 [node name="stagger" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("9_1llv7")
-knockback_force = 400.0
-
-[node name="StanceBreak" type="Node" parent="EnemyStateMachine"]
-script = ExtResource("12_wb7s4")
-stunt_time = 2.5
-knockback_force = 400.0
 
 [node name="chase" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("next_state")]
 script = ExtResource("10_naq1y")

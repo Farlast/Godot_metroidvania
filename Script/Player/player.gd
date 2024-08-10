@@ -63,7 +63,6 @@ var gravity :float = ProjectSettings.get_setting("physics/2d/default_gravity")
 var globals_sprites_position: Vector2
 #water
 @onready var water_float_point:Node2D = $Directions
-@onready var water_detect : RayCast2D = $WaterDetector
 var diving :bool = false
 var water_darg :float = 0.05
 

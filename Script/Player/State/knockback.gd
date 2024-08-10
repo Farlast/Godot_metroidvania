@@ -11,7 +11,7 @@ func on_enter()->void:
 	player.velocity = Vector2.ZERO
 	is_unfreeze = true
 	GameManager.time_manager.freeze_time_duration()
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.1).timeout
 	player.is_iframe_active = true
 	player.iframe_timer = 0
 	if temp_damage_data.take_damage_rule == temp_damage_data.TakeDamageRule.RESET:

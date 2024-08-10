@@ -11,25 +11,20 @@ func on_enter()->void:
 	active_input = true
 	player.update_area()
 	player.velocity = Vector2.ZERO
+	h_direction = Input.get_axis("move_left", "move_right")
+	
+	if player.Is_can_bufferjump:
+		transition.emit(self,"Jump")
+	elif h_direction != 0:
+		transition.emit(self,"Run")
 	
 func on_exit()->void:
 	super.on_exit()
 	active_input = false
 
-func on_update(_delta : float)->void:
-	super.on_update(_delta)
+func on_physics_update(_delta : float)->void:
 	if not player.is_on_floor():
 		transition.emit(self,"fall")
-	v_direction = Input.get_axis("move_down", "move_up")
-	h_direction = Input.get_axis("move_left", "move_right")
-	if player.Is_can_bufferjump:
-		transition.emit(self,"Jump")
-	elif v_direction < 0:
-		transition.emit(self,"crouch")
-	elif h_direction != 0:
-		transition.emit(self,"Run")
-	
-func on_physics_update(_delta : float)->void:
 	super.on_physics_update(_delta)
 	player.add_fall_gravity(_delta)
 	player.move_and_slide()
@@ -39,10 +34,14 @@ func _unhandled_input(event:InputEvent)->void:
 	if not is_controllable(): return
 	if not active_input: return
 	player.update_area()
-	if event.is_action_pressed("move_down"):
-		transition.emit(self,"duck")
+	v_direction = Input.get_axis("move_down", "move_up")
+	h_direction = Input.get_axis("move_left", "move_right")
 	
-	if event.is_action_pressed("jump") && player.is_on_floor():
+	if h_direction != 0:
+		transition.emit(self,"Run")
+	elif v_direction < 0 and (event.is_action_pressed("jump") or player.Is_can_bufferjump):
+		player.position.y += 1
+	elif event.is_action_pressed("jump") && player.is_on_floor():
 		transition.emit(self,"Jump")
 	elif event.is_action_pressed("attack") && v_direction > 0:
 		transition.emit(self,"attack_up")

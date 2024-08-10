@@ -23,7 +23,7 @@ extends Camera2D
 
 var noise_y = 0 #Value used to move through the noise
 var trauma := 0.0 #Current shake strength
-var trauma_pwr := 3 #Trauma exponent. Use [2,3]
+var trauma_pwr := 2 #Trauma exponent. Use [2,3]
 
 func _ready():
 	noise = FastNoiseLite.new()
@@ -52,7 +52,7 @@ func _process(delta: float) -> void:
 		global_position = follow_node.global_position
 	
 	#shaking
-	if trauma:
+	if trauma > 0:
 		trauma = max(trauma - decay * delta, 0)
 		shake()
 	
@@ -60,6 +60,10 @@ func _process(delta: float) -> void:
 
 func add_trauma(amount : float):
 	trauma = min(trauma + amount, 1.0)
+
+func add_clamp_trauma(amount : float):
+	if trauma < amount:
+		trauma = min(trauma + amount, 1.0)
 
 func shake(): 
 	var amt = pow(trauma, trauma_pwr)

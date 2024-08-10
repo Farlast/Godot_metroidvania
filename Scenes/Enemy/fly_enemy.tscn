@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://dfshfluoqcc1w"]
+[gd_scene load_steps=56 format=3 uid="uid://dfshfluoqcc1w"]
 
 [ext_resource type="Script" path="res://Script/Enemy/FlyEnemy/fly_enemy_base.gd" id="1_ieynj"]
 [ext_resource type="Script" path="res://Script/CombatComponent/status_value.gd" id="2_5avuf"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://Script/CombatComponent/health_system.gd" id="3_lfmor"]
 [ext_resource type="Script" path="res://Script/Player/Event/Health_Event.gd" id="3_q8ekf"]
 [ext_resource type="Script" path="res://Script/CombatComponent/hurt_box.gd" id="4_w6rn4"]
-[ext_resource type="Texture2D" uid="uid://bdk6t6ouad607" path="res://Art/UI/ui_hp_bar_fill.png" id="4_ypi8p"]
 [ext_resource type="Material" uid="uid://cmv24i1lrmfiw" path="res://Shader/enemy.tres" id="5_k0khn"]
 [ext_resource type="Texture2D" uid="uid://rr00rohs355e" path="res://Art/Enemy/Fly/fly.png" id="6_u5t5v"]
 [ext_resource type="Script" path="res://Script/CombatComponent/attack_box.gd" id="7_ngg3n"]
@@ -24,23 +23,17 @@
 [ext_resource type="Script" path="res://Script/Enemy/FlyEnemy/fly_to.gd" id="19_la6hv"]
 [ext_resource type="AudioStream" uid="uid://dgcehrixe8dlp" path="res://Audio/Effect/HitSound/body_hit_finisher_23.wav" id="19_ok7g3"]
 [ext_resource type="Script" path="res://Script/Enemy/State/stagger.gd" id="20_7p5iu"]
-[ext_resource type="Script" path="res://Script/Enemy/State/stance_break.gd" id="22_2mhmy"]
 
 [sub_resource type="Resource" id="Resource_5ey4u"]
 resource_local_to_scene = true
 script = ExtResource("2_5avuf")
 max_value = 3.0
 
-[sub_resource type="Resource" id="Resource_tcd51"]
-resource_local_to_scene = true
-script = ExtResource("2_5avuf")
-max_value = 2.0
-
 [sub_resource type="Resource" id="Resource_cgjx1"]
 resource_local_to_scene = true
 script = ExtResource("3_lfmor")
 health = SubResource("Resource_5ey4u")
-stance = SubResource("Resource_tcd51")
+status_list = {}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_56ait"]
 size = Vector2(32, 32)
@@ -52,13 +45,6 @@ size = Vector2(64, 96)
 bg_color = Color(0.827451, 0.168627, 0.168627, 1)
 
 [sub_resource type="Resource" id="Resource_fjpl7"]
-script = ExtResource("3_q8ekf")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jhwoq"]
-texture = ExtResource("4_ypi8p")
-modulate_color = Color(0.980392, 0.701961, 0.286275, 1)
-
-[sub_resource type="Resource" id="Resource_5ssgx"]
 script = ExtResource("3_q8ekf")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m0cwn"]
@@ -279,7 +265,7 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_oq5fp"]
 radius = 448.071
 
-[node name="Fly_Enemy" type="CharacterBody2D" node_paths=PackedStringArray("hp_bar", "stagger_bar") groups=["enemy"]]
+[node name="Fly_Enemy" type="CharacterBody2D" node_paths=PackedStringArray("hp_bar") groups=["enemy"]]
 collision_layer = 0
 motion_mode = 1
 platform_on_leave = 2
@@ -289,7 +275,6 @@ script = ExtResource("1_ieynj")
 health_system = SubResource("Resource_cgjx1")
 gravity_multiply = 0.0
 hp_bar = NodePath("Control/VBoxContainer/HP bar")
-stagger_bar = NodePath("Control/VBoxContainer/Stagger bar")
 
 [node name="GroundCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_56ait")
@@ -350,15 +335,6 @@ value = 50.0
 show_percentage = false
 script = ExtResource("2_hvmrp")
 hp_event = SubResource("Resource_fjpl7")
-
-[node name="Stagger bar" type="ProgressBar" parent="Control/VBoxContainer"]
-custom_minimum_size = Vector2(0, 5)
-layout_mode = 2
-theme_override_styles/fill = SubResource("StyleBoxTexture_jhwoq")
-value = 50.0
-show_percentage = false
-script = ExtResource("2_hvmrp")
-hp_event = SubResource("Resource_5ssgx")
 
 [node name="Particle" type="Node2D" parent="."]
 
@@ -503,13 +479,9 @@ script = ExtResource("17_bobnu")
 [node name="FlyTo" type="Node" parent="EnemyStateMachine" node_paths=PackedStringArray("check_area")]
 script = ExtResource("19_la6hv")
 check_area = NodePath("../../PlayerDetect")
-move_speed = 300.0
 
 [node name="Stagger" type="Node" parent="EnemyStateMachine"]
 script = ExtResource("20_7p5iu")
-
-[node name="StanceBreak" type="Node" parent="EnemyStateMachine"]
-script = ExtResource("22_2mhmy")
 
 [node name="Audio" type="Node2D" parent="."]
 

@@ -2,7 +2,6 @@ extends CharacterBody2D
 class_name Enemy
 
 signal on_dead
-signal stance_breaked
 signal take_damage_trigger(damage_data : DamageData)
 
 @export var health_system : HealthSystem 
@@ -38,15 +37,12 @@ var target : Node2D
 func _ready()->void:
 	health_system.setup()
 	health_system.dead.connect(dead)
-	health_system.stance_break.connect(on_stance_break)
 	shader = sprite.material as ShaderMaterial
 
 func take_damage(damage_data : DamageData)->bool:
 	var is_hit:bool = calculate_damage(damage_data)
 	if is_instance_valid(hp_bar):
 		hp_bar.update_hp(health_system.health.current_value,health_system.health.max_value)
-	if is_instance_valid(stagger_bar):
-		stagger_bar.update_hp(health_system.stance.current_value,health_system.stance.max_value)
 	if is_hit:
 		flash_on_hit()
 		hit_effect.rotation = get_angle_to(damage_data.sender_position) + PI
@@ -60,6 +56,11 @@ func calculate_damage(damage_data : DamageData)-> bool:
 	take_damage_trigger.emit(damage_data)
 	return true
 
+func knockback(damage_data : DamageData)->void:
+	get_hit_direction = (global_position - damage_data.sender_position).normalized()
+	if damage_data.knockback_force == DamageData.KnockBackForce.MID:
+		velocity.x = get_hit_direction.x * 1000
+
 func flash_on_hit()->void:
 	shader.set_shader_parameter("active",true)
 	await get_tree().create_timer(flashing_duration).timeout
@@ -70,6 +71,7 @@ func add_gravity(delta:float)->void:
 		velocity.y += gravity * gravity_multiply * delta
 
 func dead()->void:
+	GameManager.main_camera.add_clamp_trauma(0.5)
 	animator.play("dead")
 	dead_sound.play()
 	dead_effect.restart_all()
@@ -82,9 +84,6 @@ func dead()->void:
 	on_dead.emit()
 	await get_tree().create_timer(1.5).timeout
 	queue_free()
-
-func on_stance_break()->void:
-	pass
 
 func on_idle(_state : EnemyState,_delta:float)->void:
 	pass

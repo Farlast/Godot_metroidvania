@@ -8,8 +8,6 @@ class_name ChaseEnemy
 @export var move_speed : float = 200
 @export var turn_left : bool = true
 @export var turning : bool
-
-@export var stunt_time : float
 @export var onscreen_noti : VisibleOnScreenNotifier2D
 
 var is_on_screen : bool
@@ -24,7 +22,7 @@ func _ready()->void:
 
 func take_damage(damage_data : DamageData)->bool:
 	super.take_damage(damage_data)
-	if not super_armor and health_system.stance.current_value > 0:
+	if not super_armor:
 		if health_system.health.current_value > 0:
 			state_machine.current_state.transition.emit(state_machine.current_state,"stagger")
 	if target == null:
@@ -61,10 +59,6 @@ func face_to_target(delay :bool = true)->void:
 		turning = false
 		turn_left = true
 		direction_holder.scale.x = abs(direction_holder.scale.x)
-
-func on_stance_break()->void:
-	if not health_system.is_dead():
-		state_machine.current_state.transition.emit(state_machine.current_state,"stancebreak")
 
 func dead()->void:
 	state_machine.current_state.transition.emit(state_machine.current_state,"empty")
