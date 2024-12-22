@@ -8,7 +8,7 @@ This project are used as
 - Portfolio.
 
 Feture
-- sides croller character controll
+- side-scroller character controll
 - enemy ai with FSM (finite state machine)
 - save and load system
 - scene loader/scene-passage system for move character to new scene at set position.
